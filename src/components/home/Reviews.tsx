@@ -13,7 +13,8 @@ const FALLBACK_REVIEWS = [
   { name: 'Giuseppe M.', rating: 5, text: 'Staff cordiale e competente. Hanno trattato la mia macchina con una cura che non avevo mai visto in altri autolavaggi.', date: '4 mesi fa', avatar: '' },
 ]
 
-const reviews = reviewsData.reviews.length > 0 ? reviewsData.reviews : FALLBACK_REVIEWS
+const rawReviews = reviewsData.reviews.filter(r => r.text && r.text.trim().length > 0)
+const reviews = rawReviews.length > 0 ? rawReviews : FALLBACK_REVIEWS
 const rating = reviewsData.rating || 4.9
 const totalRatings = reviewsData.totalRatings
 
@@ -94,7 +95,7 @@ export function Reviews() {
           className="text-center mt-10"
         >
           <a
-            href="https://search.google.com/local/reviews?placeid=ChIJ..."
+            href="https://search.google.com/local/reviews?placeid=ChIJE7A-YnH9ExMRlssUFfIZGao"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-white/70 transition-colors"

@@ -1,8 +1,49 @@
 {
-  "placeId": "",
-  "placeName": "WASH HUB Lungomare",
-  "rating": 4.9,
-  "totalRatings": 0,
-  "updatedAt": "",
-  "reviews": []
+  "placeId": "ChIJE7A-YnH9ExMRlssUFfIZGao",
+  "placeName": "Wash Hub - Lungomare",
+  "rating": 5,
+  "totalRatings": 16,
+  "updatedAt": "2026-05-22T23:50:25.018Z",
+  "reviews": [
+    {
+      "name": "Federica Dovi",
+      "avatar": "https://lh3.googleusercontent.com/a/ACg8ocKyJ6TtLFeR9GcXm5Ac0qhsB-YHjL0gQXvPLwRjogJ5nrgKNQ=s128-c0x00000000-cc-rp-mo",
+      "rating": 5,
+      "text": "Sono rimasta estremamente soddisfatta del servizio ricevuto! Ho particolarmente apprezzato la puntualità, la professionalità, la cordialità e la competenza dimostrate dal personale. L’attenzione ai dettagli e la cura dedicata all’auto sono state impeccabili. È raro trovare un servizio così efficiente e al tempo stesso attento al cliente. Un’esperienza decisamente positiva che consiglio senza esitazione.",
+      "date": "una settimana fa",
+      "time": 1778321001
+    },
+    {
+      "name": "Ramona Will",
+      "avatar": "https://lh3.googleusercontent.com/a-/ALV-UjXz6U84-T2ld7MYP7BphI71WSSsKe3slOSFhVmBRc942DuWCC9B=s128-c0x00000000-cc-rp-mo-ba3",
+      "rating": 5,
+      "text": "Molto professionali e cordiali! Venivo dai Paesi Bassi e la mia auto era molto sporca. Il personale ha fatto un ottimo lavoro. Dato che ho la vernice opaca, ho chiesto di non trattare l'auto con cera o lucidante, e non c'è stato alcun problema. Consiglio questo autolavaggio a tutti!",
+      "date": "3 settimane fa",
+      "time": 1777285273
+    },
+    {
+      "name": "Sy Oumar",
+      "avatar": "https://lh3.googleusercontent.com/a-/ALV-UjXm2vELh2Hs0Bw4u3aQalsY26G9b70bitaObddVYH031DqIWNE=s128-c0x00000000-cc-rp-mo",
+      "rating": 5,
+      "text": "",
+      "date": "4 mesi fa",
+      "time": 1767389472
+    },
+    {
+      "name": "Jo Vannieuwenburg",
+      "avatar": "https://lh3.googleusercontent.com/a-/ALV-UjWL_8jA_1rMb_M4jhambi4Jeiu0rq47cJqX0fCfhCAiIlOcLbph=s128-c0x00000000-cc-rp-mo",
+      "rating": 5,
+      "text": "Servizio eccellente!",
+      "date": "6 mesi fa",
+      "time": 1763727061
+    },
+    {
+      "name": "Giordano Paterno",
+      "avatar": "https://lh3.googleusercontent.com/a/ACg8ocJ-cqOZRupOuq2-KDFLk07o45yjiE7zGsZkvX1P3pE2nKElUQ=s128-c0x00000000-cc-rp-mo",
+      "rating": 5,
+      "text": "",
+      "date": "9 mesi fa",
+      "time": 1753882954
+    }
+  ]
 }
