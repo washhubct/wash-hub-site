@@ -2,17 +2,23 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { HiggsfieldVideo } from '@/components/ui/HiggsfieldVideo'
+
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 export function Hero() {
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
-      {/* Background video/placeholder */}
-      <HiggsfieldVideo
-        prompt="cinematic aerial shot of a luxury car being washed in a premium car wash, water splashing in slow motion, golden hour light, Catania Sicily, photorealistic 4K"
-        className="absolute inset-0 w-full h-full"
-        overlayOpacity={0.6}
+      {/* Background video */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+        src={`${BASE}/brand/hero-bg.mp4`}
       />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/60" />
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 py-32 text-center text-white">
