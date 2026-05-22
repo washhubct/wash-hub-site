@@ -1,5 +1,4 @@
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { HiggsfieldImage } from '@/components/ui/HiggsfieldImage'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -80,35 +79,6 @@ export default function ChiSiamoPage() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-20 md:py-28 bg-[#FAFAF7]">
-        <div className="max-w-7xl mx-auto px-5 md:px-8">
-          <AnimatedSection className="text-center mb-14">
-            <h2 className="font-display text-4xl font-black text-[#0F0F0F]"
-              style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-              Il team
-            </h2>
-            <p className="text-[#6B6B6B] mt-3">Le persone che rendono tutto questo possibile ogni giorno.</p>
-          </AnimatedSection>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[
-              { name: 'Guido', role: 'Founder & CEO', prompt: 'portrait of a confident Italian entrepreneur, car wash business owner, Catania Sicily, warm natural light' },
-              { name: 'Sebastiano', role: 'Head of Operations', prompt: 'portrait of a professional Italian car wash operator, friendly smile, work uniform, Catania' },
-              { name: 'Team Member', role: 'Car Wash Specialist', prompt: 'portrait of a car wash specialist at work, professional, Catania Sicily' },
-              { name: 'Team Member', role: 'Customer Care', prompt: 'portrait of a friendly customer service professional, car wash, Italian, warm smile' },
-            ].map(({ name, role, prompt }) => (
-              <AnimatedSection key={name + role} className="text-center">
-                <HiggsfieldImage prompt={prompt} className="rounded-2xl w-full mb-4" aspectRatio="3/4" />
-                <p className="font-bold text-[#0F0F0F]">{name}</p>
-                <p className="text-[#6B6B6B] text-sm">{role}</p>
-              </AnimatedSection>
-            ))}
-          </div>
-          <p className="text-center text-[#6B6B6B] text-xs mt-6">
-            Le foto del team saranno aggiornate con scatti reali. Contattaci per collaborazioni.
-          </p>
-        </div>
-      </section>
     </div>
   )
 }

@@ -34,15 +34,15 @@ export function Footer() {
               Artigiani del lavaggio auto a Catania dal 2022. Due sedi, una sola ossessione: la perfezione.
             </p>
             <div className="flex gap-3 mt-5">
-              <a href="https://instagram.com/washhub" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.instagram.com/washhubcatania" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
                 <IconInstagram />
               </a>
-              <a href="https://facebook.com/washhub" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.facebook.com/120281217832639" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
                 <IconFacebook />
               </a>
-              <a href="https://tiktok.com/@washhub" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.tiktok.com/@washhublungomare" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
                 <IconTikTok />
               </a>
@@ -103,7 +103,7 @@ export function Footer() {
           <p>© {new Date().getFullYear()} WASH HUB. Tutti i diritti riservati.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
-            <Link href="/cookie" className="hover:text-white/60 transition-colors">Cookie Policy</Link>
+            <Link href="/termini" className="hover:text-white/60 transition-colors">Termini e Condizioni</Link>
           </div>
         </div>
       </div>

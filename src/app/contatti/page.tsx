@@ -1,33 +1,8 @@
-'use client'
-
-import { useState } from 'react'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 
 export default function ContattiPage() {
-  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'err'>('idle')
-  const [form, setForm] = useState({ nome: '', email: '', tel: '', msg: '' })
-
-  const FORMSPREE_URL = process.env.NEXT_PUBLIC_FORMSPREE_URL || ''
-
-  const send = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!FORMSPREE_URL) { setStatus('err'); return }
-    setStatus('sending')
-    try {
-      const res = await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name: form.nome, email: form.email, phone: form.tel, message: form.msg }),
-      })
-      setStatus(res.ok ? 'ok' : 'err')
-    } catch {
-      setStatus('err')
-    }
-  }
-
   return (
     <div className="pt-20">
-      {/* Header */}
       <section className="py-20 bg-[#0F0F0F] text-white text-center">
         <AnimatedSection>
           <h1 className="font-display text-5xl md:text-6xl font-black"
@@ -39,85 +14,54 @@ export default function ContattiPage() {
       </section>
 
       <section className="py-20 md:py-28 bg-[#FAFAF7]">
-        <div className="max-w-7xl mx-auto px-5 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            {/* Form */}
+        <div className="max-w-4xl mx-auto px-5 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Lungomare */}
             <AnimatedSection direction="left">
-              <h2 className="font-display text-2xl font-bold text-[#0F0F0F] mb-7"
-                style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                Scrivici un messaggio
-              </h2>
-              {status === 'ok' ? (
-                <div className="p-8 rounded-2xl bg-[#F5C518]/20 border border-[#F5C518] text-center">
-                  <p className="text-2xl mb-2">✅</p>
-                  <p className="font-bold text-[#0F0F0F]">Messaggio inviato!</p>
-                  <p className="text-[#6B6B6B] text-sm mt-1">Ti risponderemo il prima possibile.</p>
+              <div className="p-8 rounded-2xl bg-white border border-[#E8E8E4] h-full">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-4 bg-[#C8A84E] text-[#0F0F0F]">Premium</span>
+                <h2 className="font-display text-2xl font-black text-[#0F0F0F] mb-5"
+                  style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+                  WASH HUB Lungomare
+                </h2>
+                <div className="space-y-3 text-sm text-[#6B6B6B]">
+                  <p className="flex gap-3"><span>📍</span><span>Via Anfuso 35, Catania</span></p>
+                  <p className="flex gap-3"><span>🕗</span><span>Lun–Sab 8:00–20:00</span></p>
+                  <p className="flex gap-3"><span>📞</span>
+                    <a href="tel:+390954695153" className="text-[#0F0F0F] font-medium hover:text-[#C8A84E] transition-colors">
+                      095 469 5153
+                    </a>
+                  </p>
+                  <p className="flex gap-3"><span>✉️</span>
+                    <a href="mailto:info@parkinglungomare.it" className="text-[#0F0F0F] font-medium hover:text-[#C8A84E] transition-colors">
+                      info@parkinglungomare.it
+                    </a>
+                  </p>
                 </div>
-              ) : (
-                <form onSubmit={send} className="space-y-4">
-                  {[
-                    { field: 'nome', label: 'Nome e cognome', type: 'text', req: true },
-                    { field: 'email', label: 'Email', type: 'email', req: true },
-                    { field: 'tel', label: 'Telefono', type: 'tel', req: false },
-                  ].map(({ field, label, type, req }) => (
-                    <div key={field}>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">{label}</label>
-                      <input type={type} required={req} value={form[field as keyof typeof form]}
-                        onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
-                        className="w-full border border-[#E8E8E4] rounded-xl px-4 py-3 text-[#0F0F0F] bg-white focus:outline-none focus:border-[#F5C518] transition-colors text-sm" />
-                    </div>
-                  ))}
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Messaggio</label>
-                    <textarea required rows={5} value={form.msg}
-                      onChange={e => setForm(f => ({ ...f, msg: e.target.value }))}
-                      className="w-full border border-[#E8E8E4] rounded-xl px-4 py-3 text-[#0F0F0F] bg-white focus:outline-none focus:border-[#F5C518] transition-colors text-sm resize-none" />
-                  </div>
-                  {status === 'err' && <p className="text-[#E63946] text-sm">Errore nell&rsquo;invio. Riprova o scrivici direttamente.</p>}
-                  <button type="submit" disabled={status === 'sending'}
-                    className="w-full py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold text-sm hover:bg-[#E0B210] disabled:opacity-60 transition-colors">
-                    {status === 'sending' ? 'Invio in corso...' : 'Invia messaggio →'}
-                  </button>
-                </form>
-              )}
+                <a href="https://maps.google.com/?q=Via+Anfuso+35+Catania" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] text-sm font-semibold hover:bg-[#0F0F0F] hover:text-white transition-all">
+                  Indicazioni →
+                </a>
+              </div>
             </AnimatedSection>
 
-            {/* Info */}
-            <AnimatedSection direction="right" delay={0.1} className="space-y-8">
-              <h2 className="font-display text-2xl font-bold text-[#0F0F0F]"
-                style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                Trovaci
-              </h2>
-              <div className="space-y-6">
-                <div className="p-5 rounded-2xl bg-white border border-[#E8E8E4]">
-                  <p className="font-bold text-[#0F0F0F] mb-1">WASH HUB Lungomare</p>
-                  <p className="text-[#6B6B6B] text-sm">Via Anfuso 35, Catania</p>
-                  <p className="text-[#6B6B6B] text-sm">Lun–Sab 8:00–20:00</p>
-                  <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 mt-2 text-xs font-medium text-[#1A6B9A] hover:underline">
-                    Indicazioni →
-                  </a>
+            {/* Paesi Etnei */}
+            <AnimatedSection direction="right" delay={0.1}>
+              <div className="p-8 rounded-2xl bg-[#F5C518]/10 border border-[#F5C518]/40 h-full">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-4 bg-[#F5C518] text-[#0F0F0F]">Self 24/7</span>
+                <h2 className="font-display text-2xl font-black text-[#0F0F0F] mb-5"
+                  style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+                  WASH HUB POP<br />Paesi Etnei
+                </h2>
+                <div className="space-y-3 text-sm text-[#6B6B6B]">
+                  <p className="flex gap-3"><span>📍</span><span>Via Galileo Galilei 28 — stazione LUKoil</span></p>
+                  <p className="flex gap-3"><span>🧼</span><span>Lavaggio manuale Lun–Sab 8:00–18:30</span></p>
+                  <p className="flex gap-3"><span>⏰</span><span className="text-[#0F0F0F] font-semibold">Self service aperto 24/7</span></p>
                 </div>
-                <div className="p-5 rounded-2xl bg-[#F5C518]/10 border border-[#F5C518]/30">
-                  <p className="font-bold text-[#0F0F0F] mb-1">WASH HUB POP · Paesi Etnei</p>
-                  <p className="text-[#6B6B6B] text-sm">Via Galileo Galilei 28 — stazione LUKoil</p>
-                  <p className="text-[#6B6B6B] text-sm">Lavaggio manuale Lun–Sab 8:00–18:30</p>
-                  <p className="text-[#F5C518] font-bold text-sm">Self service 24/7</p>
-                  <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 mt-2 text-xs font-medium text-[#1A6B9A] hover:underline">
-                    Indicazioni →
-                  </a>
-                </div>
-                <div className="space-y-2">
-                  <a href="mailto:info@parkinglungomare.it" className="flex items-center gap-3 text-[#0F0F0F] hover:text-[#1A6B9A] transition-colors">
-                    <span className="text-lg">✉️</span>
-                    <span className="text-sm font-medium">info@parkinglungomare.it</span>
-                  </a>
-                  <a href="tel:+390954695153" className="flex items-center gap-3 text-[#0F0F0F] hover:text-[#1A6B9A] transition-colors">
-                    <span className="text-lg">📞</span>
-                    <span className="text-sm font-medium">095 469 5153</span>
-                  </a>
-                </div>
+                <a href="https://maps.google.com/?q=Via+Galileo+Galilei+28+Paesi+Etnei+Catania" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] text-sm font-semibold hover:bg-[#0F0F0F] hover:text-white transition-all">
+                  Indicazioni →
+                </a>
               </div>
             </AnimatedSection>
           </div>
