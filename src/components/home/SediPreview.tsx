@@ -80,7 +80,7 @@ export function SediPreview() {
               <div>
                 <p className="text-2xl font-black text-[#0F0F0F] mb-4">24 ORE · 7 GIORNI</p>
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {['Self service', 'Gettoni', 'Sempre aperto'].map(tag => (
+                  {['Self service', 'Sempre aperto'].map(tag => (
                     <span key={tag} className="px-3 py-1 rounded-full text-xs border border-[#0F0F0F]/20 text-[#0F0F0F]/60">
                       {tag}
                     </span>
