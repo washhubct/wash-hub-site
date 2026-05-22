@@ -7,14 +7,17 @@ export default function ContattiPage() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'err'>('idle')
   const [form, setForm] = useState({ nome: '', email: '', tel: '', msg: '' })
 
+  const FORMSPREE_URL = process.env.NEXT_PUBLIC_FORMSPREE_URL || ''
+
   const send = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!FORMSPREE_URL) { setStatus('err'); return }
     setStatus('sending')
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(FORMSPREE_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ name: form.nome, email: form.email, phone: form.tel, message: form.msg }),
       })
       setStatus(res.ok ? 'ok' : 'err')
     } catch {

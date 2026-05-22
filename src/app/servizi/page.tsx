@@ -16,24 +16,60 @@ const LAVAGGI = [
   { icon: '💨', name: 'Sanificazione Vapore', desc: 'Smacchiatura e igienizzazione completa', price: 'da €40', time: '~90 min' },
 ]
 
+// Inserisci qui i Payment Link di Stripe (crea su dashboard.stripe.com)
+const STRIPE_LINKS = {
+  starter: 'https://buy.stripe.com/PLACEHOLDER_STARTER',
+  pro: 'https://buy.stripe.com/PLACEHOLDER_PRO',
+  vip: 'https://buy.stripe.com/PLACEHOLDER_VIP',
+}
+
 const ABBONAMENTI = [
   {
     tier: 'Starter',
-    price: 'XXX',
-    features: ['4 lavaggi esterno/mese', 'Priorità prenotazione', 'Sconto 10% su extra'],
+    tagline: 'Il minimo garantito',
+    price: '29',
+    listino: '32',
+    saving: '3',
+    washes: 4,
+    features: [
+      '4 lavaggi esterno/mese',
+      'Prenota con priorità',
+      'Sconto 10% su servizi extra',
+    ],
     highlight: false,
+    stripeLink: STRIPE_LINKS.starter,
   },
   {
     tier: 'Pro',
-    price: 'XXX',
-    features: ['Lavaggi esterno illimitati', '2 lavaggi completi/mese', 'Sconto 20% su extra', 'Reminder automatici'],
+    tagline: 'Il più scelto',
+    price: '59',
+    listino: '72',
+    saving: '13',
+    washes: 9,
+    features: [
+      '8 lavaggi esterno/mese',
+      '1 lavaggio completo incluso',
+      'Sconto 20% su servizi extra',
+      'Reminder automatici WhatsApp',
+    ],
     highlight: true,
+    stripeLink: STRIPE_LINKS.pro,
   },
   {
     tier: 'VIP',
-    price: 'XXX',
-    features: ['Tutto illimitato', '1 tappezzeria/mese inclusa', 'Corsia preferenziale', 'Assistenza dedicata'],
+    tagline: 'Tutto senza limiti',
+    price: '99',
+    listino: '130',
+    saving: '31',
+    washes: 999,
+    features: [
+      'Lavaggi esterno illimitati',
+      '2 lavaggi completi/mese',
+      '1 tappezzeria base/mese',
+      'Corsia riservata, zero attesa',
+    ],
     highlight: false,
+    stripeLink: STRIPE_LINKS.vip,
   },
 ]
 
@@ -126,43 +162,69 @@ export default function ServiziPage() {
       </section>
 
       {/* Abbonamenti */}
-      <section className="py-20 md:py-28 bg-[#F5C518]">
+      <section className="py-20 md:py-28 bg-[#0F0F0F]">
         <div className="max-w-7xl mx-auto px-5 md:px-8">
-          <AnimatedSection className="text-center mb-14">
-            <p className="text-[#0F0F0F]/50 text-sm font-semibold uppercase tracking-[0.2em] mb-3">Risparmia ogni mese</p>
-            <h2 className="font-display text-4xl md:text-5xl font-black text-[#0F0F0F]"
+          <AnimatedSection className="text-center mb-4">
+            <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-3">Paga una volta, lavi tutto il mese</p>
+            <h2 className="font-display text-4xl md:text-5xl font-black text-white"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
               Abbonamenti mensili.
             </h2>
-            <p className="text-[#0F0F0F]/60 text-lg mt-3">Prezzi da aggiornare — contattaci per un preventivo.</p>
           </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {ABBONAMENTI.map(({ tier, price, features, highlight }, i) => (
+          <AnimatedSection className="text-center mb-14">
+            <p className="text-white/50 text-lg mt-3 max-w-xl mx-auto">
+              Attivi subito con Stripe. Risparmi fino al <span className="text-[#F5C518] font-bold">24%</span> rispetto ai lavaggi singoli — e non pensi più ai soldi ogni volta.
+            </p>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+            {ABBONAMENTI.map(({ tier, tagline, price, listino, saving, features, highlight, stripeLink }, i) => (
               <AnimatedSection key={tier} delay={i * 0.1}
-                className={`rounded-2xl p-7 ${highlight ? 'bg-[#0F0F0F] text-white scale-105 shadow-2xl' : 'bg-white text-[#0F0F0F]'}`}>
-                <h3 className="font-display text-2xl font-black mb-1"
+                className={`rounded-2xl p-7 relative ${highlight ? 'bg-white ring-2 ring-[#F5C518] shadow-[0_0_60px_rgba(245,197,24,0.25)]' : 'bg-white/5 border border-white/10'}`}>
+                {highlight && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#F5C518] text-[#0F0F0F] text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider">
+                    Il più scelto
+                  </div>
+                )}
+                <p className={`text-xs font-semibold uppercase tracking-wider mb-2 ${highlight ? 'text-[#6B6B6B]' : 'text-white/40'}`}>{tagline}</p>
+                <h3 className={`font-display text-2xl font-black mb-4 ${highlight ? 'text-[#0F0F0F]' : 'text-white'}`}
                   style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
                   {tier}
                 </h3>
-                <p className={`text-3xl font-black mb-5 ${highlight ? 'text-[#F5C518]' : 'text-[#0F0F0F]'}`}>
-                  €{price}<span className="text-base font-normal opacity-50">/mese</span>
+                <div className="mb-1">
+                  <span className={`text-4xl font-black ${highlight ? 'text-[#0F0F0F]' : 'text-white'}`}>€{price}</span>
+                  <span className={`text-sm font-normal ml-1 ${highlight ? 'text-[#6B6B6B]' : 'text-white/40'}`}>/mese</span>
+                </div>
+                <p className={`text-xs mb-5 ${highlight ? 'text-[#E63946]' : 'text-[#F5C518]/70'}`}>
+                  Invece di €{listino} — risparmi €{saving}/mese
                 </p>
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2 mb-7">
                   {features.map(f => (
-                    <li key={f} className={`text-sm flex gap-2 ${highlight ? 'text-white/70' : 'text-[#6B6B6B]'}`}>
-                      <span className="text-[#F5C518]">✓</span> {f}
+                    <li key={f} className={`text-sm flex gap-2 ${highlight ? 'text-[#6B6B6B]' : 'text-white/60'}`}>
+                      <span className="text-[#F5C518] shrink-0">✓</span> {f}
                     </li>
                   ))}
                 </ul>
-                <Link href="/contatti"
-                  className={`block text-center py-3 px-5 rounded-full font-bold text-sm transition-all ${
-                    highlight ? 'bg-[#F5C518] text-[#0F0F0F]' : 'border-2 border-[#0F0F0F] hover:bg-[#0F0F0F] hover:text-white'
+                <a href={stripeLink} target="_blank" rel="noopener noreferrer"
+                  className={`block text-center py-3.5 px-5 rounded-full font-bold text-sm transition-all ${
+                    highlight
+                      ? 'bg-[#F5C518] text-[#0F0F0F] hover:bg-[#E0B210]'
+                      : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
                   }`}>
-                  Inizia ora
-                </Link>
+                  Attiva ora →
+                </a>
+                <p className={`text-center text-xs mt-3 ${highlight ? 'text-[#6B6B6B]' : 'text-white/30'}`}>
+                  Pagamento sicuro · Disdici quando vuoi
+                </p>
               </AnimatedSection>
             ))}
           </div>
+          <AnimatedSection className="mt-12 text-center">
+            <p className="text-white/30 text-sm">
+              Non sai quale scegliere?{' '}
+              <Link href="/contatti" className="text-[#F5C518] hover:underline">Scrivici</Link>
+              {' '}— ti aiutiamo in 2 minuti.
+            </p>
+          </AnimatedSection>
         </div>
       </section>
     </div>
