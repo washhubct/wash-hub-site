@@ -35,12 +35,11 @@ export function Header() {
         {/* Logo */}
         <Link href="/" aria-label="WASH HUB — Home" className="flex items-center">
           <Image
-            src="/wash-hub-site/brand/logo.png"
+            src="/wash-hub-site/brand/logo-transparent.png"
             alt="WASH HUB"
-            width={80}
-            height={80}
-            className="h-12 md:h-14 w-auto"
-            style={{ mixBlendMode: 'screen' }}
+            width={120}
+            height={120}
+            className="h-12 md:h-14 w-auto drop-shadow-sm"
             priority
           />
         </Link>
