@@ -20,6 +20,8 @@ const IconTikTok = () => (
   </svg>
 )
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
+
 export function Footer() {
   return (
     <footer className="bg-[#0F0F0F] text-white/70">
@@ -27,9 +29,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="font-display text-2xl font-black text-white mb-3">
-              WASH<span className="text-[#F5C518]">HUB</span>
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB Autolavaggi"
+              className="h-20 w-auto mb-3" />
             <p className="text-sm leading-relaxed">
               Artigiani del lavaggio auto a Catania dal 2022. Due sedi, una sola ossessione: la perfezione.
             </p>

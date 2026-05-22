@@ -32,7 +32,7 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
           <Link href="/" aria-label="WASH HUB" className="pointer-events-auto">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${BASE}/brand/logo-transparent.png`} alt="WASH HUB"
+            <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB"
               className="h-14 md:h-16 w-auto drop-shadow-lg" />
           </Link>
           <Link href="/prenota"
@@ -65,7 +65,7 @@ export function Header() {
               {/* Logo mini */}
               <Link href="/" aria-label="WASH HUB" className="mr-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`${BASE}/brand/logo-transparent.png`} alt="WASH HUB"
+                <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB"
                   className="h-7 w-auto" />
               </Link>
 
