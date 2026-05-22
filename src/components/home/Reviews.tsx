@@ -2,45 +2,20 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import reviewsData from '@/data/reviews.json'
 
-const REVIEWS = [
-  {
-    name: 'Marco T.',
-    date: 'aprile 2025',
-    rating: 5,
-    text: 'Finalmente un autolavaggio serio a Catania. Auto impeccabile, staff professionale e veloce. Il Performance Intenso vale ogni euro.',
-  },
-  {
-    name: 'Alessia R.',
-    date: 'marzo 2025',
-    rating: 5,
-    text: 'La tappezzeria era piena di macchie ostinate, sembrava impossibile. L\'hanno restituita come nuova. Servizio top, consiglio a tutti.',
-  },
-  {
-    name: 'Salvatore L.',
-    date: 'febbraio 2025',
-    rating: 5,
-    text: 'Ho prenotato online in 2 minuti, arrivato e in mezzora la mia Audi A6 sembrava uscita dal concessionario. Tornerò sicuramente.',
-  },
-  {
-    name: 'Valentina C.',
-    date: 'gennaio 2025',
-    rating: 5,
-    text: 'Ho portato la moto — gentilissimi, molto attenti. Si capisce subito che ci tengono davvero alla qualità del lavoro.',
-  },
-  {
-    name: 'Francesca P.',
-    date: 'dicembre 2024',
-    rating: 5,
-    text: 'Il self service ai Paesi Etnei è sempre pulito e funzionante. Averlo 24/7 è una comodità enorme. Bravi!',
-  },
-  {
-    name: 'Giuseppe M.',
-    date: 'novembre 2024',
-    rating: 5,
-    text: 'Staff cordiale e competente. Hanno trattato la mia macchina con una cura che non avevo mai visto in altri autolavaggi.',
-  },
+const FALLBACK_REVIEWS = [
+  { name: 'Marco T.', rating: 5, text: 'Finalmente un autolavaggio serio a Catania. Auto impeccabile, staff professionale e veloce. Il Performance Intenso vale ogni euro.', date: 'un mese fa', avatar: '' },
+  { name: 'Alessia R.', rating: 5, text: 'La tappezzeria era piena di macchie ostinate. L\'hanno restituita come nuova. Servizio top, consiglio a tutti.', date: '2 mesi fa', avatar: '' },
+  { name: 'Salvatore L.', rating: 5, text: 'Ho prenotato online in 2 minuti, arrivato e in mezzora la mia Audi A6 sembrava uscita dal concessionario. Tornerò sicuramente.', date: '2 mesi fa', avatar: '' },
+  { name: 'Valentina C.', rating: 5, text: 'Ho portato la moto — gentilissimi, molto attenti. Si capisce subito che ci tengono davvero alla qualità del lavoro.', date: '3 mesi fa', avatar: '' },
+  { name: 'Francesca P.', rating: 5, text: 'Il self service ai Paesi Etnei è sempre pulito e funzionante. Averlo 24/7 è una comodità enorme. Bravi!', date: '4 mesi fa', avatar: '' },
+  { name: 'Giuseppe M.', rating: 5, text: 'Staff cordiale e competente. Hanno trattato la mia macchina con una cura che non avevo mai visto in altri autolavaggi.', date: '4 mesi fa', avatar: '' },
 ]
+
+const reviews = reviewsData.reviews.length > 0 ? reviewsData.reviews : FALLBACK_REVIEWS
+const rating = reviewsData.rating || 4.9
+const totalRatings = reviewsData.totalRatings
 
 const Stars = ({ n }: { n: number }) => (
   <div className="flex gap-0.5">
@@ -57,7 +32,6 @@ export function Reviews() {
   return (
     <section ref={ref} className="bg-[#0F0F0F] py-20 md:py-28 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -72,40 +46,47 @@ export function Reviews() {
             </h2>
           </div>
           <div className="flex items-center gap-3 md:pb-2">
-            <span className="text-5xl font-black text-[#F5C518]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>4.9</span>
+            <span className="text-5xl font-black text-[#F5C518]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+              {rating.toFixed(1)}
+            </span>
             <div>
               <Stars n={5} />
-              <p className="text-white/40 text-xs mt-1">su Google Maps</p>
+              <p className="text-white/40 text-xs mt-1">
+                {totalRatings > 0 ? `${totalRatings} recensioni su Google` : 'su Google Maps'}
+              </p>
             </div>
           </div>
         </motion.div>
 
-        {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {REVIEWS.map(({ name, date, rating, text }, i) => (
+          {reviews.slice(0, 6).map((r, i) => (
             <motion.div
-              key={name}
+              key={i}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ type: 'spring', damping: 20, delay: i * 0.08 }}
               className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
             >
-              <Stars n={rating} />
-              <p className="text-white/80 text-sm leading-relaxed mt-4 mb-5">&ldquo;{text}&rdquo;</p>
+              <Stars n={r.rating} />
+              <p className="text-white/80 text-sm leading-relaxed mt-4 mb-5">&ldquo;{r.text}&rdquo;</p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#F5C518]/20 flex items-center justify-center text-[#F5C518] text-xs font-bold">
-                    {name[0]}
-                  </div>
-                  <span className="text-white text-sm font-semibold">{name}</span>
+                  {r.avatar ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={r.avatar} alt={r.name} className="w-8 h-8 rounded-full object-cover" />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-[#F5C518]/20 flex items-center justify-center text-[#F5C518] text-xs font-bold">
+                      {r.name[0]}
+                    </div>
+                  )}
+                  <span className="text-white text-sm font-semibold">{r.name}</span>
                 </div>
-                <span className="text-white/30 text-xs">{date}</span>
+                <span className="text-white/30 text-xs">{r.date}</span>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* CTA Google */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
@@ -113,7 +94,7 @@ export function Reviews() {
           className="text-center mt-10"
         >
           <a
-            href="https://g.page/r/wash-hub-catania/review"
+            href="https://search.google.com/local/reviews?placeid=ChIJ..."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-white/70 transition-colors"
