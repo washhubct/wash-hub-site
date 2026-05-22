@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Bricolage_Grotesque, Instrument_Serif, Inter } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import './globals.css'
 
 const bricolage = Bricolage_Grotesque({
@@ -50,10 +51,10 @@ const jsonLd = {
       name: 'WASH HUB Lungomare',
       description: 'Autolavaggio premium con operatori a Catania Lungomare',
       url: 'https://wash-hub.it/sedi/lungomare',
-      telephone: '+39-000-0000000',
+      telephone: '+39-095-469-5153',
       email: 'info@parkinglungomare.it',
-      address: { '@type': 'PostalAddress', streetAddress: 'Via del Lungomare', addressLocality: 'Catania', addressRegion: 'CT', postalCode: '95100', addressCountry: 'IT' },
-      openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '08:00', closes: '20:00' }],
+      address: { '@type': 'PostalAddress', streetAddress: 'Via Anfuso 35', addressLocality: 'Catania', addressRegion: 'CT', postalCode: '95126', addressCountry: 'IT' },
+      openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '08:00', closes: '18:30' }],
       priceRange: '€€',
       image: 'https://wash-hub.it/og-default.jpg',
     },
@@ -63,7 +64,7 @@ const jsonLd = {
       name: 'WASH HUB POP Paesi Etnei',
       description: 'Autolavaggio self service 24/7 ai Paesi Etnei, Catania',
       url: 'https://wash-hub.it/sedi/paesi-etnei',
-      address: { '@type': 'PostalAddress', addressLocality: 'Paesi Etnei', addressRegion: 'CT', addressCountry: 'IT' },
+      address: { '@type': 'PostalAddress', streetAddress: 'Via Galileo Galilei 28', addressLocality: 'San Gregorio di Catania', addressRegion: 'CT', postalCode: '95027', addressCountry: 'IT' },
       openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '00:00', closes: '23:59' }],
       priceRange: '€',
     },
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   )

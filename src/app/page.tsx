@@ -1,6 +1,7 @@
 import { Hero } from '@/components/home/Hero'
 import { SocialProof } from '@/components/home/SocialProof'
 import { Differentiators } from '@/components/home/Differentiators'
+import { Reviews } from '@/components/home/Reviews'
 import { SediPreview } from '@/components/home/SediPreview'
 import { HomeCTA } from '@/components/home/HomeCTA'
 import type { Metadata } from 'next'
@@ -16,6 +17,7 @@ export default function HomePage() {
       <Hero />
       <SocialProof />
       <Differentiators />
+      <Reviews />
       <SediPreview />
       <HomeCTA />
     </>
