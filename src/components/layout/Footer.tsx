@@ -70,7 +70,7 @@ export function Footer() {
               </div>
               <div>
                 <p className="text-[#F5C518] font-medium">WASH HUB POP · Paesi Etnei</p>
-                <p>Via Galileo Galilei 28 (LUKoil)</p>
+                <p>Via Galileo Galilei 28, San Gregorio di Catania</p>
                 <p>Manuale Lun–Sab 8:00–18:30</p>
                 <p className="text-[#F5C518]">Self service 24/7</p>
               </div>

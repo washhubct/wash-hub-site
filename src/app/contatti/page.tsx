@@ -54,7 +54,7 @@ export default function ContattiPage() {
                   WASH HUB POP<br />Paesi Etnei
                 </h2>
                 <div className="space-y-3 text-sm text-[#6B6B6B]">
-                  <p className="flex gap-3"><span>📍</span><span>Via Galileo Galilei 28 — stazione LUKoil</span></p>
+                  <p className="flex gap-3"><span>📍</span><span>Via Galileo Galilei 28, San Gregorio di Catania — stazione LUKoil</span></p>
                   <p className="flex gap-3"><span>🧼</span><span>Lavaggio manuale Lun–Sab 8:00–18:30</span></p>
                   <p className="flex gap-3"><span>⏰</span><span className="text-[#0F0F0F] font-semibold">Self service aperto 24/7</span></p>
                 </div>

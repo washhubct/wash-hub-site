@@ -54,7 +54,7 @@ export default function PaesiEtneiPage() {
               </p>
               <div className="space-y-4 mb-8">
                 {[
-                  ['📍 Indirizzo', 'Via Galileo Galilei 28, Paesi Etnei (CT)\npresso stazione LUKoil'],
+                  ['📍 Indirizzo', 'Via Galileo Galilei 28, San Gregorio di Catania\npresso stazione LUKoil'],
                   ['🧼 Servizio manuale', 'Lun–Sab 8:00–18:30'],
                   ['⏰ Self service', 'Aperto 24/7 — auto, interni, camion'],
                   ['🪙 Pagamento', 'Monete · Carta · Contactless'],
@@ -65,7 +65,7 @@ export default function PaesiEtneiPage() {
                   </div>
                 ))}
               </div>
-              <a href="https://maps.google.com/?q=Via+Galileo+Galilei+28+Paesi+Etnei+Catania" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.google.com/maps/search/?api=1&query=Via+Galileo+Galilei+28+San+Gregorio+di+Catania" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] font-semibold text-sm hover:bg-[#0F0F0F] hover:text-white transition-all">
                 Come arrivare →
               </a>
@@ -137,7 +137,7 @@ export default function PaesiEtneiPage() {
             Sempre aperto per te.
           </h2>
           <p className="text-[#0F0F0F]/60 text-lg mb-8">Passa quando vuoi, nessuna prenotazione necessaria.</p>
-          <a href="https://maps.google.com/?q=Via+Galileo+Galilei+28+Paesi+Etnei+Catania" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.google.com/maps/search/?api=1&query=Via+Galileo+Galilei+28+San+Gregorio+di+Catania" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#0F0F0F] text-white font-bold text-base hover:bg-[#1a1a1a] transition-all hover:scale-105">
             Indicazioni stradali →
           </a>
