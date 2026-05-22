@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Logo } from '@/components/ui/Logo'
 
 const NAV = [
   { label: 'Servizi', href: '/servizi' },
@@ -27,12 +27,22 @@ export function Header() {
   return (
     <header className={cn(
       'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-      scrolled ? 'bg-[#0F0F0F]/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      scrolled
+        ? 'bg-[#0F0F0F]/95 backdrop-blur-md shadow-lg'
+        : 'bg-[#0F0F0F]/60 backdrop-blur-sm'
     )}>
       <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center" aria-label="WASH HUB — Home">
-          <Logo white className="h-7 md:h-8 w-auto" />
+        <Link href="/" aria-label="WASH HUB — Home" className="flex items-center">
+          <Image
+            src="/wash-hub-site/brand/logo.png"
+            alt="WASH HUB"
+            width={80}
+            height={80}
+            className="h-12 md:h-14 w-auto"
+            style={{ mixBlendMode: 'screen' }}
+            priority
+          />
         </Link>
 
         {/* Desktop Nav */}
