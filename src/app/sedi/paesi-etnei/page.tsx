@@ -55,9 +55,9 @@ export default function PaesiEtneiPage() {
               <div className="space-y-4 mb-8">
                 {[
                   ['📍 Indirizzo', 'Via Galileo Galilei 28, Paesi Etnei (CT)\npresso stazione LUKoil'],
-                  ['⏰ Self service', 'Aperto 24 ore · 7 giorni su 7'],
-                  ['🧼 Lavaggio manuale', 'Lun–Sab 8:00–18:30'],
-                  ['🪙 Pagamento', 'Gettoni · Carta · Contactless'],
+                  ['🧼 Servizio manuale', 'Lun–Sab 8:00–18:30'],
+                  ['⏰ Self service', 'Aperto 24/7 — auto, interni, camion'],
+                  ['🪙 Pagamento', 'Monete · Carta · Contactless'],
                 ].map(([label, val]) => (
                   <div key={label} className="flex gap-3 items-baseline">
                     <span className="text-[#6B6B6B] text-sm w-36 shrink-0">{label}</span>
@@ -80,7 +80,7 @@ export default function PaesiEtneiPage() {
                 {[
                   { step: '01', title: 'Arrivi quando vuoi', desc: 'La stazione è sempre aperta e sempre disponibile, giorno e notte.' },
                   { step: '02', title: 'Scegli il programma', desc: 'Dal lavaggio base all\'intensivo con cera. Prezzi chiari sul display.' },
-                  { step: '03', title: 'Inserisci i gettoni', desc: 'Accettiamo monete, banconote e pagamenti contactless.' },
+                  { step: '03', title: 'Inserisci le monete', desc: 'Accettiamo monete e pagamenti contactless.' },
                   { step: '04', title: 'Via in pochi minuti', desc: 'Programma rapido, alta pressione, risultato professionale.' },
                 ].map(({ step, title, desc }) => (
                   <div key={step} className="flex gap-4 p-5 rounded-2xl bg-white border border-[#E8E8E4]">
