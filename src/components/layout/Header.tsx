@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -12,6 +11,9 @@ const NAV = [
   { label: 'Chi siamo', href: '/chi-siamo' },
   { label: 'Contatti', href: '/contatti' },
 ]
+
+// basePath iniettato a build-time dall'env (GitHub Actions lo setta su /wash-hub-site)
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -28,19 +30,17 @@ export function Header() {
     <header className={cn(
       'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
       scrolled
-        ? 'bg-[#0F0F0F]/95 backdrop-blur-md shadow-lg'
-        : 'bg-[#0F0F0F]/60 backdrop-blur-sm'
+        ? 'bg-[#0F0F0F] shadow-[0_1px_0_rgba(255,255,255,0.06)]'
+        : 'bg-[#0F0F0F]'
     )}>
       <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" aria-label="WASH HUB — Home" className="flex items-center">
-          <Image
-            src="/brand/logo-transparent.png"
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`${BASE}/brand/logo-transparent.png`}
             alt="WASH HUB"
-            width={120}
-            height={120}
-            className="h-12 md:h-14 w-auto drop-shadow-sm"
-            priority
+            className="h-10 md:h-12 w-auto"
           />
         </Link>
 
