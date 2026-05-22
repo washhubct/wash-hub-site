@@ -33,7 +33,7 @@ export function Header() {
           <Link href="/" aria-label="WASH HUB" className="pointer-events-auto">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB"
-              className="h-14 md:h-16 w-auto drop-shadow-lg" />
+              className="h-20 md:h-24 w-auto drop-shadow-lg" />
           </Link>
           <Link href="/prenota"
             className="pointer-events-auto hidden md:flex items-center px-5 py-2.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-bold hover:bg-[#E0B210] transition-colors shadow-lg">
