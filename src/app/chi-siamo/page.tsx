@@ -11,12 +11,7 @@ export default function ChiSiamoPage() {
     <div className="pt-20">
       {/* Hero */}
       <section className="relative py-28 md:py-36 overflow-hidden bg-[#0F0F0F]">
-        <HiggsfieldImage
-          prompt="professional car wash team portrait smiling, Italian setting, Catania Sicily, warm afternoon light, authentic editorial photography"
-          className="absolute inset-0 w-full h-full opacity-30"
-          aspectRatio="auto"
-        />
-        <div className="relative z-10 max-w-4xl mx-auto px-5 md:px-8 text-center text-white">
+        <div className="max-w-4xl mx-auto px-5 md:px-8 text-center text-white">
           <AnimatedSection>
             <h1 className="font-display text-5xl md:text-7xl font-black leading-tight"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
