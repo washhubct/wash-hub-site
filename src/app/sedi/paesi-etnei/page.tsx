@@ -61,8 +61,9 @@ export default function PaesiEtneiPage() {
               </p>
               <div className="space-y-4 mb-8">
                 {[
-                  ['📍 Indirizzo', 'Paesi Etnei, Catania'],
-                  ['⏰ Orari', 'Aperto 24 ore · 7 giorni su 7'],
+                  ['📍 Indirizzo', 'Via Galileo Galilei 28, Paesi Etnei (CT)\npresso stazione LUKoil'],
+                  ['⏰ Self service', 'Aperto 24 ore · 7 giorni su 7'],
+                  ['🧼 Lavaggio manuale', 'Lun–Sab 8:00–18:30'],
                   ['🪙 Pagamento', 'Gettoni · Carta · Contactless'],
                 ].map(([label, val]) => (
                   <div key={label} className="flex gap-3 items-baseline">

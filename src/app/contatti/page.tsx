@@ -91,7 +91,7 @@ export default function ContattiPage() {
               <div className="space-y-6">
                 <div className="p-5 rounded-2xl bg-white border border-[#E8E8E4]">
                   <p className="font-bold text-[#0F0F0F] mb-1">WASH HUB Lungomare</p>
-                  <p className="text-[#6B6B6B] text-sm">Via del Lungomare, Catania</p>
+                  <p className="text-[#6B6B6B] text-sm">Via Anfuso 35, Catania</p>
                   <p className="text-[#6B6B6B] text-sm">Lun–Sab 8:00–20:00</p>
                   <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 mt-2 text-xs font-medium text-[#1A6B9A] hover:underline">
@@ -100,8 +100,9 @@ export default function ContattiPage() {
                 </div>
                 <div className="p-5 rounded-2xl bg-[#F5C518]/10 border border-[#F5C518]/30">
                   <p className="font-bold text-[#0F0F0F] mb-1">WASH HUB POP · Paesi Etnei</p>
-                  <p className="text-[#6B6B6B] text-sm">Paesi Etnei, Catania</p>
-                  <p className="text-[#F5C518] font-bold text-sm">Aperto 24/7</p>
+                  <p className="text-[#6B6B6B] text-sm">Via Galileo Galilei 28 — stazione LUKoil</p>
+                  <p className="text-[#6B6B6B] text-sm">Lavaggio manuale Lun–Sab 8:00–18:30</p>
+                  <p className="text-[#F5C518] font-bold text-sm">Self service 24/7</p>
                   <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 mt-2 text-xs font-medium text-[#1A6B9A] hover:underline">
                     Indicazioni →
@@ -112,9 +113,9 @@ export default function ContattiPage() {
                     <span className="text-lg">✉️</span>
                     <span className="text-sm font-medium">info@parkinglungomare.it</span>
                   </a>
-                  <a href="tel:+39000000000" className="flex items-center gap-3 text-[#0F0F0F] hover:text-[#1A6B9A] transition-colors">
+                  <a href="tel:+390954695153" className="flex items-center gap-3 text-[#0F0F0F] hover:text-[#1A6B9A] transition-colors">
                     <span className="text-lg">📞</span>
-                    <span className="text-sm font-medium">+39 000 000 0000</span>
+                    <span className="text-sm font-medium">095 469 5153</span>
                   </a>
                 </div>
               </div>

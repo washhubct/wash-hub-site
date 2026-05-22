@@ -50,9 +50,9 @@ export default function LungomareePage() {
               </p>
               <div className="space-y-4">
                 {[
-                  ['📍 Indirizzo', 'Via del Lungomare, Catania'],
+                  ['📍 Indirizzo', 'Via Anfuso 35, Catania'],
                   ['🕗 Orari', 'Lunedì–Sabato 8:00–20:00'],
-                  ['📞 Telefono', '+39 000 000 0000'],
+                  ['📞 Telefono', '095 469 5153'],
                   ['✉️ Email', 'info@parkinglungomare.it'],
                 ].map(([label, val]) => (
                   <div key={label} className="flex gap-3 items-baseline">
