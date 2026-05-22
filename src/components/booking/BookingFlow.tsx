@@ -201,7 +201,7 @@ export function BookingFlow() {
                 Siamo un po' fissati con la qualità — lo sappiamo — ma le moto calde e l'acqua fredda non vanno proprio d'accordo.
               </p>
               <p className="text-[#0F0F0F] font-semibold mb-8">
-                Assicurati che il motore sia freddo prima di venire da noi. 🙏
+                Ricordati di farla raffreddare prima di venire da noi. ❄️
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button onClick={() => goTo('data')}
