@@ -5,11 +5,10 @@ import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking } from '@/lib/firebase-booking'
 
 const SERVICES = [
-  { id: 'Esterno Base', icon: '🚿', name: 'Esterno Base', price: 'da €8', time: '~15 min' },
-  { id: 'Interno + Esterno', icon: '🧼', name: 'Interno + Esterno', price: 'da €14', time: '~30 min' },
+  { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min' },
+  { id: 'Lavaggio Tradizionale', icon: '🧼', name: 'Lavaggio Tradizionale', price: 'da €18', time: '~30 min' },
   { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: '€29', time: '~60 min' },
   { id: 'Moto / Scooter', icon: '🏍️', name: 'Moto / Scooter', price: '€12', time: '~20 min' },
-  { id: 'Sanificazione Vapore', icon: '💨', name: 'Sanificazione Vapore', price: 'da €40', time: '~90 min' },
   { id: 'Tappezzeria', icon: '🪡', name: 'Tappezzeria', price: 'Su preventivo', time: 'Varia' },
 ]
 

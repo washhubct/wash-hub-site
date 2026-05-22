@@ -5,15 +5,15 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Servizi — Lavaggi, Tappezzeria, Abbonamenti',
-  description: 'Listino completo: lavaggio esterno, interno+esterno, Performance Intenso, moto, tappezzeria, sanificazione vapore. Abbonamenti mensili disponibili.',
+  description: 'Listino completo: lavaggio esterno, tradizionale, Performance Intenso, moto, tappezzeria. Abbonamenti mensili disponibili.',
 }
 
 const LAVAGGI = [
-  { icon: '🚿', name: 'Esterno Base', desc: 'Carrozzeria, vetri, cerchi, passaruota', price: 'da €8', time: '~15 min' },
-  { icon: '🧼', name: 'Interno + Esterno', desc: 'Completo con aspirazione abitacolo', price: 'da €14', time: '~30 min' },
+  { icon: '🚿', name: 'Esterno', desc: 'Carrozzeria, vetri, cerchi, passaruota', price: 'da €14', time: '~15 min' },
+  { icon: '🧼', name: 'Lavaggio Tradizionale', desc: 'Completo con aspirazione e cura abitacolo', price: 'da €18', time: '~30 min' },
   { icon: '⭐', name: 'Performance Intenso', desc: 'Trattamento profondo, cera, finiture premium', price: '€29', time: '~60 min' },
   { icon: '🏍️', name: 'Moto / Scooter', desc: 'Lavaggio completo con delicatezza', price: '€12', time: '~20 min' },
-  { icon: '💨', name: 'Sanificazione Vapore', desc: 'Smacchiatura e igienizzazione completa', price: 'da €40', time: '~90 min' },
+  { icon: '🪡', name: 'Tappezzeria', desc: 'Interni, sedili, door panel — su prenotazione', price: 'Su preventivo', time: 'Varia' },
 ]
 
 // Inserisci qui i Payment Link di Stripe (crea su dashboard.stripe.com)
