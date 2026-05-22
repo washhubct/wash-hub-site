@@ -45,7 +45,7 @@ const slide: Variants = {
   exit: (dir: number) => ({ x: dir > 0 ? -60 : 60, opacity: 0, transition: { duration: 0.15 } }),
 }
 
-type Step = 'servizio' | 'data' | 'orario' | 'dati' | 'done'
+type Step = 'servizio' | 'moto-avviso' | 'data' | 'orario' | 'dati' | 'done'
 const STEP_ORDER: Step[] = ['servizio', 'data', 'orario', 'dati']
 
 export function BookingFlow() {
@@ -66,10 +66,20 @@ export function BookingFlow() {
   const dates = getDates()
 
   const goTo = (s: Step) => {
-    const curr = STEP_ORDER.indexOf(step)
-    const next = STEP_ORDER.indexOf(s)
+    const curr = STEP_ORDER.indexOf(step as Step)
+    const next = STEP_ORDER.indexOf(s as Step)
     setDir(next > curr ? 1 : -1)
     setStep(s)
+  }
+
+  const selectServizio = (id: string) => {
+    setServizio(id)
+    if (id === 'Moto / Scooter') {
+      setDir(1)
+      setStep('moto-avviso')
+    } else {
+      goTo('data')
+    }
   }
 
   useEffect(() => {
@@ -164,7 +174,7 @@ export function BookingFlow() {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {SERVICES.map(s => (
-                  <button key={s.id} onClick={() => { setServizio(s.id); goTo('data') }}
+                  <button key={s.id} onClick={() => selectServizio(s.id)}
                     className="flex items-center gap-4 p-4 rounded-2xl border-2 text-left transition-all hover:border-[#F5C518] hover:shadow-md active:scale-[0.98] border-[#E8E8E4] bg-white">
                     <span className="text-3xl">{s.icon}</span>
                     <div className="flex-1">
@@ -174,6 +184,34 @@ export function BookingFlow() {
                     <p className="font-black text-[#F5C518] text-sm">{s.price}</p>
                   </button>
                 ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP MOTO — Avviso raffreddamento */}
+          {step === 'moto-avviso' && (
+            <motion.div key="moto-avviso" custom={dir} variants={slide} initial="initial" animate="animate" exit="exit"
+              className="text-center py-6">
+              <div className="text-6xl mb-5">🏍️</div>
+              <h2 className="font-display text-2xl font-black text-[#0F0F0F] mb-3"
+                style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+                Un attimo solo!
+              </h2>
+              <p className="text-[#6B6B6B] text-lg leading-relaxed max-w-sm mx-auto mb-2">
+                Siamo un po' fissati con la qualità — lo sappiamo — ma le moto calde e l'acqua fredda non vanno proprio d'accordo.
+              </p>
+              <p className="text-[#0F0F0F] font-semibold mb-8">
+                Assicurati che il motore sia freddo prima di venire da noi. 🙏
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button onClick={() => goTo('data')}
+                  className="px-8 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold hover:bg-[#E0B210] transition-all">
+                  Sì, sarà fredda — prenoto!
+                </button>
+                <button onClick={() => { setServizio(''); goTo('servizio') }}
+                  className="px-8 py-4 rounded-full border-2 border-[#E8E8E4] text-[#6B6B6B] font-medium hover:border-[#0F0F0F] hover:text-[#0F0F0F] transition-all">
+                  Torno più tardi
+                </button>
               </div>
             </motion.div>
           )}
