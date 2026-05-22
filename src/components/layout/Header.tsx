@@ -35,7 +35,7 @@ export function Header() {
         {/* Logo */}
         <Link href="/" aria-label="WASH HUB — Home" className="flex items-center">
           <Image
-            src="/wash-hub-site/brand/logo-transparent.png"
+            src="/brand/logo-transparent.png"
             alt="WASH HUB"
             width={120}
             height={120}
