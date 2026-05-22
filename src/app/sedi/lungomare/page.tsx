@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { HiggsfieldImage } from '@/components/ui/HiggsfieldImage'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -13,11 +12,6 @@ export default function LungomareePage() {
     <div className="pt-20">
       {/* Hero */}
       <section className="relative min-h-[70vh] flex items-end overflow-hidden bg-[#0F0F0F]">
-        <HiggsfieldImage
-          prompt="luxury premium car wash station at golden hour, Catania seafront, professional operators washing luxury cars, warm cinematic light, editorial photography"
-          className="absolute inset-0 w-full h-full opacity-50"
-          aspectRatio="auto"
-        />
         <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pb-16 md:pb-24 w-full">
           <AnimatedSection>
             <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-4 bg-[#C8A84E] text-[#0F0F0F]">
@@ -51,7 +45,7 @@ export default function LungomareePage() {
               <div className="space-y-4">
                 {[
                   ['📍 Indirizzo', 'Via Anfuso 35, Catania'],
-                  ['🕗 Orari', 'Lunedì–Sabato 8:00–20:00'],
+                  ['🕗 Orari', 'Lunedì–Sabato 8:00–18:30'],
                   ['📞 Telefono', '095 469 5153'],
                   ['✉️ Email', 'info@parkinglungomare.it'],
                 ].map(([label, val]) => (
@@ -62,9 +56,9 @@ export default function LungomareePage() {
                 ))}
               </div>
               <Link href="/prenota"
-                className="inline-flex items-center mt-8 px-8 py-4 rounded-full font-bold text-sm hover:gap-3 transition-all"
+                className="inline-flex items-center mt-8 px-8 py-4 rounded-full font-bold text-sm transition-all hover:opacity-90"
                 style={{ background: '#C8A84E', color: '#0F0F0F' }}>
-                Prenota al Lungomare →
+                Prenota online →
               </Link>
             </AnimatedSection>
 
@@ -85,24 +79,6 @@ export default function LungomareePage() {
               ))}
             </AnimatedSection>
           </div>
-        </div>
-      </section>
-
-      {/* Gallery placeholder */}
-      <section className="py-16 bg-[#F0F0EC]">
-        <div className="max-w-7xl mx-auto px-5 md:px-8">
-          <AnimatedSection className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              'professional car washing a black luxury SUV, water droplets, cinematic close-up',
-              'detail of car wash brush on car surface, soap foam, dramatic light',
-              'interior car detailing, leather seats cleaned, professional tools, luxury',
-              'car wash exterior building at sunset, Catania, premium brand identity',
-              'wheel cleaning with professional equipment, water splash, close-up',
-              'smiling professional car wash operator, Catania Italy, premium service',
-            ].map((prompt, i) => (
-              <HiggsfieldImage key={i} prompt={prompt} className="rounded-xl w-full" aspectRatio="4/3" />
-            ))}
-          </AnimatedSection>
         </div>
       </section>
     </div>

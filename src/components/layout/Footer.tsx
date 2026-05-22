@@ -66,7 +66,7 @@ export function Footer() {
               <div>
                 <p className="text-white font-medium">WASH HUB Lungomare</p>
                 <p>Via Anfuso 35, Catania</p>
-                <p>Lun–Sab 8:00–20:00</p>
+                <p>Lun–Sab 8:00–18:30</p>
               </div>
               <div>
                 <p className="text-[#F5C518] font-medium">WASH HUB POP · Paesi Etnei</p>

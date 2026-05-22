@@ -1,6 +1,4 @@
-import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { HiggsfieldImage } from '@/components/ui/HiggsfieldImage'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -13,11 +11,6 @@ export default function PaesiEtneiPage() {
     <div className="pt-20">
       {/* Hero giallo */}
       <section className="relative min-h-[70vh] flex items-end overflow-hidden bg-[#F5C518]">
-        <HiggsfieldImage
-          prompt="modern self-service car wash station at night, neon lights illuminating the structure, futuristic industrial design, Paesi Etnei Catania, energetic atmosphere, wide angle"
-          className="absolute inset-0 w-full h-full opacity-25"
-          aspectRatio="auto"
-        />
         <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pb-16 md:pb-24 w-full">
           <AnimatedSection>
             <span className="inline-block px-4 py-2 rounded-full text-sm font-black uppercase tracking-wider mb-4 bg-[#E63946] text-white">
@@ -35,7 +28,7 @@ export default function PaesiEtneiPage() {
         </div>
       </section>
 
-      {/* Il messaggio 24/7 in grande */}
+      {/* 24/7 */}
       <section className="bg-[#0F0F0F] py-16 md:py-20 text-center">
         <AnimatedSection>
           <p className="font-display text-6xl md:text-9xl font-black text-[#F5C518] leading-none"
@@ -67,12 +60,12 @@ export default function PaesiEtneiPage() {
                   ['🪙 Pagamento', 'Gettoni · Carta · Contactless'],
                 ].map(([label, val]) => (
                   <div key={label} className="flex gap-3 items-baseline">
-                    <span className="text-[#6B6B6B] text-sm w-32 shrink-0">{label}</span>
+                    <span className="text-[#6B6B6B] text-sm w-36 shrink-0">{label}</span>
                     <span className="font-medium text-[#0F0F0F]">{val}</span>
                   </div>
                 ))}
               </div>
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://maps.google.com/?q=Via+Galileo+Galilei+28+Paesi+Etnei+Catania" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] font-semibold text-sm hover:bg-[#0F0F0F] hover:text-white transition-all">
                 Come arrivare →
               </a>
@@ -107,7 +100,7 @@ export default function PaesiEtneiPage() {
         </div>
       </section>
 
-      {/* CTA giallo */}
+      {/* CTA */}
       <section className="bg-[#F5C518] py-20 text-center">
         <AnimatedSection>
           <h2 className="font-display text-4xl md:text-5xl font-black text-[#0F0F0F] mb-4"
@@ -115,7 +108,7 @@ export default function PaesiEtneiPage() {
             Sempre aperto per te.
           </h2>
           <p className="text-[#0F0F0F]/60 text-lg mb-8">Passa quando vuoi, nessuna prenotazione necessaria.</p>
-          <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer"
+          <a href="https://maps.google.com/?q=Via+Galileo+Galilei+28+Paesi+Etnei+Catania" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#0F0F0F] text-white font-bold text-base hover:bg-[#1a1a1a] transition-all hover:scale-105">
             Indicazioni stradali →
           </a>
