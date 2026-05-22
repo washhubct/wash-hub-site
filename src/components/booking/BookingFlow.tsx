@@ -188,31 +188,25 @@ export function BookingFlow() {
             </motion.div>
           )}
 
-          {/* STEP MOTO — Avviso raffreddamento */}
+          {/* STEP MOTO — Promemoria raffreddamento */}
           {step === 'moto-avviso' && (
             <motion.div key="moto-avviso" custom={dir} variants={slide} initial="initial" animate="animate" exit="exit"
               className="text-center py-6">
-              <div className="text-6xl mb-5">🏍️</div>
+              <div className="text-6xl mb-5">🏍️❄️</div>
               <h2 className="font-display text-2xl font-black text-[#0F0F0F] mb-3"
                 style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                Un attimo solo!
+                Piccolo promemoria!
               </h2>
-              <p className="text-[#6B6B6B] text-lg leading-relaxed max-w-sm mx-auto mb-2">
-                Siamo un po' fissati con la qualità — lo sappiamo — ma le moto calde e l'acqua fredda non vanno proprio d'accordo.
+              <p className="text-[#6B6B6B] text-lg leading-relaxed max-w-sm mx-auto mb-6">
+                Siamo un po' fissati con la qualità — lo sappiamo — ma moto calda + acqua fredda non è un bel matrimonio.
               </p>
-              <p className="text-[#0F0F0F] font-semibold mb-8">
-                Ricordati di farla raffreddare prima di venire da noi. ❄️
+              <p className="text-[#0F0F0F] font-semibold mb-10">
+                Ricordati di farla raffreddare prima di venire da noi. Grazie! 🙏
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button onClick={() => goTo('data')}
-                  className="px-8 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold hover:bg-[#E0B210] transition-all">
-                  Sì, sarà fredda — prenoto!
-                </button>
-                <button onClick={() => { setServizio(''); goTo('servizio') }}
-                  className="px-8 py-4 rounded-full border-2 border-[#E8E8E4] text-[#6B6B6B] font-medium hover:border-[#0F0F0F] hover:text-[#0F0F0F] transition-all">
-                  Torno più tardi
-                </button>
-              </div>
+              <button onClick={() => goTo('data')}
+                className="px-8 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold hover:bg-[#E0B210] transition-all">
+                Ho capito, prenoto →
+              </button>
             </motion.div>
           )}
 
