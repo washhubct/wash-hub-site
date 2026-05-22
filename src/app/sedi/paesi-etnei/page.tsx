@@ -71,29 +71,58 @@ export default function PaesiEtneiPage() {
               </a>
             </AnimatedSection>
 
-            <AnimatedSection direction="right" delay={0.1}>
-              <h3 className="font-display text-2xl font-bold text-[#0F0F0F] mb-6"
-                style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                Come funziona
-              </h3>
-              <div className="space-y-4">
-                {[
-                  { step: '01', title: 'Arrivi quando vuoi', desc: 'La stazione è sempre aperta e sempre disponibile, giorno e notte.' },
-                  { step: '02', title: 'Scegli il programma', desc: 'Dal lavaggio base all\'intensivo con cera. Prezzi chiari sul display.' },
-                  { step: '03', title: 'Inserisci le monete', desc: 'Accettiamo monete e pagamenti contactless.' },
-                  { step: '04', title: 'Via in pochi minuti', desc: 'Programma rapido, alta pressione, risultato professionale.' },
-                ].map(({ step, title, desc }) => (
-                  <div key={step} className="flex gap-4 p-5 rounded-2xl bg-white border border-[#E8E8E4]">
-                    <span className="font-display text-2xl font-black text-[#F5C518] shrink-0 leading-none"
-                      style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                      {step}
-                    </span>
-                    <div>
-                      <h4 className="font-bold text-[#0F0F0F] mb-1">{title}</h4>
-                      <p className="text-[#6B6B6B] text-sm">{desc}</p>
+            <AnimatedSection direction="right" delay={0.1} className="space-y-8">
+              {/* Self service */}
+              <div>
+                <h3 className="font-display text-xl font-bold text-[#0F0F0F] mb-4 flex items-center gap-2"
+                  style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+                  <span className="px-2 py-0.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-xs font-black uppercase tracking-wider">Self 24/7</span>
+                  Come funziona
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    { step: '01', title: 'Arrivi quando vuoi', desc: 'La stazione è sempre aperta, giorno e notte, 365 giorni l\'anno.' },
+                    { step: '02', title: 'Scegli il programma', desc: 'Dal lavaggio base all\'intensivo con cera. Prezzi chiari sul display.' },
+                    { step: '03', title: 'Inserisci le monete', desc: 'Accettiamo monete e pagamenti contactless.' },
+                    { step: '04', title: 'Via in pochi minuti', desc: 'Alta pressione, risultato professionale.' },
+                  ].map(({ step, title, desc }) => (
+                    <div key={step} className="flex gap-4 p-4 rounded-2xl bg-white border border-[#E8E8E4]">
+                      <span className="font-display text-xl font-black text-[#F5C518] shrink-0 leading-none"
+                        style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>{step}</span>
+                      <div>
+                        <h4 className="font-bold text-[#0F0F0F] mb-0.5 text-sm">{title}</h4>
+                        <p className="text-[#6B6B6B] text-xs">{desc}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </div>
+
+              {/* Lavaggio manuale */}
+              <div>
+                <h3 className="font-display text-xl font-bold text-[#0F0F0F] mb-4 flex items-center gap-2"
+                  style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+                  <span className="px-2 py-0.5 rounded-full bg-[#0F0F0F] text-white text-xs font-black uppercase tracking-wider">Manuale Lun–Sab</span>
+                  Come funziona
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    { step: '01', title: 'Arrivi in orario', desc: 'I nostri operatori sono disponibili dal lunedì al sabato, 8:00–18:30.' },
+                    { step: '02', title: 'Trovi i nostri operatori', desc: 'Nessuna prenotazione necessaria — pass direct, ti accogliamo all\'arrivo.' },
+                    { step: '03', title: 'Scegli il servizio', desc: 'Esterno, tradizionale o Performance Intenso. Ti consigliamo noi.' },
+                    { step: '04', title: 'Ritiri l\'auto pulita', desc: 'Lavoro fatto a mano, con cura. Come piace a noi.' },
+                  ].map(({ step, title, desc }) => (
+                    <div key={step} className="flex gap-4 p-4 rounded-2xl bg-white border border-[#E8E8E4]">
+                      <span className="font-display text-xl font-black text-[#0F0F0F] shrink-0 leading-none"
+                        style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>{step}</span>
+                      <div>
+                        <h4 className="font-bold text-[#0F0F0F] mb-0.5 text-sm">{title}</h4>
+                        <p className="text-[#6B6B6B] text-xs">{desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-3 text-xs text-[#6B6B6B] italic">* Prenotazione online non disponibile per questa sede al momento.</p>
               </div>
             </AnimatedSection>
           </div>
