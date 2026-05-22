@@ -22,7 +22,7 @@ export function Hero() {
           transition={{ type: 'spring', damping: 20, stiffness: 70, delay: 0.2 }}
         >
           <p className="text-[#F5C518] text-sm md:text-base font-semibold uppercase tracking-[0.2em] mb-6">
-            Catania · dal 2019
+            Catania · dal 2022
           </p>
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
@@ -31,7 +31,7 @@ export function Hero() {
             <span className="text-[#F5C518]">per il lavaggio auto.</span>
           </h1>
           <p className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed mb-10">
-            Artigiani del lavaggio dal 2019. Due sedi, un&rsquo;unica ossessione: la perfezione.
+            Artigiani del lavaggio dal 2022. Due sedi, un&rsquo;unica ossessione: la perfezione.
           </p>
         </motion.div>
 

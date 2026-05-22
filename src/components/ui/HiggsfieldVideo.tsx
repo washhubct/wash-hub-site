@@ -19,9 +19,7 @@ export function HiggsfieldVideo({ prompt, className, overlay = true, overlayOpac
       {overlay && (
         <div className="absolute inset-0" style={{ background: `rgba(0,0,0,${overlayOpacity})` }} />
       )}
-      <div className="absolute bottom-3 left-3 z-10">
-        <p className="text-[10px] text-white/25 font-mono">🎬 Higgsfield: {prompt}</p>
-      </div>
+      {/* prompt nascosto — solo per riferimento sviluppatore: {prompt} */}
     </div>
   )
 }

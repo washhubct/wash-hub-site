@@ -11,7 +11,7 @@ export function Footer() {
               WASH<span className="text-[#F5C518]">HUB</span>
             </div>
             <p className="text-sm leading-relaxed">
-              Artigiani del lavaggio auto a Catania dal 2019. Due sedi, una sola ossessione: la perfezione.
+              Artigiani del lavaggio auto a Catania dal 2022. Due sedi, una sola ossessione: la perfezione.
             </p>
             <div className="flex gap-4 mt-5">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"

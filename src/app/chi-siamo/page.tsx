@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Chi siamo — La storia di WASH HUB',
-  description: 'WASH HUB nasce nel 2019 a Catania dalla passione per il lavaggio auto professionale. La nostra storia, il nostro team, i nostri valori.',
+  description: 'WASH HUB nasce nel 2022 a Catania dalla passione per il lavaggio auto professionale. La nostra storia, il nostro team, i nostri valori.',
 }
 
 export default function ChiSiamoPage() {
@@ -33,7 +33,7 @@ export default function ChiSiamoPage() {
           <div className="space-y-8 text-xl leading-relaxed text-[#0F0F0F]"
             style={{ fontFamily: 'var(--font-instrument)' }}>
             <p className="italic text-2xl text-[#6B6B6B]">
-              &ldquo;WASH HUB nasce nel 2019 da una semplice convinzione: a Catania mancava un autolavaggio che trattasse ogni auto come se fosse la propria.&rdquo;
+              &ldquo;WASH HUB nasce nel 2022 da una semplice convinzione: a Catania mancava un autolavaggio che trattasse ogni auto come se fosse la propria.&rdquo;
             </p>
             <p>
               Oggi siamo due sedi, un team affiatato, e migliaia di clienti che tornano ogni settimana. Non perché sia comodo, ma perché sanno che qui la macchina esce davvero pulita.
