@@ -1,5 +1,25 @@
 import Link from 'next/link'
 
+const IconInstagram = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <circle cx="12" cy="12" r="4"/>
+    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+  </svg>
+)
+
+const IconFacebook = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+)
+
+const IconTikTok = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.17 8.17 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/>
+  </svg>
+)
+
 export function Footer() {
   return (
     <footer className="bg-[#0F0F0F] text-white/70">
@@ -13,18 +33,18 @@ export function Footer() {
             <p className="text-sm leading-relaxed">
               Artigiani del lavaggio auto a Catania dal 2022. Due sedi, una sola ossessione: la perfezione.
             </p>
-            <div className="flex gap-4 mt-5">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors text-sm">
-                IG
+            <div className="flex gap-3 mt-5">
+              <a href="https://instagram.com/washhub" target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
+                <IconInstagram />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors text-sm">
-                FB
+              <a href="https://facebook.com/washhub" target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
+                <IconFacebook />
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors text-sm">
-                TK
+              <a href="https://tiktok.com/@washhub" target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
+                <IconTikTok />
               </a>
             </div>
           </div>
@@ -45,13 +65,14 @@ export function Footer() {
             <div className="space-y-4 text-sm">
               <div>
                 <p className="text-white font-medium">WASH HUB Lungomare</p>
-                <p>Via del Lungomare, Catania</p>
+                <p>Via Anfuso 35, Catania</p>
                 <p>Lun–Sab 8:00–20:00</p>
               </div>
               <div>
                 <p className="text-[#F5C518] font-medium">WASH HUB POP · Paesi Etnei</p>
-                <p>Paesi Etnei, Catania</p>
-                <p className="text-[#F5C518]">Aperto 24/7</p>
+                <p>Via Galileo Galilei 28 (LUKoil)</p>
+                <p>Manuale Lun–Sab 8:00–18:30</p>
+                <p className="text-[#F5C518]">Self service 24/7</p>
               </div>
             </div>
           </div>
@@ -66,8 +87,8 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="tel:+39000000000" className="hover:text-white transition-colors">
-                  +39 000 000 0000
+                <a href="tel:+390954695153" className="hover:text-white transition-colors">
+                  095 469 5153
                 </a>
               </li>
             </ul>

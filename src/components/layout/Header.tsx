@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { Logo } from '@/components/ui/Logo'
 
 const NAV = [
   { label: 'Servizi', href: '/servizi' },
@@ -18,6 +19,7 @@ export function Header() {
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40)
+    fn()
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
@@ -29,10 +31,8 @@ export function Header() {
     )}>
       <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="font-display text-xl md:text-2xl font-black text-white tracking-tight">
-            WASH<span className="text-[#F5C518]">HUB</span>
-          </span>
+        <Link href="/" className="flex items-center" aria-label="WASH HUB — Home">
+          <Logo white className="h-7 md:h-8 w-auto" />
         </Link>
 
         {/* Desktop Nav */}
@@ -54,9 +54,9 @@ export function Header() {
           <button onClick={() => setOpen(!open)}
             className="md:hidden flex flex-col gap-1.5 p-2 text-white"
             aria-label="Menu">
-            <span className={cn('block w-5 h-0.5 bg-current transition-all', open && 'rotate-45 translate-y-2')} />
-            <span className={cn('block w-5 h-0.5 bg-current transition-all', open && 'opacity-0')} />
-            <span className={cn('block w-5 h-0.5 bg-current transition-all', open && '-rotate-45 -translate-y-2')} />
+            <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'rotate-45 translate-y-2')} />
+            <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'opacity-0')} />
+            <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && '-rotate-45 -translate-y-2')} />
           </button>
         </div>
       </div>
