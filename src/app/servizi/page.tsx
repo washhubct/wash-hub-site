@@ -161,69 +161,28 @@ export default function ServiziPage() {
         </div>
       </section>
 
-      {/* Abbonamenti */}
+      {/* Abbonamenti — Coming Soon */}
       <section className="py-20 md:py-28 bg-[#0F0F0F]">
-        <div className="max-w-7xl mx-auto px-5 md:px-8">
-          <AnimatedSection className="text-center mb-4">
-            <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-3">Paga una volta, lavi tutto il mese</p>
-            <h2 className="font-display text-4xl md:text-5xl font-black text-white"
+        <div className="max-w-3xl mx-auto px-5 md:px-8 text-center">
+          <AnimatedSection>
+            <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">In arrivo</p>
+            <h2 className="font-display text-4xl md:text-5xl font-black text-white mb-5"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
               Abbonamenti mensili.
             </h2>
-          </AnimatedSection>
-          <AnimatedSection className="text-center mb-14">
-            <p className="text-white/50 text-lg mt-3 max-w-xl mx-auto">
-              Attivi subito con Stripe. Risparmi fino al <span className="text-[#F5C518] font-bold">24%</span> rispetto ai lavaggi singoli — e non pensi più ai soldi ogni volta.
+            <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
+              Stiamo preparando piani su misura per chi lava spesso. Risparmio garantito, zero pensieri.
             </p>
-          </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            {ABBONAMENTI.map(({ tier, tagline, price, listino, saving, features, highlight, stripeLink }, i) => (
-              <AnimatedSection key={tier} delay={i * 0.1}
-                className={`rounded-2xl p-7 relative ${highlight ? 'bg-white ring-2 ring-[#F5C518] shadow-[0_0_60px_rgba(245,197,24,0.25)]' : 'bg-white/5 border border-white/10'}`}>
-                {highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#F5C518] text-[#0F0F0F] text-xs font-black px-4 py-1 rounded-full uppercase tracking-wider">
-                    Il più scelto
-                  </div>
-                )}
-                <p className={`text-xs font-semibold uppercase tracking-wider mb-2 ${highlight ? 'text-[#6B6B6B]' : 'text-white/40'}`}>{tagline}</p>
-                <h3 className={`font-display text-2xl font-black mb-4 ${highlight ? 'text-[#0F0F0F]' : 'text-white'}`}
-                  style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                  {tier}
-                </h3>
-                <div className="mb-1">
-                  <span className={`text-4xl font-black ${highlight ? 'text-[#0F0F0F]' : 'text-white'}`}>€{price}</span>
-                  <span className={`text-sm font-normal ml-1 ${highlight ? 'text-[#6B6B6B]' : 'text-white/40'}`}>/mese</span>
-                </div>
-                <p className={`text-xs mb-5 ${highlight ? 'text-[#E63946]' : 'text-[#F5C518]/70'}`}>
-                  Invece di €{listino} — risparmi €{saving}/mese
-                </p>
-                <ul className="space-y-2 mb-7">
-                  {features.map(f => (
-                    <li key={f} className={`text-sm flex gap-2 ${highlight ? 'text-[#6B6B6B]' : 'text-white/60'}`}>
-                      <span className="text-[#F5C518] shrink-0">✓</span> {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href={stripeLink} target="_blank" rel="noopener noreferrer"
-                  className={`block text-center py-3.5 px-5 rounded-full font-bold text-sm transition-all ${
-                    highlight
-                      ? 'bg-[#F5C518] text-[#0F0F0F] hover:bg-[#E0B210]'
-                      : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
-                  }`}>
-                  Attiva ora →
+            <div className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl border border-white/10 bg-white/5 mb-10">
+              <span className="text-2xl">🔔</span>
+              <p className="text-white/70 text-sm text-left">
+                Vuoi essere avvisato al lancio?<br />
+                <a href="https://wa.me/390954695153" target="_blank" rel="noopener noreferrer"
+                  className="text-[#F5C518] font-semibold hover:underline">
+                  Scrivici su WhatsApp →
                 </a>
-                <p className={`text-center text-xs mt-3 ${highlight ? 'text-[#6B6B6B]' : 'text-white/30'}`}>
-                  Pagamento sicuro · Disdici quando vuoi
-                </p>
-              </AnimatedSection>
-            ))}
-          </div>
-          <AnimatedSection className="mt-12 text-center">
-            <p className="text-white/30 text-sm">
-              Non sai quale scegliere?{' '}
-              <Link href="/contatti" className="text-[#F5C518] hover:underline">Scrivici</Link>
-              {' '}— ti aiutiamo in 2 minuti.
-            </p>
+              </p>
+            </div>
           </AnimatedSection>
         </div>
       </section>

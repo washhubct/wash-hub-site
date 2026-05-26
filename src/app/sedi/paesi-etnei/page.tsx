@@ -55,7 +55,7 @@ export default function PaesiEtneiPage() {
               <div className="space-y-4 mb-8">
                 {[
                   ['📍 Indirizzo', 'Via Galileo Galilei 28, San Gregorio di Catania\npresso stazione LUKoil'],
-                  ['🧼 Servizio manuale', 'Lun–Sab 8:00–18:30'],
+                  ['🧼 Servizio manuale', 'Lun–Dom 8:00–19:00'],
                   ['⏰ Self service', 'Aperto 24/7 — auto, interni, camion'],
                   ['🪙 Pagamento', 'Monete · Carta · Contactless'],
                 ].map(([label, val]) => (
@@ -102,12 +102,12 @@ export default function PaesiEtneiPage() {
               <div>
                 <h3 className="font-display text-xl font-bold text-[#0F0F0F] mb-4 flex items-center gap-2"
                   style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                  <span className="px-2 py-0.5 rounded-full bg-[#0F0F0F] text-white text-xs font-black uppercase tracking-wider">Manuale Lun–Sab</span>
+                  <span className="px-2 py-0.5 rounded-full bg-[#0F0F0F] text-white text-xs font-black uppercase tracking-wider">Manuale Lun–Dom</span>
                   Come funziona
                 </h3>
                 <div className="space-y-3">
                   {[
-                    { step: '01', title: 'Arrivi in orario', desc: 'I nostri operatori sono disponibili dal lunedì al sabato, 8:00–18:30.' },
+                    { step: '01', title: 'Arrivi in orario', desc: 'I nostri operatori sono disponibili tutti i giorni, lunedì–domenica, 8:00–19:00.' },
                     { step: '02', title: 'Trovi i nostri operatori', desc: 'Nessuna prenotazione necessaria — pass direct, ti accogliamo all\'arrivo.' },
                     { step: '03', title: 'Scegli il servizio', desc: 'Esterno, tradizionale o Performance Intenso. Ti consigliamo noi.' },
                     { step: '04', title: 'Ritiri l\'auto pulita', desc: 'Lavoro fatto a mano, con cura. Come piace a noi.' },
