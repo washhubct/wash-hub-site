@@ -161,6 +161,24 @@ export default function ServiziPage() {
         </div>
       </section>
 
+      {/* Prodotti MA-FRA */}
+      <section className="py-16 bg-[#FAFAF7]">
+        <div className="max-w-4xl mx-auto px-5 md:px-8 text-center">
+          <AnimatedSection>
+            <p className="text-[#6B6B6B] text-sm font-semibold uppercase tracking-[0.2em] mb-4">I prodotti che usiamo</p>
+            <div className="inline-flex items-center gap-6 px-8 py-5 rounded-2xl bg-white border border-[#E8E8E4] shadow-sm">
+              <div className="text-left">
+                <p className="font-black text-[#0F0F0F] text-xl">MA-FRA S.p.A.</p>
+                <p className="text-[#6B6B6B] text-sm">Prodotti professionali per la cura dell&rsquo;auto — Made in Italy dal 1965</p>
+              </div>
+            </div>
+            <p className="text-[#6B6B6B] text-sm mt-5 max-w-xl mx-auto">
+              Utilizziamo esclusivamente prodotti MA-FRA — la scelta dei professionisti del settore per qualità, sicurezza sulla carrozzeria e rispetto dell&rsquo;ambiente.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* Abbonamenti — Coming Soon */}
       <section className="py-20 md:py-28 bg-[#0F0F0F]">
         <div className="max-w-3xl mx-auto px-5 md:px-8 text-center">
