@@ -55,8 +55,22 @@ export function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Navigazione</h4>
             <ul className="space-y-2 text-sm">
-              {[['Home', '/'], ['Servizi', '/servizi'], ['Le nostre sedi', '/sedi'], ['Flotte & Aziende', '/flotte'], ['FAQ', '/faq'], ['Chi siamo', '/chi-siamo'], ['Gift Card', '/gift-card'], ['Prenota', '/prenota'], ['Contatti', '/contatti']].map(([l, h]) => (
-                <li key={h}><Link href={h} className="hover:text-white transition-colors">{l}</Link></li>
+              {([
+                ['Home', '/'],
+                ['Servizi', '/servizi'],
+                ['Le nostre sedi', '/sedi'],
+                ['Flotte & Aziende', '/flotte'],
+                ['FAQ', '/faq'],
+                ['Chi siamo', '/chi-siamo'],
+                ['Gift Card', '/gift-card', 'soon'],
+                ['Programma Amici', '/referral', 'soon'],
+                ['Prenota', '/prenota'],
+                ['Contatti', '/contatti'],
+              ] as [string, string, string?][]).map(([l, h, badge]) => (
+                <li key={h} className="flex items-center gap-2">
+                  <Link href={h} className="hover:text-white transition-colors">{l}</Link>
+                  {badge === 'soon' && <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#F5C518]/20 text-[#F5C518]">Soon</span>}
+                </li>
               ))}
             </ul>
           </div>
@@ -101,7 +115,17 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/40">
+        {/* Partner */}
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center gap-4">
+          <span className="text-xs text-white/30 uppercase tracking-widest shrink-0">Prodotti certificati</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <a href="https://www.mafra.it" target="_blank" rel="noopener noreferrer">
+            <img src="https://mafra.it/wp-content/uploads/2025/04/logo-60-mafra-anniversary-Since-1965-e1745477899242.png"
+              alt="MA-FRA" className="h-8 w-auto opacity-50 hover:opacity-80 transition-opacity" />
+          </a>
+        </div>
+
+        <div className="mt-6 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/40">
           <p>© {new Date().getFullYear()} WASH HUB. Tutti i diritti riservati.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>

@@ -84,7 +84,7 @@ export default function GiftCardPage() {
               {[
                 { step: '01', title: 'Acquisti online', desc: 'Pagamento sicuro con Stripe. Ricevi subito la ricevuta via email.' },
                 { step: '02', title: 'La regali', desc: 'Mostra la ricevuta email o stampala. Nessun codice da ricordare.' },
-                { step: '03', title: 'Si prenota', desc: 'Chi riceve il regalo prenota online o passa direttamente — mostra la ricevuta a Sebastiano.' },
+                { step: '03', title: 'Si prenota', desc: 'Chi riceve il regalo prenota online o passa direttamente — mostra la ricevuta ai nostri addetti.' },
                 { step: '04', title: 'Auto pulita', desc: 'Scala il valore dalla gift card. Il cambio eventuale rimane come credito.' },
               ].map(({ step, title, desc }) => (
                 <div key={step} className="flex gap-5 p-5 rounded-2xl bg-white border border-[#E8E8E4]">
