@@ -105,7 +105,7 @@ export function Reviews() {
             </a>
             <span className="text-white/20 hidden sm:block">·</span>
             <a
-              href="https://search.google.com/local/writereview?placeid=ChIJE7A-YnH9ExMRlssUFfIZGao"
+              href="https://www.google.com/search?hl=it-IT&gl=it&q=Wash+Hub+-+Lungomare,+Via+Anfuso,+35,+95126+Catania+CT&ludocid=12256856388391979926&lsig=AB86z5VUoEv75haHahvi-hFB0yXK#lrd=0xa919f2711b993b13,1"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all"
