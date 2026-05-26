@@ -58,6 +58,7 @@ export function BookingFlow() {
   const [tel, setTel] = useState('')
   const [vettura, setVettura] = useState('')
   const [targa, setTarga] = useState('')
+  const [referral, setReferral] = useState('')
   const [bookedSlots, setBookedSlots] = useState<Set<string>>(new Set())
   const [loadingSlots, setLoadingSlots] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -113,7 +114,11 @@ export function BookingFlow() {
     setError('')
     try {
       const prezzoFisso = SERVICES.find(s => s.id === servizio)?.prezzoFisso ?? ''
-      await saveBooking({ servizio, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa, ...(prezzoFisso && { prezzo: prezzoFisso }) })
+      await saveBooking({
+        servizio, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
+        ...(prezzoFisso && { prezzo: prezzoFisso }),
+        ...(referral.trim() && { referral: referral.trim() }),
+      })
       setDir(1)
       setStep('done')
     } catch {
@@ -137,7 +142,7 @@ export function BookingFlow() {
           {servizio} · {new Date(data + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })} · ore {orario}
         </p>
         <p className="text-[#6B6B6B]">Ti aspettiamo in Via Anfuso 35, Catania.</p>
-        <button onClick={() => { setStep('servizio'); setServizio(''); setData(''); setOrario(''); setNome(''); setTel(''); setVettura(''); setTarga('') }}
+        <button onClick={() => { setStep('servizio'); setServizio(''); setData(''); setOrario(''); setNome(''); setTel(''); setVettura(''); setTarga(''); setReferral('') }}
           className="mt-8 px-6 py-3 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] font-semibold text-sm hover:bg-[#0F0F0F] hover:text-white transition-all">
           Nuova prenotazione
         </button>
@@ -298,6 +303,7 @@ export function BookingFlow() {
                   { label: 'Telefono *', value: tel, set: setTel, type: 'tel', placeholder: '333 123 4567' },
                   { label: 'Tipo vettura *', value: vettura, set: setVettura, type: 'text', placeholder: 'BMW Serie 3' },
                   { label: 'Targa (opzionale)', value: targa, set: setTarga, type: 'text', placeholder: 'AB123CD' },
+                  { label: 'Codice amico (opzionale)', value: referral, set: setReferral, type: 'text', placeholder: 'WHXXXX' },
                 ].map(({ label, value, set, type, placeholder }) => (
                   <div key={label}>
                     <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">{label}</label>

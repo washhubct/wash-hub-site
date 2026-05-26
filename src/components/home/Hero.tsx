@@ -15,6 +15,22 @@ export function Hero() {
     if (!v) return
     v.muted = true
     v.play().catch(() => {})
+
+    const handleVisibility = () => {
+      if (!document.hidden && v.paused) {
+        v.play().catch(() => {})
+      }
+    }
+    const handlePageShow = () => {
+      if (v.paused) v.play().catch(() => {})
+    }
+
+    document.addEventListener('visibilitychange', handleVisibility)
+    window.addEventListener('pageshow', handlePageShow)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility)
+      window.removeEventListener('pageshow', handlePageShow)
+    }
   }, [])
 
   return (

@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from 'firebase/app'
-import { getFirestore, collection, addDoc, getDocs, query, where } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, setDoc } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCj0IlKMARo0IxnqaHoN-rSd0HINuwf6Po',
@@ -48,8 +48,14 @@ export async function saveBooking(data: {
   telefono: string
   targa?: string
   prezzo?: string
+  referral?: string
 }) {
-  const note = `[WEB] Servizio: ${data.servizio} | Tel: ${data.telefono}${data.targa ? ` | Targa: ${data.targa}` : ''}`
+  const noteExtra = [
+    data.targa ? `Targa: ${data.targa}` : '',
+    data.referral ? `Referral: ${data.referral.toUpperCase()}` : '',
+  ].filter(Boolean).join(' | ')
+  const note = `[WEB] Servizio: ${data.servizio} | Tel: ${data.telefono}${noteExtra ? ' | ' + noteExtra : ''}`
+
   await addDoc(collection(db, 'prenotazioni'), {
     dataPren: data.dataPren,
     orario: data.orario,
@@ -61,5 +67,15 @@ export async function saveBooking(data: {
     saldo: '',
     saldato: '',
     sedeId: 'lungomare',
+    ...(data.referral && { referral: data.referral.toUpperCase() }),
   })
+
+  // Registra il referral se presente
+  if (data.referral) {
+    const clean = data.referral.toUpperCase()
+    const ref = doc(db, 'referral', clean)
+    await setDoc(ref, { totale: 0, inAttesa: 0 }, { merge: true })
+    const { increment, serverTimestamp } = await import('firebase/firestore')
+    await setDoc(ref, { totale: increment(1), inAttesa: increment(1), ultimoAggiornamento: serverTimestamp() }, { merge: true })
+  }
 }

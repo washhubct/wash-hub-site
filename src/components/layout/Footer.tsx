@@ -55,7 +55,7 @@ export function Footer() {
           <div>
             <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Navigazione</h4>
             <ul className="space-y-2 text-sm">
-              {[['Home', '/'], ['Servizi', '/servizi'], ['Le nostre sedi', '/sedi'], ['Chi siamo', '/chi-siamo'], ['Prenota', '/prenota'], ['Contatti', '/contatti']].map(([l, h]) => (
+              {[['Home', '/'], ['Servizi', '/servizi'], ['Le nostre sedi', '/sedi'], ['Flotte & Aziende', '/flotte'], ['FAQ', '/faq'], ['Chi siamo', '/chi-siamo'], ['Gift Card', '/gift-card'], ['Prenota', '/prenota'], ['Contatti', '/contatti']].map(([l, h]) => (
                 <li key={h}><Link href={h} className="hover:text-white transition-colors">{l}</Link></li>
               ))}
             </ul>
