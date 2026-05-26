@@ -80,6 +80,7 @@ export default function SediPage() {
                 <p className="text-[#0F0F0F]/60 text-sm mb-5">Paesi Etnei, Catania</p>
                 <div className="space-y-2 text-[#0F0F0F]/70 text-sm mb-6 flex-1">
                   <p className="font-bold text-[#0F0F0F]">⏰ Aperto 24 ore · 7 giorni su 7</p>
+                  <p>🧼 Lavaggio manuale Lun–Dom 8:00–19:00</p>
                   <p>🪙 Self service a gettoni</p>
                   <p>🚗 Nessuna prenotazione necessaria</p>
                   <p>⚡ Pronto in pochi minuti</p>
