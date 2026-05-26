@@ -5,20 +5,53 @@ import { motion } from 'framer-motion'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
+const splashes = [
+  { size: 320, x: '-8%', y: '-12%', rotate: -20, delay: 0 },
+  { size: 260, x: '78%', y: '-8%', rotate: 15, delay: 0.15 },
+  { size: 200, x: '-4%', y: '65%', rotate: 30, delay: 0.3 },
+  { size: 280, x: '82%', y: '60%', rotate: -10, delay: 0.1 },
+]
+
+function Splash({ size, x, y, rotate, delay }: typeof splashes[0]) {
+  return (
+    <motion.svg
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ type: 'spring', damping: 14, stiffness: 80, delay }}
+      width={size} height={size} viewBox="0 0 100 100"
+      className="absolute pointer-events-none select-none"
+      style={{ left: x, top: y, rotate: `${rotate}deg` }}
+    >
+      <path
+        d="M50 5 C55 18,70 15,75 28 C85 25,92 35,85 45 C95 50,92 65,80 65 C85 78,75 88,62 83 C60 95,45 95,42 83 C30 90,18 82,22 70 C8 68,5 52,15 45 C5 38,10 22,22 22 C20 10,35 5,50 5Z"
+        fill="#F5C518"
+        opacity="0.18"
+        stroke="#F5C518"
+        strokeWidth="2"
+        strokeOpacity="0.35"
+      />
+    </motion.svg>
+  )
+}
+
 export function Hero() {
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
       {/* Background video */}
       <video
-        autoPlay
-        muted
-        loop
-        playsInline
+        autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover"
         src={`${BASE}/brand/hero-bg.mp4`}
       />
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-black/65" />
+
+      {/* Halftone texture */}
+      <div className="absolute inset-0 opacity-[0.06]"
+        style={{ backgroundImage: 'radial-gradient(circle, #F5C518 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+
+      {/* Cartoon splashes */}
+      {splashes.map((s, i) => <Splash key={i} {...s} />)}
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 py-32 text-center text-white">
@@ -30,11 +63,21 @@ export function Hero() {
           <p className="text-[#F5C518] text-sm md:text-base font-semibold uppercase tracking-[0.2em] mb-6">
             Catania · dal 2022
           </p>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6"
-            style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+          <h1
+            className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6"
+            style={{
+              fontFamily: 'var(--font-bricolage), system-ui',
+              textShadow: '3px 3px 0px rgba(0,0,0,0.5)',
+            }}>
             I N°1 a Catania
             <br />
-            <span className="text-[#F5C518]">per il lavaggio auto.</span>
+            <span style={{
+              color: '#F5C518',
+              WebkitTextStroke: '1px rgba(0,0,0,0.3)',
+              textShadow: '4px 4px 0px rgba(0,0,0,0.4)',
+            }}>
+              per il lavaggio auto.
+            </span>
           </h1>
           <p className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed mb-10">
             Artigiani del lavaggio dal 2022. Due sedi, un&rsquo;unica ossessione: la perfezione.
@@ -48,7 +91,8 @@ export function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Link href="/prenota"
-            className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold text-base md:text-lg hover:bg-[#E0B210] transition-all hover:scale-105 active:scale-100">
+            className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black text-base md:text-lg hover:bg-[#E0B210] transition-all hover:scale-105 active:scale-100"
+            style={{ border: '3px solid #0F0F0F', boxShadow: '4px 4px 0px #0F0F0F' }}>
             Prenota ora →
           </Link>
           <Link href="/sedi"
