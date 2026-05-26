@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
@@ -36,10 +37,20 @@ function Splash({ size, x, y, rotate, delay }: typeof splashes[0]) {
 }
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    v.muted = true
+    v.play().catch(() => {})
+  }, [])
+
   return (
     <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden">
       {/* Background video */}
       <video
+        ref={videoRef}
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover"
         src={`${BASE}/brand/hero-bg.mp4`}
