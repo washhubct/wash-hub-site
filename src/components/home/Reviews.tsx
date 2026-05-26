@@ -105,7 +105,7 @@ export function Reviews() {
             </a>
             <span className="text-white/20 hidden sm:block">·</span>
             <a
-              href="https://g.page/r/CZbLFBXyGQtiEAE/review"
+              href="https://search.google.com/local/writereview?placeid=ChIJE7A-YnH9ExMRlssUFfIZGao"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all"
