@@ -9,8 +9,9 @@ const NAV = [
   { label: 'Servizi', href: '/servizi' },
   { label: 'Le nostre sedi', href: '/sedi' },
   { label: 'Flotte', href: '/flotte' },
+  { label: 'Gift Card', href: '/gift-card' },
+  { label: 'Porta un amico', href: '/referral' },
   { label: 'FAQ', href: '/faq' },
-  { label: 'Chi siamo', href: '/chi-siamo' },
   { label: 'Contatti', href: '/contatti' },
 ]
 

@@ -5,6 +5,7 @@ import { Garanzia } from '@/components/home/Garanzia'
 import { Reviews } from '@/components/home/Reviews'
 import { SediPreview } from '@/components/home/SediPreview'
 import { HomeCTA } from '@/components/home/HomeCTA'
+import { ReferralBanner } from '@/components/home/ReferralBanner'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function HomePage() {
       <Differentiators />
       <SediPreview />
       <Reviews />
+      <ReferralBanner />
       <HomeCTA />
     </>
   )
