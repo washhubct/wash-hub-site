@@ -51,6 +51,19 @@ export default function GiftCardPage() {
 
       <section className="py-20 md:py-28 bg-[#FAFAF7]">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
+
+          <AnimatedSection className="mb-10 p-5 rounded-2xl bg-[#F5C518]/10 border border-[#F5C518]/30 flex items-start gap-4">
+            <span className="text-2xl shrink-0">🔔</span>
+            <div>
+              <p className="font-bold text-[#0F0F0F] mb-1">Acquisto online in arrivo</p>
+              <p className="text-[#6B6B6B] text-sm">Stiamo configurando il pagamento sicuro. Nel frattempo puoi acquistare direttamente in sede o&nbsp;
+                <a href="https://wa.me/390954695153" target="_blank" rel="noopener noreferrer" className="text-[#0F0F0F] font-semibold underline underline-offset-2">
+                  contattaci su WhatsApp →
+                </a>
+              </p>
+            </div>
+          </AnimatedSection>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {GIFT_CARDS.map(({ value, label, desc, highlight, stripeLink }, i) => (
               <AnimatedSection key={value} delay={i * 0.1}
@@ -63,14 +76,22 @@ export default function GiftCardPage() {
                 <p className={`text-5xl font-black mb-1 ${highlight ? 'text-white' : 'text-[#0F0F0F]'}`}>€{value}</p>
                 <p className={`text-sm font-semibold mb-4 ${highlight ? 'text-[#F5C518]' : 'text-[#6B6B6B]'}`}>{label}</p>
                 <p className={`text-sm leading-relaxed mb-8 ${highlight ? 'text-white/60' : 'text-[#6B6B6B]'}`}>{desc}</p>
-                <a href={stripeLink} target="_blank" rel="noopener noreferrer"
-                  className={`block text-center py-3.5 rounded-full font-bold text-sm transition-all ${
-                    highlight
-                      ? 'bg-[#F5C518] text-[#0F0F0F] hover:bg-[#E0B210]'
-                      : 'bg-[#0F0F0F] text-white hover:bg-[#1a1a1a]'
+                {stripeLink.includes('PLACEHOLDER') ? (
+                  <div className={`block text-center py-3.5 rounded-full font-bold text-sm ${
+                    highlight ? 'bg-[#F5C518]/30 text-[#F5C518]' : 'bg-[#0F0F0F]/20 text-[#6B6B6B]'
                   }`}>
-                  Acquista →
-                </a>
+                    In arrivo 🔔
+                  </div>
+                ) : (
+                  <a href={stripeLink} target="_blank" rel="noopener noreferrer"
+                    className={`block text-center py-3.5 rounded-full font-bold text-sm transition-all ${
+                      highlight
+                        ? 'bg-[#F5C518] text-[#0F0F0F] hover:bg-[#E0B210]'
+                        : 'bg-[#0F0F0F] text-white hover:bg-[#1a1a1a]'
+                    }`}>
+                    Acquista →
+                  </a>
+                )}
               </AnimatedSection>
             ))}
           </div>

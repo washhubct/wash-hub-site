@@ -21,8 +21,13 @@ export default function ReferralPage() {
       const s = await getReferralStats(c)
       setCode(c)
       setStats(s)
-    } catch {
-      setError('Errore. Riprova.')
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : ''
+      if (msg.includes('permission') || msg.includes('Missing or insufficient')) {
+        setError('Servizio momentaneamente in manutenzione. Riprova tra poco.')
+      } else {
+        setError('Errore di connessione. Controlla la rete e riprova.')
+      }
     } finally {
       setLoading(false)
     }
