@@ -5,11 +5,11 @@ import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking } from '@/lib/firebase-booking'
 
 const SERVICES = [
-  { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min' },
-  { id: 'Lavaggio Tradizionale', icon: '🧼', name: 'Lavaggio Tradizionale', price: 'da €18', time: '~30 min' },
-  { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: '€29', time: '~60 min' },
-  { id: 'Moto / Scooter', icon: '🏍️', name: 'Moto / Scooter', price: '€12', time: '~20 min' },
-  { id: 'Tappezzeria', icon: '🪡', name: 'Tappezzeria', price: 'Su preventivo', time: 'Varia' },
+  { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min', prezzoFisso: '' },
+  { id: 'Lavaggio Tradizionale', icon: '🧼', name: 'Lavaggio Tradizionale', price: 'da €18', time: '~30 min', prezzoFisso: '' },
+  { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: '€29', time: '~60 min', prezzoFisso: '29' },
+  { id: 'Moto / Scooter', icon: '🏍️', name: 'Moto / Scooter', price: '€12', time: '~20 min', prezzoFisso: '12' },
+  { id: 'Tappezzeria', icon: '🪡', name: 'Tappezzeria', price: 'Su preventivo', time: 'Varia', prezzoFisso: '' },
 ]
 
 function getLocalToday() {
@@ -112,7 +112,8 @@ export function BookingFlow() {
     setSaving(true)
     setError('')
     try {
-      await saveBooking({ servizio, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa })
+      const prezzoFisso = SERVICES.find(s => s.id === servizio)?.prezzoFisso ?? ''
+      await saveBooking({ servizio, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa, ...(prezzoFisso && { prezzo: prezzoFisso }) })
       setDir(1)
       setStep('done')
     } catch {

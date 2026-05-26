@@ -47,6 +47,7 @@ export async function saveBooking(data: {
   vettura: string
   telefono: string
   targa?: string
+  prezzo?: string
 }) {
   const note = `[WEB] Servizio: ${data.servizio} | Tel: ${data.telefono}${data.targa ? ` | Targa: ${data.targa}` : ''}`
   await addDoc(collection(db, 'prenotazioni'), {
@@ -55,7 +56,7 @@ export async function saveBooking(data: {
     cliente: data.cliente.toUpperCase(),
     vettura: data.vettura.toUpperCase(),
     telefono: data.telefono,
-    prezzo: '',
+    prezzo: data.prezzo ?? '',
     note,
     saldo: '',
     saldato: '',
