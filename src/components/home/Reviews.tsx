@@ -94,14 +94,25 @@ export function Reviews() {
           transition={{ delay: 0.6 }}
           className="text-center mt-10"
         >
-          <a
-            href="https://search.google.com/local/reviews?placeid=ChIJE7A-YnH9ExMRlssUFfIZGao"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-white/70 transition-colors"
-          >
-            Leggi tutte le recensioni su Google →
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="https://search.google.com/local/reviews?placeid=ChIJE7A-YnH9ExMRlssUFfIZGao"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-white/70 transition-colors"
+            >
+              Leggi tutte le recensioni →
+            </a>
+            <span className="text-white/20 hidden sm:block">·</span>
+            <a
+              href="https://g.page/r/CZbLFBXyGQtiEAE/review"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white text-sm font-semibold hover:bg-white/20 transition-all"
+            >
+              ⭐ Lascia la tua recensione
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

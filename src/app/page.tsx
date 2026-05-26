@@ -17,8 +17,8 @@ export default function HomePage() {
       <Hero />
       <SocialProof />
       <Differentiators />
-      <Reviews />
       <SediPreview />
+      <Reviews />
       <HomeCTA />
     </>
   )

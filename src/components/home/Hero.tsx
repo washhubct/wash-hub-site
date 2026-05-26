@@ -6,35 +6,6 @@ import { useEffect, useRef } from 'react'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
-const splashes = [
-  { size: 420, x: '-12%', y: '-15%', rotate: -20, delay: 0 },
-  { size: 360, x: '75%', y: '-10%', rotate: 15, delay: 0.15 },
-  { size: 280, x: '-6%', y: '60%', rotate: 30, delay: 0.3 },
-  { size: 380, x: '78%', y: '55%', rotate: -10, delay: 0.1 },
-  { size: 180, x: '45%', y: '-5%', rotate: 45, delay: 0.2 },
-]
-
-function Splash({ size, x, y, rotate, delay }: typeof splashes[0]) {
-  return (
-    <motion.svg
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: 'spring', damping: 14, stiffness: 80, delay }}
-      width={size} height={size} viewBox="0 0 100 100"
-      className="absolute pointer-events-none select-none"
-      style={{ left: x, top: y, rotate: `${rotate}deg` }}
-    >
-      <path
-        d="M50 5 C55 18,70 15,75 28 C85 25,92 35,85 45 C95 50,92 65,80 65 C85 78,75 88,62 83 C60 95,45 95,42 83 C30 90,18 82,22 70 C8 68,5 52,15 45 C5 38,10 22,22 22 C20 10,35 5,50 5Z"
-        fill="#F5C518"
-        opacity="0.35"
-        stroke="#F5C518"
-        strokeWidth="3"
-        strokeOpacity="0.7"
-      />
-    </motion.svg>
-  )
-}
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -62,10 +33,7 @@ export function Hero() {
       <div className="absolute inset-0 opacity-[0.12]"
         style={{ backgroundImage: 'radial-gradient(circle, #F5C518 1.5px, transparent 1.5px)', backgroundSize: '20px 20px' }} />
 
-      {/* Cartoon splashes */}
-      {splashes.map((s, i) => <Splash key={i} {...s} />)}
-
-      {/* Content */}
+{/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 py-32 text-center text-white">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
@@ -77,17 +45,10 @@ export function Hero() {
           </p>
           <h1
             className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6"
-            style={{
-              fontFamily: 'var(--font-bricolage), system-ui',
-              textShadow: '4px 4px 0px #000, 6px 6px 0px rgba(0,0,0,0.3)',
-            }}>
+            style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
             I N°1 a Catania
             <br />
-            <span style={{
-              color: '#F5C518',
-              WebkitTextStroke: '2px #000',
-              textShadow: '5px 5px 0px #000, 7px 7px 0px rgba(0,0,0,0.3)',
-            }}>
+            <span style={{ color: '#F5C518' }}>
               per il lavaggio auto.
             </span>
           </h1>
