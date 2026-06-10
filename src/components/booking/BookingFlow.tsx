@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking } from '@/lib/firebase-booking'
+import { getReferralCode } from '@/lib/referral'
 
 const SERVICES = [
   { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min', prezzoFisso: '' },
@@ -130,6 +131,22 @@ export function BookingFlow() {
   const stepIdx = STEP_ORDER.indexOf(step)
 
   if (step === 'done') {
+    const codiceCliente = tel ? getReferralCode(tel) : ''
+    const shareText = `Usa il mio codice ${codiceCliente} per prenotare su wash-hub.it e ottieni €5 di sconto sul tuo lavaggio!`
+    const condividi = async () => {
+      if (typeof navigator !== 'undefined' && navigator.share) {
+        try {
+          await navigator.share({ title: 'WASH HUB — Porta un amico', text: shareText, url: 'https://wash-hub.it/prenota' })
+          return
+        } catch { /* utente ha annullato */ }
+      }
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        try {
+          await navigator.clipboard.writeText(`${shareText} https://wash-hub.it/prenota`)
+          alert('Codice copiato negli appunti!')
+        } catch { /* clipboard non disponibile */ }
+      }
+    }
     return (
       <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
         className="text-center py-16 px-6">
@@ -142,6 +159,24 @@ export function BookingFlow() {
           {servizio} · {new Date(data + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })} · ore {orario}
         </p>
         <p className="text-[#6B6B6B]">Ti aspettiamo in Via Anfuso 35, Catania.</p>
+
+        {codiceCliente && (
+          <div className="mt-8 mx-auto max-w-md p-6 rounded-2xl bg-[#0F0F0F] text-white text-left">
+            <p className="text-[#F5C518] text-xs font-semibold uppercase tracking-[0.18em] mb-2">Porta un amico, guadagni €5</p>
+            <p className="text-white/70 text-sm mb-4">
+              Condividi il tuo codice. Per ogni amico che prenota, ti regaliamo <strong className="text-white">€5 di sconto</strong> sul prossimo lavaggio.
+            </p>
+            <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/10 mb-4">
+              <span className="text-[10px] uppercase tracking-wider text-white/40">Il tuo codice</span>
+              <code className="font-black text-2xl text-[#F5C518] tracking-widest">{codiceCliente}</code>
+            </div>
+            <button onClick={condividi}
+              className="w-full px-6 py-3 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold text-sm hover:bg-[#E0B210] transition-all">
+              Condividi codice
+            </button>
+          </div>
+        )}
+
         <button onClick={() => { setStep('servizio'); setServizio(''); setData(''); setOrario(''); setNome(''); setTel(''); setVettura(''); setTarga(''); setReferral('') }}
           className="mt-8 px-6 py-3 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] font-semibold text-sm hover:bg-[#0F0F0F] hover:text-white transition-all">
           Nuova prenotazione
