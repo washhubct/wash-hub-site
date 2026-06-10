@@ -18,14 +18,32 @@ export function getReferralCode(telefono: string): string {
   return code
 }
 
-export async function getReferralStats(code: string): Promise<{ totale: number; inAttesa: number }> {
+export async function getReferralStats(
+  code: string,
+  telefono?: string
+): Promise<{ totale: number; inAttesa: number; confermati: number }> {
   const ref = doc(db, 'referral', code)
   const snap = await getDoc(ref)
-  if (!snap.exists()) return { totale: 0, inAttesa: 0 }
+
+  // Salva il telefono al primo lookup (serve al gestionale per emettere voucher)
+  if (telefono) {
+    const cleanTel = telefono.replace(/\D/g, '').slice(-9)
+    const existing = snap.exists() ? snap.data() : null
+    if (!existing?.telefono && cleanTel.length >= 9) {
+      try {
+        await setDoc(ref, { telefono: cleanTel, codice: code, primoLookup: serverTimestamp() }, { merge: true })
+      } catch {
+        // best effort — non bloccare la UI se le rules cambiano
+      }
+    }
+  }
+
+  if (!snap.exists()) return { totale: 0, inAttesa: 0, confermati: 0 }
   const data = snap.data()
   return {
     totale: data.totale ?? 0,
     inAttesa: data.inAttesa ?? 0,
+    confermati: data.confermati ?? 0,
   }
 }
 

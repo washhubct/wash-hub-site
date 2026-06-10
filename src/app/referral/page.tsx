@@ -18,7 +18,7 @@ export default function ReferralPage() {
     setError('')
     try {
       const c = getReferralCode(t)
-      const s = await getReferralStats(c)
+      const s = await getReferralStats(c, t)
       setCode(c)
       setStats(s)
     } catch (e: unknown) {
