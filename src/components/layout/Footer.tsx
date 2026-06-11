@@ -63,7 +63,7 @@ export function Footer() {
                 ['FAQ', '/faq'],
                 ['Chi siamo', '/chi-siamo'],
                 ['Gift Card', '/gift-card', 'soon'],
-                ['Porta un amico', '/referral', 'soon'],
+                ['Porta un amico', '/referral', ''],
                 ['Prenota', '/prenota'],
                 ['Contatti', '/contatti'],
               ] as [string, string, string?][]).map(([l, h, badge]) => (
