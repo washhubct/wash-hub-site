@@ -49,10 +49,12 @@ export async function saveBooking(data: {
   targa?: string
   prezzo?: string
   referral?: string
+  voucher?: string
 }) {
   const noteExtra = [
     data.targa ? `Targa: ${data.targa}` : '',
     data.referral ? `Referral: ${data.referral.toUpperCase()}` : '',
+    data.voucher ? `Voucher: ${data.voucher.toUpperCase()}` : '',
   ].filter(Boolean).join(' | ')
   const note = `[WEB] Servizio: ${data.servizio} | Tel: ${data.telefono}${noteExtra ? ' | ' + noteExtra : ''}`
 
@@ -68,6 +70,7 @@ export async function saveBooking(data: {
     saldato: '',
     sedeId: 'lungomare',
     ...(data.referral && { referral: data.referral.toUpperCase() }),
+    ...(data.voucher && { voucherCodice: data.voucher.toUpperCase() }),
   })
 
   // Registra il referral se presente

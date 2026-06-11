@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking } from '@/lib/firebase-booking'
-import { getReferralCode } from '@/lib/referral'
+import { getReferralCode, getVouchersAttivi, type VoucherAttivo } from '@/lib/referral'
 
 const SERVICES = [
   { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min', prezzoFisso: '' },
@@ -65,6 +65,10 @@ export function BookingFlow() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
+  // Voucher: dopo che il cliente digita il proprio telefono, lookup voucher attivi
+  const [voucherDisponibili, setVoucherDisponibili] = useState<VoucherAttivo[]>([])
+  const [voucherSel, setVoucherSel] = useState<string>('') // codice voucher applicato
+
   const dates = getDates()
 
   const goTo = (s: Step) => {
@@ -94,6 +98,23 @@ export function BookingFlow() {
       .finally(() => setLoadingSlots(false))
   }, [data])
 
+  // Lookup voucher attivi appena il telefono è "abbastanza completo" (>= 9 cifre).
+  // Debounce 600ms per non spammare Firestore mentre l'utente digita.
+  useEffect(() => {
+    const clean = tel.replace(/\D/g, '')
+    const t = setTimeout(() => {
+      if (clean.length < 9) {
+        setVoucherDisponibili([])
+        setVoucherSel('')
+        return
+      }
+      getVouchersAttivi(tel)
+        .then(v => setVoucherDisponibili(v))
+        .catch(() => setVoucherDisponibili([]))
+    }, 600)
+    return () => clearTimeout(t)
+  }, [tel])
+
   const localToday = getLocalToday()
 
   const isSlotDisabled = (slot: string) => {
@@ -119,6 +140,7 @@ export function BookingFlow() {
         servizio, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
         ...(prezzoFisso && { prezzo: prezzoFisso }),
         ...(referral.trim() && { referral: referral.trim() }),
+        ...(voucherSel && { voucher: voucherSel }),
       })
       setDir(1)
       setStep('done')
@@ -348,6 +370,49 @@ export function BookingFlow() {
                   </div>
                 ))}
               </div>
+
+              {/* Voucher attivi del cliente — proposti automaticamente al digitare il telefono */}
+              {voucherDisponibili.length > 0 && (
+                <div className="mt-5 p-4 rounded-2xl bg-[#F5C518]/10 border-2 border-[#F5C518]/40">
+                  <p className="text-xs font-bold uppercase tracking-wider text-[#0F0F0F] mb-3">
+                    🎁 Hai {voucherDisponibili.length === 1 ? 'un voucher' : `${voucherDisponibili.length} voucher`} disponibile{voucherDisponibili.length > 1 ? 'i' : ''}
+                  </p>
+                  <div className="space-y-2">
+                    {voucherDisponibili.map(v => {
+                      const sel = voucherSel === v.codice
+                      const scad = v.dataScadenza ? new Date(v.dataScadenza).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: '2-digit' }) : ''
+                      return (
+                        <button key={v.codice} type="button"
+                          onClick={() => setVoucherSel(sel ? '' : v.codice)}
+                          className={`w-full text-left p-3 rounded-xl border-2 transition-all flex items-center justify-between gap-3 ${
+                            sel ? 'bg-[#0F0F0F] border-[#0F0F0F] text-white' : 'bg-white border-[#E8E8E4] hover:border-[#F5C518]'
+                          }`}>
+                          <div className="flex-1 min-w-0">
+                            <div className={`text-xs font-bold tracking-widest ${sel ? 'text-[#F5C518]' : 'text-[#0F0F0F]'}`}>
+                              {v.codice}
+                            </div>
+                            {scad && (
+                              <div className={`text-[10px] ${sel ? 'text-white/50' : 'text-[#6B6B6B]'}`}>scade {scad}</div>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className={`text-lg font-black ${sel ? 'text-[#F5C518]' : 'text-[#0F0F0F]'}`}>−€{v.valore}</span>
+                            <span className={`text-xs font-semibold ${sel ? 'text-white' : 'text-[#6B6B6B]'}`}>
+                              {sel ? 'APPLICATO ✓' : 'APPLICA'}
+                            </span>
+                          </div>
+                        </button>
+                      )
+                    })}
+                  </div>
+                  {voucherSel && (
+                    <p className="text-[11px] text-[#6B6B6B] mt-3">
+                      Lo sconto verrà applicato in cassa quando saldi il lavaggio.
+                    </p>
+                  )}
+                </div>
+              )}
+
               {error && <p className="text-[#E63946] text-sm mt-4">{error}</p>}
               <button onClick={submit} disabled={saving}
                 className="w-full mt-6 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black text-base hover:bg-[#E0B210] disabled:opacity-60 transition-all active:scale-[0.98]">

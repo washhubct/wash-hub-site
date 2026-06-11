@@ -47,6 +47,42 @@ export async function getReferralStats(
   }
 }
 
+export type VoucherAttivo = {
+  codice: string
+  valore: number
+  dataScadenza: number
+}
+
+/**
+ * Lista i voucher attivi del titolare del numero passato.
+ * Calcola il codice referral dal telefono, legge /referral/{code}.vouchersAttivi[],
+ * recupera i singoli /vouchers/{codice} e filtra solo i veramente attivi e non scaduti.
+ * Pubblico (nessuna auth richiesta).
+ */
+export async function getVouchersAttivi(telefono: string): Promise<VoucherAttivo[]> {
+  const code = getReferralCode(telefono)
+  const refSnap = await getDoc(doc(db, 'referral', code))
+  if (!refSnap.exists()) return []
+  const codici = (refSnap.data().vouchersAttivi as string[] | undefined) || []
+  if (!codici.length) return []
+
+  const now = Date.now()
+  const snaps = await Promise.all(codici.map(c => getDoc(doc(db, 'vouchers', c))))
+  const out: VoucherAttivo[] = []
+  for (const s of snaps) {
+    if (!s.exists()) continue
+    const v = s.data()
+    if (v.stato !== 'attivo') continue
+    if (v.dataScadenza && v.dataScadenza < now) continue
+    out.push({
+      codice: s.id,
+      valore: Number(v.valore) || 0,
+      dataScadenza: Number(v.dataScadenza) || 0,
+    })
+  }
+  return out
+}
+
 export async function registraReferral(codiceAmico: string, telefonoNuovoCliente: string): Promise<void> {
   if (!codiceAmico || codiceAmico.length < 4) return
   const ref = doc(db, 'referral', codiceAmico.toUpperCase())
