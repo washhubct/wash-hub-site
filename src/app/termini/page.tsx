@@ -47,7 +47,7 @@ export default function TerminiPage() {
 
             <div>
               <h2 className="text-lg font-bold text-[#0F0F0F] mb-2">6. Orari e chiusure</h2>
-              <p>Gli orari di apertura sono Lunedì–Sabato 8:00–20:00 per la sede Lungomare. WASH HUB si riserva il diritto di modificare gli orari o chiudere in occasione di festività, comunicandolo con adeguato preavviso.</p>
+              <p>Gli orari di apertura sono Lunedì–Sabato 7:30–18:30 per la sede Lungomare. WASH HUB si riserva il diritto di modificare gli orari o chiudere in occasione di festività, comunicandolo con adeguato preavviso.</p>
             </div>
 
             <div>
