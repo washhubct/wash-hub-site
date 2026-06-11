@@ -26,7 +26,7 @@ export default function ContattiPage() {
                 </h2>
                 <div className="space-y-3 text-sm text-[#6B6B6B]">
                   <p className="flex gap-3"><span>📍</span><span>Via Anfuso 35, Catania</span></p>
-                  <p className="flex gap-3"><span>🕗</span><span>Lun–Sab 8:00–18:30</span></p>
+                  <p className="flex gap-3"><span>🕗</span><span>Lun–Sab 7:30–18:30</span></p>
                   <p className="flex gap-3"><span>📞</span>
                     <a href="tel:+390954695153" className="text-[#0F0F0F] font-medium hover:text-[#C8A84E] transition-colors">
                       095 469 5153

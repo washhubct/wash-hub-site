@@ -54,7 +54,7 @@ const jsonLd = {
       telephone: '+39-095-469-5153',
       email: 'info@parkinglungomare.it',
       address: { '@type': 'PostalAddress', streetAddress: 'Via Anfuso 35', addressLocality: 'Catania', addressRegion: 'CT', postalCode: '95126', addressCountry: 'IT' },
-      openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '08:00', closes: '18:30' }],
+      openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '07:30', closes: '18:30' }],
       priceRange: '€€',
       image: 'https://wash-hub.it/og-default.jpg',
     },

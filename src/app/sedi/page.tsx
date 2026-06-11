@@ -48,7 +48,7 @@ export default function SediPage() {
                 </h2>
                 <p className="text-[#C8A84E] text-sm mb-5">Via del Lungomare, Catania</p>
                 <div className="space-y-2 text-white/60 text-sm mb-6 flex-1">
-                  <p>🕗 Lun–Sab 8:00–18:30 · Domenica chiuso</p>
+                  <p>🕗 Lun–Sab 7:30–18:30 · Domenica chiuso</p>
                   <p>👨‍🔧 Operatori esperti inclusi</p>
                   <p>🪡 Servizio tappezzeria disponibile</p>
                   <p>🅿️ Parcheggio interno</p>

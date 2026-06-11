@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'WASH HUB Lungomare — Autolavaggio Premium Catania',
-  description: 'Lavaggio auto premium con operatori a Catania Lungomare. Tappezzeria, parcheggio, servizio personalizzato. Aperto lun–sab 8:00–20:00.',
+  description: 'Lavaggio auto premium con operatori a Catania Lungomare. Tappezzeria, parcheggio, servizio personalizzato. Aperto lun–sab 7:30–18:30.',
 }
 
 export default function LungomareePage() {
@@ -45,7 +45,7 @@ export default function LungomareePage() {
               <div className="space-y-4">
                 {[
                   ['📍 Indirizzo', 'Via Anfuso 35, Catania'],
-                  ['🕗 Orari', 'Lunedì–Sabato 8:00–18:30'],
+                  ['🕗 Orari', 'Lunedì–Sabato 7:30–18:30'],
                   ['📞 Telefono', '095 469 5153'],
                   ['✉️ Email', 'info@parkinglungomare.it'],
                 ].map(([label, val]) => (

@@ -30,30 +30,37 @@ export function Header() {
 
   return (
     <>
-      {/* Top bar — sempre visibile, trasparente, nessuna barra */}
-      <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
-        <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
-          <Link href="/" aria-label="WASH HUB" className="pointer-events-auto">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB"
-              className="h-20 md:h-24 w-auto drop-shadow-lg" />
-          </Link>
-          <Link href="/prenota"
-            className="pointer-events-auto hidden md:flex items-center px-5 py-2.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-bold hover:bg-[#E0B210] transition-colors shadow-lg">
-            Prenota ora
-          </Link>
-          {/* Mobile burger — solo quando non scrollato */}
-          {!scrolled && (
-            <button onClick={() => setOpen(!open)}
-              className="pointer-events-auto md:hidden flex flex-col gap-1.5 p-2 text-white drop-shadow-lg"
-              aria-label="Menu">
-              <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'rotate-45 translate-y-2')} />
-              <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'opacity-0')} />
-              <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && '-rotate-45 -translate-y-2')} />
-            </button>
-          )}
-        </div>
-      </div>
+      {/* Top bar — visibile solo prima dello scroll; quando appare la pill, sparisce */}
+      <AnimatePresence>
+        {!scrolled && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+            <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
+              <Link href="/" aria-label="WASH HUB" className="pointer-events-auto">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB"
+                  className="h-20 md:h-24 w-auto drop-shadow-lg" />
+              </Link>
+              <Link href="/prenota"
+                className="pointer-events-auto hidden md:flex items-center px-5 py-2.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-bold hover:bg-[#E0B210] transition-colors shadow-lg">
+                Prenota ora
+              </Link>
+              {/* Mobile burger */}
+              <button onClick={() => setOpen(!open)}
+                className="pointer-events-auto md:hidden flex flex-col gap-1.5 p-2 text-white drop-shadow-lg"
+                aria-label="Menu">
+                <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'rotate-45 translate-y-2')} />
+                <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'opacity-0')} />
+                <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && '-rotate-45 -translate-y-2')} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Floating pill — appare allo scroll */}
       <AnimatePresence>
