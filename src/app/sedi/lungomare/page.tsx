@@ -67,7 +67,7 @@ export default function LungomareePage() {
                 { icon: '🧼', title: 'Lavaggio completo', desc: 'Esterno, interno, cerchi, vetri. Risultato impeccabile.' },
                 { icon: '🪡', title: 'Tappezzeria premium', desc: 'Sedili, tetti, pannelli porta. Servizio su prenotazione.' },
                 { icon: '✨', title: 'Performance Intenso', desc: 'Trattamento profondo con cera e lucidatura.' },
-                { icon: '🅿️', title: 'Parcheggio custodito', desc: 'Lascia l\'auto in sicurezza durante il lavaggio.' },
+                { icon: '🅿️', title: 'Parcheggio', desc: 'Ad ore o abbonamento mensile — posti coperti e scoperti.' },
               ].map(({ icon, title, desc }) => (
                 <div key={title} className="flex gap-4 p-5 rounded-2xl bg-white border border-[#E8E8E4]">
                   <span className="text-2xl">{icon}</span>
@@ -78,6 +78,49 @@ export default function LungomareePage() {
                 </div>
               ))}
             </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Parcheggio */}
+      <section className="py-20 md:py-28 bg-[#0F0F0F]">
+        <div className="max-w-7xl mx-auto px-5 md:px-8">
+          <AnimatedSection>
+            <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-4 bg-[#C8A84E] text-[#0F0F0F]">
+              Novità
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl font-black text-white mb-4"
+              style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+              Parcheggio Lungomare
+            </h2>
+            <p className="text-white/60 text-lg max-w-2xl mb-12">
+              Non solo lavaggio: al Lungomare trovi anche il parcheggio. A ore per le soste brevi,
+              oppure in abbonamento mensile con posto riservato — coperto o scoperto.
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              { icon: '⏱️', title: 'Parcheggio ad ore', desc: 'Paghi solo il tempo che usi. Ideale per soste brevi mentre sei in zona.', highlight: false },
+              { icon: '🅿️', title: 'Abbonamento — Posto scoperto', desc: 'Posto auto riservato tutto il mese, all’aperto. Comodità e tariffa contenuta.', highlight: false },
+              { icon: '🏠', title: 'Abbonamento — Posto coperto', desc: 'Posto al coperto: la tua auto protetta da sole, pioggia e intemperie tutto il mese.', highlight: true },
+            ].map(({ icon, title, desc, highlight }) => (
+              <div key={title}
+                className={`p-6 rounded-2xl border ${highlight ? 'bg-[#C8A84E] border-[#C8A84E]' : 'bg-white/[0.04] border-white/10'}`}>
+                <span className="text-3xl">{icon}</span>
+                <h3 className={`font-bold mt-4 mb-2 text-lg ${highlight ? 'text-[#0F0F0F]' : 'text-white'}`}>{title}</h3>
+                <p className={`text-sm leading-relaxed ${highlight ? 'text-[#0F0F0F]/70' : 'text-white/55'}`}>{desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-10 flex flex-col sm:flex-row gap-3">
+            <a href="https://wa.me/390954695153?text=Ciao!%20Vorrei%20informazioni%20sul%20parcheggio%20al%20Lungomare%20(tariffe%20e%20disponibilit%C3%A0)."
+              target="_blank" rel="noopener"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full font-bold text-sm transition-all hover:opacity-90"
+              style={{ background: '#C8A84E', color: '#0F0F0F' }}>
+              💬 Tariffe e disponibilità su WhatsApp →
+            </a>
           </div>
         </div>
       </section>
