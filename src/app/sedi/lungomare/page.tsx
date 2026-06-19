@@ -101,14 +101,18 @@ export default function LungomareePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
-              { icon: '⏱️', title: 'Parcheggio ad ore', desc: 'Paghi solo il tempo che usi. Ideale per soste brevi mentre sei in zona.', highlight: false },
-              { icon: '🅿️', title: 'Abbonamento — Posto scoperto', desc: 'Posto auto riservato tutto il mese, all’aperto. Comodità e tariffa contenuta.', highlight: false },
-              { icon: '🏠', title: 'Abbonamento — Posto coperto', desc: 'Posto al coperto: la tua auto protetta da sole, pioggia e intemperie tutto il mese.', highlight: true },
-            ].map(({ icon, title, desc, highlight }) => (
+              { icon: '⏱️', title: 'Parcheggio ad ore', price: '€2', unit: '/ ora', desc: 'Paghi solo il tempo che usi. Ideale per soste brevi mentre sei in zona.', highlight: false },
+              { icon: '🅿️', title: 'Abbonamento — Posto scoperto', price: '€100', unit: '/ mese', desc: 'Posto auto riservato tutto il mese, all’aperto. Comodità e tariffa contenuta.', highlight: false },
+              { icon: '🏠', title: 'Abbonamento — Posto coperto', price: '€140', unit: '/ mese', desc: 'Posto al coperto: la tua auto protetta da sole, pioggia e intemperie tutto il mese.', highlight: true },
+            ].map(({ icon, title, price, unit, desc, highlight }) => (
               <div key={title}
                 className={`p-6 rounded-2xl border ${highlight ? 'bg-[#C8A84E] border-[#C8A84E]' : 'bg-white/[0.04] border-white/10'}`}>
                 <span className="text-3xl">{icon}</span>
-                <h3 className={`font-bold mt-4 mb-2 text-lg ${highlight ? 'text-[#0F0F0F]' : 'text-white'}`}>{title}</h3>
+                <h3 className={`font-bold mt-4 mb-1 text-lg ${highlight ? 'text-[#0F0F0F]' : 'text-white'}`}>{title}</h3>
+                <div className={`mb-2 ${highlight ? 'text-[#0F0F0F]' : 'text-[#C8A84E]'}`}>
+                  <span className="font-display text-3xl font-black" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>{price}</span>
+                  <span className="text-sm font-medium opacity-70"> {unit}</span>
+                </div>
                 <p className={`text-sm leading-relaxed ${highlight ? 'text-[#0F0F0F]/70' : 'text-white/55'}`}>{desc}</p>
               </div>
             ))}
