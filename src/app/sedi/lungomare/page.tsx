@@ -47,7 +47,7 @@ export default function LungomareePage() {
                   ['📍 Indirizzo', 'Via Anfuso 35, Catania'],
                   ['🕗 Orari', 'Lunedì–Sabato 7:30–18:30'],
                   ['📞 Telefono', '095 469 5153'],
-                  ['✉️ Email', 'info@parkinglungomare.it'],
+                  ['✉️ Email', 'info@washhub.it'],
                 ].map(([label, val]) => (
                   <div key={label} className="flex gap-3 items-baseline">
                     <span className="text-[#6B6B6B] text-sm w-32 shrink-0">{label}</span>

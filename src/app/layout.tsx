@@ -52,7 +52,7 @@ const jsonLd = {
       description: 'Autolavaggio premium con operatori a Catania Lungomare',
       url: 'https://wash-hub.it/sedi/lungomare',
       telephone: '+39-095-469-5153',
-      email: 'info@parkinglungomare.it',
+      email: 'info@washhub.it',
       address: { '@type': 'PostalAddress', streetAddress: 'Via Anfuso 35', addressLocality: 'Catania', addressRegion: 'CT', postalCode: '95126', addressCountry: 'IT' },
       openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], opens: '07:30', closes: '18:30' }],
       priceRange: '€€',

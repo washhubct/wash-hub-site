@@ -98,8 +98,8 @@ export function Footer() {
             <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contatti</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="mailto:info@parkinglungomare.it" className="hover:text-white transition-colors">
-                  info@parkinglungomare.it
+                <a href="mailto:info@washhub.it" className="hover:text-white transition-colors">
+                  info@washhub.it
                 </a>
               </li>
               <li>

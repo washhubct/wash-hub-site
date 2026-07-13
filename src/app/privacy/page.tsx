@@ -22,7 +22,7 @@ export default function PrivacyPage() {
 
             <div>
               <h2 className="text-lg font-bold text-[#0F0F0F] mb-2">1. Titolare del trattamento</h2>
-              <p>WASH HUB di Consoli Guido, con sede in Via Anfuso 35, Catania (CT). Email: info@parkinglungomare.it — Tel: 095 469 5153.</p>
+              <p>WASH HUB di Consoli Guido, con sede in Via Anfuso 35, Catania (CT). Email: info@washhub.it — Tel: 095 469 5153.</p>
             </div>
 
             <div>
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
 
             <div>
               <h2 className="text-lg font-bold text-[#0F0F0F] mb-2">6. I tuoi diritti</h2>
-              <p>Puoi esercitare in qualsiasi momento i diritti di accesso, rettifica, cancellazione, portabilità e opposizione scrivendo a info@parkinglungomare.it. Hai anche il diritto di proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it).</p>
+              <p>Puoi esercitare in qualsiasi momento i diritti di accesso, rettifica, cancellazione, portabilità e opposizione scrivendo a info@washhub.it. Hai anche il diritto di proporre reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it).</p>
             </div>
 
             <div>

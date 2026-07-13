@@ -33,8 +33,8 @@ export default function ContattiPage() {
                     </a>
                   </p>
                   <p className="flex gap-3"><span>✉️</span>
-                    <a href="mailto:info@parkinglungomare.it" className="text-[#0F0F0F] font-medium hover:text-[#C8A84E] transition-colors">
-                      info@parkinglungomare.it
+                    <a href="mailto:info@washhub.it" className="text-[#0F0F0F] font-medium hover:text-[#C8A84E] transition-colors">
+                      info@washhub.it
                     </a>
                   </p>
                 </div>
