@@ -1,22 +1,8 @@
-import { collection, query, where, getDocs, getDoc, doc, setDoc, increment, serverTimestamp } from 'firebase/firestore'
+import { getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from './firebase-booking'
+import { getReferralCode } from './referral-code'
 
-export function getReferralCode(telefono: string): string {
-  const clean = telefono.replace(/\D/g, '').slice(-9)
-  let hash = 0
-  for (let i = 0; i < clean.length; i++) {
-    hash = ((hash << 5) - hash) + clean.charCodeAt(i)
-    hash |= 0
-  }
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
-  let code = 'WH'
-  let n = Math.abs(hash)
-  for (let i = 0; i < 4; i++) {
-    code += chars[n % chars.length]
-    n = Math.floor(n / chars.length)
-  }
-  return code
-}
+export { getReferralCode }
 
 export async function getReferralStats(
   code: string,
@@ -81,21 +67,4 @@ export async function getVouchersAttivi(telefono: string): Promise<VoucherAttivo
     })
   }
   return out
-}
-
-export async function registraReferral(codiceAmico: string, telefonoNuovoCliente: string): Promise<void> {
-  if (!codiceAmico || codiceAmico.length < 4) return
-  const ref = doc(db, 'referral', codiceAmico.toUpperCase())
-  await setDoc(ref, {
-    totale: increment(1),
-    inAttesa: increment(1),
-    ultimoAggiornamento: serverTimestamp(),
-  }, { merge: true })
-
-  // Salva anche il singolo evento
-  await setDoc(doc(collection(db, 'referral', codiceAmico.toUpperCase(), 'eventi'), telefonoNuovoCliente), {
-    telefono: telefonoNuovoCliente,
-    data: serverTimestamp(),
-    stato: 'in_attesa',
-  })
 }

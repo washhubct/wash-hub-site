@@ -1,5 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app'
-import { getFirestore, collection, addDoc, getDocs, query, where, doc, setDoc } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, getDocs, getDoc, query, where, doc, setDoc, increment, serverTimestamp } from 'firebase/firestore'
+import { getReferralCode } from './referral-code'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCj0IlKMARo0IxnqaHoN-rSd0HINuwf6Po',
@@ -39,6 +40,26 @@ export async function getBookedSlots(date: string): Promise<Set<string>> {
   return booked
 }
 
+export type EsitoCodiceAmico = 'ok' | 'self' | 'non-trovato'
+
+/**
+ * Valida un codice amico rispetto al telefono del cliente che prenota.
+ * - 'self': il codice è il proprio (calcolato dal telefono) o appartiene al proprio numero
+ * - 'non-trovato': il codice non esiste o il titolare non l'ha ancora attivato
+ *   (il doc referral nasce al primo lookup del titolare su /referral — senza
+ *   telefono del titolare il gestionale non potrebbe comunque emettere il voucher)
+ */
+export async function validaCodiceAmico(codice: string, telefonoCliente: string): Promise<EsitoCodiceAmico> {
+  const clean = codice.trim().toUpperCase()
+  const telClean = telefonoCliente.replace(/\D/g, '').slice(-9)
+  if (getReferralCode(telefonoCliente) === clean) return 'self'
+  const snap = await getDoc(doc(db, 'referral', clean))
+  const d = snap.exists() ? snap.data() : null
+  if (!d?.telefono) return 'non-trovato'
+  if (d.telefono === telClean) return 'self'
+  return 'ok'
+}
+
 export async function saveBooking(data: {
   servizio: string
   dataPren: string
@@ -51,9 +72,20 @@ export async function saveBooking(data: {
   referral?: string
   voucher?: string
 }) {
+  // Il codice amico conta solo se valido: esistente, attivato dal titolare, non self-referral.
+  let referralValido = ''
+  if (data.referral) {
+    try {
+      const esito = await validaCodiceAmico(data.referral, data.telefono)
+      if (esito === 'ok') referralValido = data.referral.trim().toUpperCase()
+    } catch {
+      // rete/rules: meglio perdere il referral che bloccare la prenotazione
+    }
+  }
+
   const noteExtra = [
     data.targa ? `Targa: ${data.targa}` : '',
-    data.referral ? `Referral: ${data.referral.toUpperCase()}` : '',
+    referralValido ? `Referral: ${referralValido}` : '',
     data.voucher ? `Voucher: ${data.voucher.toUpperCase()}` : '',
   ].filter(Boolean).join(' | ')
   const note = `[WEB] Servizio: ${data.servizio} | Tel: ${data.telefono}${noteExtra ? ' | ' + noteExtra : ''}`
@@ -69,16 +101,23 @@ export async function saveBooking(data: {
     saldo: '',
     saldato: '',
     sedeId: 'lungomare',
-    ...(data.referral && { referral: data.referral.toUpperCase() }),
+    ...(referralValido && { referral: referralValido }),
     ...(data.voucher && { voucherCodice: data.voucher.toUpperCase() }),
   })
 
-  // Registra il referral se presente
-  if (data.referral) {
-    const clean = data.referral.toUpperCase()
-    const ref = doc(db, 'referral', clean)
-    await setDoc(ref, { totale: 0, inAttesa: 0 }, { merge: true })
-    const { increment, serverTimestamp } = await import('firebase/firestore')
-    await setDoc(ref, { totale: increment(1), inAttesa: increment(1), ultimoAggiornamento: serverTimestamp() }, { merge: true })
+  if (referralValido) {
+    const ref = doc(db, 'referral', referralValido)
+    const telClean = data.telefono.replace(/\D/g, '').slice(-9)
+    try {
+      await setDoc(ref, { totale: increment(1), inAttesa: increment(1), ultimoAggiornamento: serverTimestamp() }, { merge: true })
+      // Evento di audit per il gestionale (chi ha usato il codice e quando)
+      await setDoc(doc(db, 'referral', referralValido, 'eventi', telClean), {
+        telefono: telClean,
+        data: serverTimestamp(),
+        stato: 'in_attesa',
+      }, { merge: true })
+    } catch {
+      // best effort — la prenotazione è già salvata
+    }
   }
 }

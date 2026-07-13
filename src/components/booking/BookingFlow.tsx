@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
-import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking } from '@/lib/firebase-booking'
+import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking, validaCodiceAmico, type EsitoCodiceAmico } from '@/lib/firebase-booking'
 import { getReferralCode, getVouchersAttivi, type VoucherAttivo } from '@/lib/referral'
 
 const SERVICES = [
@@ -65,6 +65,9 @@ export function BookingFlow() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
+  // Validazione live del codice amico (esistenza + anti self-referral)
+  const [referralEsito, setReferralEsito] = useState<EsitoCodiceAmico | 'idle' | 'checking'>('idle')
+
   // Voucher: dopo che il cliente digita il proprio telefono, lookup voucher attivi
   const [voucherDisponibili, setVoucherDisponibili] = useState<VoucherAttivo[]>([])
   const [voucherSel, setVoucherSel] = useState<string>('') // codice voucher applicato
@@ -114,6 +117,28 @@ export function BookingFlow() {
     }, 600)
     return () => clearTimeout(t)
   }, [tel])
+
+  // Validazione live codice amico: parte quando codice (6 char) e telefono sono completi.
+  // Debounce 600ms come il lookup voucher.
+  useEffect(() => {
+    const code = referral.trim().toUpperCase()
+    const telOk = tel.replace(/\D/g, '').length >= 9
+    if (!code) {
+      setReferralEsito('idle')
+      return
+    }
+    if (code.length < 6 || !telOk) {
+      setReferralEsito('idle')
+      return
+    }
+    setReferralEsito('checking')
+    const t = setTimeout(() => {
+      validaCodiceAmico(code, tel)
+        .then(e => setReferralEsito(e))
+        .catch(() => setReferralEsito('idle'))
+    }, 600)
+    return () => clearTimeout(t)
+  }, [referral, tel])
 
   const localToday = getLocalToday()
 
@@ -367,6 +392,16 @@ export function BookingFlow() {
                     <input type={type} value={value} placeholder={placeholder}
                       onChange={e => set(e.target.value)}
                       className="w-full border border-[#E8E8E4] rounded-xl px-4 py-3 text-[#0F0F0F] bg-white focus:outline-none focus:border-[#F5C518] transition-colors text-sm placeholder:text-[#C0C0BC]" />
+                    {label.startsWith('Codice amico') && referralEsito !== 'idle' && (
+                      <p className={`text-xs mt-1.5 ${
+                        referralEsito === 'ok' ? 'text-[#2E7D32]' : referralEsito === 'checking' ? 'text-[#6B6B6B]' : 'text-[#E63946]'
+                      }`}>
+                        {referralEsito === 'checking' && 'Verifica codice...'}
+                        {referralEsito === 'ok' && '✓ Codice valido — €5 di sconto sul tuo lavaggio'}
+                        {referralEsito === 'self' && 'Non puoi usare il tuo stesso codice 😉'}
+                        {referralEsito === 'non-trovato' && 'Codice non trovato. Chiedi al tuo amico di aprire wash-hub.it/referral per attivarlo.'}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
