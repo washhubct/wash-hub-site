@@ -169,8 +169,10 @@ export function BookingFlow() {
       })
       setDir(1)
       setStep('done')
-    } catch {
-      setError('Errore di connessione. Riprova tra qualche secondo.')
+    } catch (e) {
+      setError(e instanceof Error && e.message.startsWith('Siamo chiusi')
+        ? e.message
+        : 'Errore di connessione. Riprova tra qualche secondo.')
       setSaving(false)
     }
   }

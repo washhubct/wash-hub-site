@@ -23,8 +23,14 @@ export const SLOTS = [
 
 const GIORNI_CHIUSI = ['2026-06-02', '2026-08-15', '2026-12-25', '2026-12-26', '2026-01-01']
 
+// Periodi di chiusura continuativa (estremi inclusi, date ISO)
+export const CHIUSURE: { from: string; to: string; label: string }[] = [
+  { from: '2026-08-14', to: '2026-08-22', label: 'Chiusura estiva — riapriamo il 24 agosto' },
+]
+
 export function isGiornoChiuso(dateStr: string) {
   if (GIORNI_CHIUSI.includes(dateStr)) return true
+  if (CHIUSURE.some(c => dateStr >= c.from && dateStr <= c.to)) return true
   const d = new Date(dateStr + 'T00:00:00')
   return d.getDay() === 0
 }
@@ -72,6 +78,12 @@ export async function saveBooking(data: {
   referral?: string
   voucher?: string
 }) {
+  // Difesa in profondità: mai salvare prenotazioni in giorni chiusi
+  // (il calendario li nasconde già, ma protegge da URL manipolati o tab vecchie)
+  if (isGiornoChiuso(data.dataPren)) {
+    throw new Error('Siamo chiusi in questa data. Scegli un altro giorno.')
+  }
+
   // Il codice amico conta solo se valido: esistente, attivato dal titolare, non self-referral.
   let referralValido = ''
   if (data.referral) {

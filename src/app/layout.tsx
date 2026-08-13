@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, Instrument_Serif, Inter } from 'next/font/google'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
+import { ChiusuraEstivaPopup } from '@/components/ui/ChiusuraEstivaPopup'
 import './globals.css'
 
 const bricolage = Bricolage_Grotesque({
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="flex-1">{children}</main>
         <Footer />
         <WhatsAppButton />
+        <ChiusuraEstivaPopup />
       </body>
     </html>
   )
