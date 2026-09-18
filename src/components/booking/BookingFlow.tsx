@@ -10,7 +10,7 @@ const SERVICES = [
   { id: 'Lavaggio Tradizionale', icon: '🧼', name: 'Lavaggio Tradizionale', price: 'da €18', time: '~30 min', prezzoFisso: '' },
   // Prezzo base 29: SUV/monovolume e auto molto sporche costano di più, quindi
   // niente prezzo fisso in prenotazione — lo definisce l'operatore in sede (18/09/2026).
-  { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: 'da €29', time: '~60 min', prezzoFisso: '', note: 'SUV, monovolume e auto molto sporche: prezzo definito in sede' },
+  { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: 'da €29', time: '~60 min', prezzoFisso: '', note: 'Utilitaria e berlina €29 · SUV, monovolume e station wagon €35' },
   { id: 'Moto / Scooter', icon: '🏍️', name: 'Moto / Scooter', price: '€12', time: '~20 min', prezzoFisso: '12' },
   { id: 'Tappezzeria', icon: '🪡', name: 'Tappezzeria', price: 'Su preventivo', time: 'Varia', prezzoFisso: '' },
 ]
@@ -48,13 +48,15 @@ const slide: Variants = {
   exit: (dir: number) => ({ x: dir > 0 ? -60 : 60, opacity: 0, transition: { duration: 0.15 } }),
 }
 
-type Step = 'servizio' | 'moto-avviso' | 'data' | 'orario' | 'dati' | 'done'
-const STEP_ORDER: Step[] = ['servizio', 'data', 'orario', 'dati']
+type Step = 'servizio' | 'moto-avviso' | 'taglia' | 'data' | 'orario' | 'dati' | 'done'
+const STEP_ORDER: Step[] = ['servizio', 'taglia', 'data', 'orario', 'dati']
 
 export function BookingFlow() {
   const [step, setStep] = useState<Step>('servizio')
   const [dir, setDir] = useState(1)
   const [servizio, setServizio] = useState('')
+  // Performance Intenso: prezzo per taglia scelto dal cliente (decisione Guido 18/09/2026)
+  const [taglia, setTaglia] = useState<'' | 'standard' | 'suv'>('')
   const [data, setData] = useState('')
   const [orario, setOrario] = useState('')
   const [nome, setNome] = useState('')
@@ -88,10 +90,21 @@ export function BookingFlow() {
     if (id === 'Moto / Scooter') {
       setDir(1)
       setStep('moto-avviso')
+    } else if (id === 'Performance Intenso') {
+      setTaglia('')
+      goTo('taglia')
     } else {
       goTo('data')
     }
   }
+
+  const isIntenso = servizio === 'Performance Intenso'
+  const TAGLIE = [
+    { id: 'standard' as const, icon: '🚗', name: 'Utilitaria / berlina', desc: 'City car, compatte, berline', prezzo: '29' },
+    { id: 'suv' as const, icon: '🚙', name: 'SUV / monovolume / station wagon', desc: 'Auto grandi o a 7 posti', prezzo: '35' },
+  ]
+  // Nome servizio come lo vede il gestionale (nota [WEB] e riepiloghi)
+  const servizioLabel = isIntenso && taglia ? `Performance Intenso (${taglia === 'suv' ? 'SUV' : 'auto'})` : servizio
 
   useEffect(() => {
     if (!data) return
@@ -162,9 +175,11 @@ export function BookingFlow() {
     setSaving(true)
     setError('')
     try {
-      const prezzoFisso = SERVICES.find(s => s.id === servizio)?.prezzoFisso ?? ''
+      const prezzoFisso = isIntenso
+        ? (TAGLIE.find(t => t.id === taglia)?.prezzo ?? '')
+        : (SERVICES.find(s => s.id === servizio)?.prezzoFisso ?? '')
       await saveBooking({
-        servizio, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
+        servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
         ...(prezzoFisso && { prezzo: prezzoFisso }),
         ...(referral.trim() && { referral: referral.trim() }),
         ...(voucherSel && { voucher: voucherSel }),
@@ -207,7 +222,7 @@ export function BookingFlow() {
           Prenotazione confermata!
         </h2>
         <p className="text-[#6B6B6B] text-lg mb-2">
-          {servizio} · {new Date(data + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })} · ore {orario}
+          {servizioLabel} · {new Date(data + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })} · ore {orario}
         </p>
         <p className="text-[#6B6B6B]">Ti aspettiamo in Via Anfuso 35, Catania.</p>
 
@@ -228,7 +243,7 @@ export function BookingFlow() {
           </div>
         )}
 
-        <button onClick={() => { setStep('servizio'); setServizio(''); setData(''); setOrario(''); setNome(''); setTel(''); setVettura(''); setTarga(''); setReferral('') }}
+        <button onClick={() => { setStep('servizio'); setServizio(''); setTaglia(''); setData(''); setOrario(''); setNome(''); setTel(''); setVettura(''); setTarga(''); setReferral('') }}
           className="mt-8 px-6 py-3 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] font-semibold text-sm hover:bg-[#0F0F0F] hover:text-white transition-all">
           Nuova prenotazione
         </button>
@@ -281,6 +296,34 @@ export function BookingFlow() {
             </motion.div>
           )}
 
+          {/* STEP TAGLIA — solo Performance Intenso: prezzo per dimensione auto */}
+          {step === 'taglia' && (
+            <motion.div key="taglia" custom={dir} variants={slide} initial="initial" animate="animate" exit="exit">
+              <div className="flex items-center gap-3 mb-2">
+                <button onClick={() => goTo('servizio')} className="text-[#6B6B6B] hover:text-[#0F0F0F] transition-colors text-sm">← indietro</button>
+                <h2 className="font-display text-2xl font-black text-[#0F0F0F]"
+                  style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+                  Che auto hai?
+                </h2>
+              </div>
+              <p className="text-[#6B6B6B] text-sm mb-6">Il Performance Intenso ha un prezzo diverso in base alla dimensione dell&apos;auto.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {TAGLIE.map(t => (
+                  <button key={t.id} onClick={() => { setTaglia(t.id); goTo('data') }}
+                    className="flex items-center gap-4 p-4 rounded-2xl border-2 text-left transition-all hover:border-[#F5C518] hover:shadow-md active:scale-[0.98] border-[#E8E8E4] bg-white">
+                    <span className="text-3xl">{t.icon}</span>
+                    <div className="flex-1">
+                      <p className="font-bold text-[#0F0F0F] text-sm">{t.name}</p>
+                      <p className="text-[#6B6B6B] text-xs">{t.desc}</p>
+                    </div>
+                    <p className="font-black text-[#F5C518] text-lg">€{t.prezzo}</p>
+                  </button>
+                ))}
+              </div>
+              <p className="text-[#6B6B6B] text-xs mt-5 text-center">Auto molto sporca o pelo animale: supplemento valutato in sede.</p>
+            </motion.div>
+          )}
+
           {/* STEP MOTO — Promemoria raffreddamento */}
           {step === 'moto-avviso' && (
             <motion.div key="moto-avviso" custom={dir} variants={slide} initial="initial" animate="animate" exit="exit"
@@ -307,7 +350,7 @@ export function BookingFlow() {
           {step === 'data' && (
             <motion.div key="data" custom={dir} variants={slide} initial="initial" animate="animate" exit="exit">
               <div className="flex items-center gap-3 mb-6">
-                <button onClick={() => goTo('servizio')} className="text-[#6B6B6B] hover:text-[#0F0F0F] transition-colors text-sm">← indietro</button>
+                <button onClick={() => goTo(isIntenso ? 'taglia' : 'servizio')} className="text-[#6B6B6B] hover:text-[#0F0F0F] transition-colors text-sm">← indietro</button>
                 <h2 className="font-display text-2xl font-black text-[#0F0F0F]"
                   style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
                   Quando vieni?
@@ -379,7 +422,7 @@ export function BookingFlow() {
                 </h2>
               </div>
               <div className="bg-[#F5C518]/10 border border-[#F5C518]/30 rounded-2xl p-4 mb-6 text-sm">
-                <p className="font-semibold text-[#0F0F0F]">{servizio}</p>
+                <p className="font-semibold text-[#0F0F0F]">{servizioLabel}{isIntenso && taglia ? ` · €${TAGLIE.find(t => t.id === taglia)?.prezzo}` : ''}</p>
                 <p className="text-[#6B6B6B]">
                   {new Date(data + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })} · ore {orario}
                 </p>
