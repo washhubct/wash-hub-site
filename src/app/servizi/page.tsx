@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const LAVAGGI = [
   { icon: '🚿', name: 'Esterno', desc: 'Carrozzeria, vetri, cerchi, passaruota', price: 'da €14', time: '~15 min' },
   { icon: '🧼', name: 'Lavaggio Tradizionale', desc: 'Completo con aspirazione e cura abitacolo', price: 'da €18', time: '~30 min' },
-  { icon: '⭐', name: 'Performance Intenso', desc: 'Trattamento profondo, cera, finiture premium', price: '€29', time: '~60 min' },
+  { icon: '⭐', name: 'Performance Intenso', desc: 'Trattamento profondo, cera, finiture premium. SUV, monovolume e auto molto sporche: prezzo definito in sede.', price: 'da €29', time: '~60 min' },
   { icon: '🏍️', name: 'Moto / Scooter', desc: 'Lavaggio completo con delicatezza', price: '€12', time: '~20 min' },
   { icon: '🪡', name: 'Tappezzeria', desc: 'Interni, sedili, door panel — su prenotazione', price: 'Su preventivo', time: 'Varia' },
 ]

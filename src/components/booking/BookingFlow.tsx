@@ -8,7 +8,9 @@ import { getReferralCode, getVouchersAttivi, type VoucherAttivo } from '@/lib/re
 const SERVICES = [
   { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min', prezzoFisso: '' },
   { id: 'Lavaggio Tradizionale', icon: '🧼', name: 'Lavaggio Tradizionale', price: 'da €18', time: '~30 min', prezzoFisso: '' },
-  { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: '€29', time: '~60 min', prezzoFisso: '29' },
+  // Prezzo base 29: SUV/monovolume e auto molto sporche costano di più, quindi
+  // niente prezzo fisso in prenotazione — lo definisce l'operatore in sede (18/09/2026).
+  { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: 'da €29', time: '~60 min', prezzoFisso: '', note: 'SUV, monovolume e auto molto sporche: prezzo definito in sede' },
   { id: 'Moto / Scooter', icon: '🏍️', name: 'Moto / Scooter', price: '€12', time: '~20 min', prezzoFisso: '12' },
   { id: 'Tappezzeria', icon: '🪡', name: 'Tappezzeria', price: 'Su preventivo', time: 'Varia', prezzoFisso: '' },
 ]
@@ -270,6 +272,7 @@ export function BookingFlow() {
                     <div className="flex-1">
                       <p className="font-bold text-[#0F0F0F] text-sm">{s.name}</p>
                       <p className="text-[#6B6B6B] text-xs">{s.time}</p>
+                      {'note' in s && s.note && <p className="text-[#6B6B6B] text-[11px] mt-1 leading-snug">{s.note}</p>}
                     </div>
                     <p className="font-black text-[#F5C518] text-sm">{s.price}</p>
                   </button>

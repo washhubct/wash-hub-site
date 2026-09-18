@@ -26,7 +26,7 @@ const GIFT_CARDS = [
   {
     value: '100',
     label: '5–6 lavaggi',
-    desc: 'Fino a 5 lavaggi tradizionali, oppure 1 Performance Intenso (€29) + 3 completi e altro.',
+    desc: 'Fino a 5 lavaggi tradizionali, oppure 1 Performance Intenso (da €29) + 3 completi e altro.',
     color: 'bg-white border-[#E8E8E4]',
     highlight: false,
     stripeLink: 'https://buy.stripe.com/PLACEHOLDER_GIFT_100',
