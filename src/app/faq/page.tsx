@@ -11,7 +11,7 @@ const FAQ = [
   },
   {
     q: 'Quanto tempo ci vuole per un lavaggio?',
-    a: 'Il lavaggio esterno richiede circa 15 minuti. Il Lavaggio Tradizionale (esterno + interni) circa 30 minuti. Il Performance Intenso fino a 60 minuti. Per la tappezzeria i tempi variano in base al servizio richiesto.',
+    a: 'Il lavaggio esterno richiede circa 15 minuti. Il Lavaggio Tradizionale (esterno + interni) circa 30 minuti. Il Performance Intenso varia da veicolo a veicolo: dipende da dimensioni e da quanto è sporca l\'auto. Per la tappezzeria i tempi variano in base al servizio richiesto.',
   },
   {
     q: 'Cosa include il lavaggio esterno?',
@@ -20,6 +20,10 @@ const FAQ = [
   {
     q: 'Cosa include il Lavaggio Tradizionale?',
     a: 'Tutto il lavaggio esterno più aspirazione abitacolo, pulizia cruscotto e superfici interne, e cura dei vetri interni. Il risultato completo dentro e fuori.',
+  },
+  {
+    q: 'Cosa include il Performance Intenso?',
+    a: 'Tutto quello che fa il Lavaggio Tradizionale, fatto in modo intenso: esterno e interni curati a fondo, con trattamento schiumogeno. È pensato per le auto molto sporche o per chi vuole il massimo risultato. Il prezzo dipende dalla taglia dell\'auto e la durata dal veicolo.',
   },
   {
     q: 'Posso lavare la moto?',

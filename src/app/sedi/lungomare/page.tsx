@@ -66,7 +66,7 @@ export default function LungomareePage() {
               {[
                 { icon: '🧼', title: 'Lavaggio completo', desc: 'Esterno, interno, cerchi, vetri. Risultato impeccabile.' },
                 { icon: '🪡', title: 'Tappezzeria premium', desc: 'Sedili, tetti, pannelli porta. Servizio su prenotazione.' },
-                { icon: '✨', title: 'Performance Intenso', desc: 'Trattamento profondo con cera e lucidatura.' },
+                { icon: '✨', title: 'Performance Intenso', desc: 'Il Tradizionale spinto al massimo, con trattamento schiumogeno.' },
                 { icon: '🅿️', title: 'Parcheggio', desc: 'Ad ore o abbonamento mensile — posti coperti e scoperti.' },
               ].map(({ icon, title, desc }) => (
                 <div key={title} className="flex gap-4 p-5 rounded-2xl bg-white border border-[#E8E8E4]">

@@ -10,7 +10,7 @@ const SERVICES = [
   { id: 'Lavaggio Tradizionale', icon: '🧼', name: 'Lavaggio Tradizionale', price: 'da €18', time: '~30 min', prezzoFisso: '' },
   // Prezzo base 29: SUV/monovolume e auto molto sporche costano di più, quindi
   // niente prezzo fisso in prenotazione — lo definisce l'operatore in sede (18/09/2026).
-  { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: 'da €29', time: '~60 min', prezzoFisso: '', note: 'Utilitaria e berlina €29 · SUV, monovolume e station wagon €35' },
+  { id: 'Performance Intenso', icon: '⭐', name: 'Performance Intenso', price: 'da €29', time: 'Durata in base al veicolo', prezzoFisso: '', note: 'Tradizionale intenso con trattamento schiumogeno · Utilitaria e berlina €29 · SUV, monovolume e station wagon €35' },
   { id: 'Moto / Scooter', icon: '🏍️', name: 'Moto / Scooter', price: '€12', time: '~20 min', prezzoFisso: '12' },
   { id: 'Tappezzeria', icon: '🪡', name: 'Tappezzeria', price: 'Su preventivo', time: 'Varia', prezzoFisso: '' },
 ]
