@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/sedi/lungomare`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/sedi/paesi-etnei`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/prenota`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${base}/parcheggio-smart`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/chi-siamo`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${base}/contatti`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
   ]

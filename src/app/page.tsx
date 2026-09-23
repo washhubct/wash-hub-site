@@ -6,6 +6,7 @@ import { Reviews } from '@/components/home/Reviews'
 import { SediPreview } from '@/components/home/SediPreview'
 import { HomeCTA } from '@/components/home/HomeCTA'
 import { ReferralBanner } from '@/components/home/ReferralBanner'
+import { ParcheggioSmartBanner } from '@/components/home/ParcheggioSmartBanner'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function HomePage() {
       <Garanzia />
       <Differentiators />
       <SediPreview />
+      <ParcheggioSmartBanner />
       <Reviews />
       <ReferralBanner />
       <HomeCTA />

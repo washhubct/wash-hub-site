@@ -62,6 +62,7 @@ export function Footer() {
                 ['Flotte & Aziende', '/flotte'],
                 ['FAQ', '/faq'],
                 ['Chi siamo', '/chi-siamo'],
+                ['Parcheggio Smart', '/parcheggio-smart', 'new'],
                 ['Gift Card', '/gift-card', 'soon'],
                 ['Porta un amico', '/referral', ''],
                 ['Prenota', '/prenota'],
@@ -69,6 +70,7 @@ export function Footer() {
               ] as [string, string, string?][]).map(([l, h, badge]) => (
                 <li key={h} className="flex items-center gap-2">
                   <Link href={h} className="hover:text-white transition-colors">{l}</Link>
+                  {badge === 'new' && <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#C8A84E]/20 text-[#C8A84E]">New</span>}
                   {badge === 'soon' && <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#F5C518]/20 text-[#F5C518]">Soon</span>}
                 </li>
               ))}

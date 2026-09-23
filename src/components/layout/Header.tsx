@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 const NAV = [
   { label: 'Servizi', href: '/servizi' },
   { label: 'Le nostre sedi', href: '/sedi' },
+  { label: 'Parcheggio Smart', href: '/parcheggio-smart' },
   { label: 'Flotte', href: '/flotte' },
   { label: 'Gift Card', href: '/gift-card' },
   { label: 'Porta un amico', href: '/referral' },
