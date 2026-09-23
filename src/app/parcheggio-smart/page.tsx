@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 }
 
 const STEPS = [
-  { n: '1', t: 'Paghi online', d: 'Targa, cellulare, quante ore ti servono. Carta o Apple/Google Pay tramite SumUp.' },
-  { n: '2', t: 'Ricevi il codice', d: 'Un codice a 6 cifre valido solo nella fascia che hai scelto. Lo trovi subito a schermo e lo salvi su WhatsApp.' },
+  { n: '1', t: 'Paghi online', d: 'Targa, cellulare, email e quante ore ti servono. Carta o Apple/Google Pay tramite SumUp.' },
+  { n: '2', t: 'Ricevi il codice', d: 'Un codice a 6 cifre valido solo nella fascia che hai scelto. Lo vedi subito a schermo e lo ricevi via email.' },
   { n: '3', t: 'Apri il cancello', d: 'Digiti il codice sul tastierino in entrata e in uscita. Nessuna chiave, nessuno da chiamare.' },
 ]
 

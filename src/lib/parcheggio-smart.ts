@@ -25,6 +25,8 @@ export interface StatoCodice {
   fine: string
   inizioTs: number
   fineTs: number
+  email: string | null      // mascherata
+  emailInviata: boolean
 }
 
 // Stessa tariffa del gestionale: €2/h max €8 fino a 6h, max €15 fino a 24h. Minimo 2h.
@@ -60,7 +62,7 @@ export async function getConfigParcheggio(): Promise<ConfigParcheggio> {
 }
 
 export async function creaCheckout(payload: {
-  targa: string; telefono: string; vettura?: string; nome?: string; email?: string; ore: number; inizio: string
+  targa: string; telefono: string; vettura?: string; nome: string; email: string; ore: number; inizio: string; consensoMarketing: boolean
 }): Promise<{ id: string; url: string; prezzo: number }> {
   const r = await fetch(`${PARCHEGGIO_API}/checkout`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),

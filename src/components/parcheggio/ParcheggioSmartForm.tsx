@@ -12,7 +12,9 @@ export function ParcheggioSmartForm() {
   const [targa, setTarga] = useState('')
   const [telefono, setTelefono] = useState('')
   const [vettura, setVettura] = useState('')
+  const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
+  const [marketing, setMarketing] = useState(false)
   const [ore, setOre] = useState(2)
   const [quando, setQuando] = useState<'now' | 'custom'>('now')
   const [inizio, setInizio] = useState(localNow())
@@ -35,7 +37,9 @@ export function ParcheggioSmartForm() {
 
   const targaOk = /^[A-Z0-9]{5,10}$/.test(targa.replace(/[^A-Z0-9]/g, ''))
   const telOk = /^\+?[0-9 ]{8,16}$/.test(telefono.trim())
-  const pronto = targaOk && telOk && privacy && cfg.attivo && !loading
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())
+  const nomeOk = nome.trim().length >= 2
+  const pronto = targaOk && telOk && emailOk && nomeOk && privacy && cfg.attivo && !loading
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -44,8 +48,8 @@ export function ParcheggioSmartForm() {
     try {
       const r = await creaCheckout({
         targa: targa.toUpperCase().replace(/[^A-Z0-9]/g, ''),
-        telefono: telefono.trim(), vettura: vettura.trim(), email: email.trim(),
-        ore, inizio: quando === 'now' ? 'now' : inizio,
+        telefono: telefono.trim(), vettura: vettura.trim(), nome: nome.trim(), email: email.trim(),
+        ore, inizio: quando === 'now' ? 'now' : inizio, consensoMarketing: marketing,
       })
       try { sessionStorage.setItem('ps_last', r.id) } catch { /* private mode */ }
       window.location.href = r.url
@@ -83,14 +87,19 @@ export function ParcheggioSmartForm() {
             onChange={e => setTelefono(e.target.value)} required />
         </div>
         <div>
+          <label className={label} htmlFor="ps-nome">Nome</label>
+          <input id="ps-nome" className={input} placeholder="Nome e cognome" value={nome} autoComplete="name" onChange={e => setNome(e.target.value)} required />
+        </div>
+        <div>
+          <label className={label} htmlFor="ps-email">Email</label>
+          <input id="ps-email" className={input} placeholder="nome@email.it" value={email} type="email" autoComplete="email" onChange={e => setEmail(e.target.value)} required />
+        </div>
+        <div className="sm:col-span-2">
           <label className={label} htmlFor="ps-vettura">Auto <span className="normal-case font-medium tracking-normal">(facoltativo)</span></label>
           <input id="ps-vettura" className={input} placeholder="Es. Fiat 500" value={vettura} onChange={e => setVettura(e.target.value)} />
         </div>
-        <div>
-          <label className={label} htmlFor="ps-email">Email per la ricevuta <span className="normal-case font-medium tracking-normal">(facoltativo)</span></label>
-          <input id="ps-email" className={input} placeholder="nome@email.it" value={email} type="email" autoComplete="email" onChange={e => setEmail(e.target.value)} />
-        </div>
       </div>
+      <p className="mt-3 text-xs text-[#6B6B6B]">Il codice lo vedi subito a schermo e te lo inviamo anche via email.</p>
 
       {/* Quando */}
       <div className="mt-6">
@@ -145,10 +154,16 @@ export function ParcheggioSmartForm() {
         </div>
       </div>
 
-      <label className="flex items-start gap-3 mt-5 text-sm text-[#6B6B6B] cursor-pointer">
-        <input type="checkbox" checked={privacy} onChange={e => setPrivacy(e.target.checked)} className="mt-1 accent-[#C8A84E]" />
-        <span>Ho letto la <a href="/privacy" className="underline hover:text-[#0F0F0F]">privacy policy</a>. Il codice vale solo nella fascia scelta: oltre l&rsquo;orario si paga la differenza al banco.</span>
-      </label>
+      <div className="mt-5 space-y-3">
+        <label className="flex items-start gap-3 text-sm text-[#6B6B6B] cursor-pointer">
+          <input type="checkbox" checked={privacy} onChange={e => setPrivacy(e.target.checked)} className="mt-1 accent-[#C8A84E]" required />
+          <span>Ho letto la <a href="/privacy" className="underline hover:text-[#0F0F0F]">privacy policy</a> e accetto le <a href="/termini" className="underline hover:text-[#0F0F0F]">condizioni</a>. Il codice vale solo nella fascia scelta: oltre l&rsquo;orario si paga la differenza al banco.</span>
+        </label>
+        <label className="flex items-start gap-3 text-sm cursor-pointer rounded-xl border border-[#C8A84E]/40 bg-[#C8A84E]/10 px-4 py-3">
+          <input type="checkbox" checked={marketing} onChange={e => setMarketing(e.target.checked)} className="mt-1 accent-[#C8A84E]" />
+          <span className="text-[#0F0F0F]"><b>Sì, tienimi aggiornato.</b> <span className="text-[#6B6B6B]">Accetto di ricevere via email e SMS novità, promozioni e servizi WASH HUB. Posso disiscrivermi quando voglio.</span></span>
+        </label>
+      </div>
 
       {err && <p className="mt-4 text-sm font-semibold text-[#E63946]">{err}</p>}
       {cfgErr && <p className="mt-4 text-xs text-[#6B6B6B]">Connessione lenta: se il pagamento non si apre, riprova tra qualche secondo.</p>}

@@ -72,7 +72,6 @@ export function ConfermaCodice() {
     )
   }
 
-  const testo = `Codice parcheggio WASH HUB: ${dati.codice}\nTarga ${dati.targa} · ${dati.ore}h\nDal ${fmtLocal(dati.inizio)} alle ${fmtLocal(dati.fine)}\nDigita il codice sul tastierino in entrata e in uscita.\n${INDIRIZZO}`
   const copia = () => navigator.clipboard?.writeText(dati.codice!).then(() => { setCopiato(true); setTimeout(() => setCopiato(false), 2000) })
 
   return (
@@ -100,11 +99,16 @@ export function ConfermaCodice() {
         <li className="flex gap-3"><b className="text-[#C8A84E] font-black">3</b> All&rsquo;uscita ripeti il codice sul tastierino interno. Vale fino all&rsquo;orario indicato.</li>
       </ol>
 
-      <div className="mt-8 flex flex-col sm:flex-row gap-3">
-        <a href={`https://wa.me/?text=${encodeURIComponent(testo)}`} target="_blank" rel="noopener"
-          className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-[#25D366] text-white font-bold hover:brightness-95 transition">
-          💬 Salvalo su WhatsApp
-        </a>
+      {dati.email && (
+        <p className="mt-6 text-sm text-[#0F0F0F] rounded-xl bg-[#C8A84E]/10 border border-[#C8A84E]/40 px-4 py-3">
+          ✉️ {dati.emailInviata ? 'Ti abbiamo inviato il codice anche a' : 'Ti stiamo inviando il codice anche a'} <b>{dati.email}</b>. Controlla anche lo spam.
+        </p>
+      )}
+      <div className="mt-6 flex flex-col sm:flex-row gap-3">
+        <button onClick={copia}
+          className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-[#0F0F0F] text-white font-bold hover:bg-[#1a1a1a] transition">
+          {copiato ? '✓ Copiato' : '📋 Copia il codice'}
+        </button>
         <a href={MAPS_URL} target="_blank" rel="noopener"
           className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-[#F0F0EC] text-[#0F0F0F] font-bold hover:bg-[#E8E8E4] transition">
           📍 Portami al parcheggio
