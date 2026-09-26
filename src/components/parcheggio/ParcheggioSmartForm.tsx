@@ -6,6 +6,8 @@ import { creaCheckout, fmtEur, getConfigParcheggio, localNow, prezzoParcheggioOr
 const pad = (n: number) => String(n).padStart(2, '0')
 const fmt = (d: Date) => `${d.toLocaleDateString('it-IT', { weekday: 'short' })} ${pad(d.getDate())}/${pad(d.getMonth() + 1)} · ${pad(d.getHours())}:${pad(d.getMinutes())}`
 
+const CF_RE = /^[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$/
+
 export function ParcheggioSmartForm() {
   const [cfg, setCfg] = useState<ConfigParcheggio>({ attivo: true, minOre: 2, maxOre: 24 })
   const [cfgErr, setCfgErr] = useState(false)
@@ -15,6 +17,11 @@ export function ParcheggioSmartForm() {
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
   const [marketing, setMarketing] = useState(false)
+  const [cf, setCf] = useState('')
+  const [via, setVia] = useState('')
+  const [cap, setCap] = useState('')
+  const [citta, setCitta] = useState('')
+  const [provincia, setProvincia] = useState('')
   const [ore, setOre] = useState(2)
   const [quando, setQuando] = useState<'now' | 'custom'>('now')
   const [inizio, setInizio] = useState(localNow())
@@ -39,7 +46,13 @@ export function ParcheggioSmartForm() {
   const telOk = /^\+?[0-9 ]{8,16}$/.test(telefono.trim())
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())
   const nomeOk = nome.trim().length >= 2
-  const pronto = targaOk && telOk && emailOk && nomeOk && privacy && cfg.attivo && !loading
+  const cfClean = cf.replace(/\s/g, '').toUpperCase()
+  const cfOk = CF_RE.test(cfClean) || /^\d{11}$/.test(cfClean)
+  const viaOk = via.trim().length >= 3
+  const capOk = /^\d{5}$/.test(cap.trim())
+  const cittaOk = citta.trim().length >= 2
+  const provOk = /^[A-Za-z]{2}$/.test(provincia.trim())
+  const pronto = targaOk && telOk && emailOk && nomeOk && cfOk && viaOk && capOk && cittaOk && provOk && privacy && cfg.attivo && !loading
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -50,6 +63,7 @@ export function ParcheggioSmartForm() {
         targa: targa.toUpperCase().replace(/[^A-Z0-9]/g, ''),
         telefono: telefono.trim(), vettura: vettura.trim(), nome: nome.trim(), email: email.trim(),
         ore, inizio: quando === 'now' ? 'now' : inizio, consensoMarketing: marketing,
+        cf: cfClean, via: via.trim(), cap: cap.trim(), citta: citta.trim(), provincia: provincia.trim().toUpperCase(),
       })
       try { sessionStorage.setItem('ps_last', r.id) } catch { /* private mode */ }
       window.location.href = r.url
@@ -100,6 +114,37 @@ export function ParcheggioSmartForm() {
         </div>
       </div>
       <p className="mt-3 text-xs text-[#6B6B6B]">Il codice lo vedi subito a schermo e te lo inviamo anche via email.</p>
+
+      {/* Dati fattura: per ogni acquisto online emettiamo fattura elettronica (LAST MILE SRL) */}
+      <div className="mt-6">
+        <div className={label}>Dati per la fattura</div>
+        <p className="text-xs text-[#6B6B6B] mb-3">Per ogni acquisto online emettiamo fattura elettronica: la ricevi in PDF insieme al codice.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="sm:col-span-2">
+            <label className={label} htmlFor="ps-cf">Codice fiscale <span className="normal-case font-medium tracking-normal">(o P.IVA)</span></label>
+            <input id="ps-cf" className={`${input} uppercase tracking-[0.12em] font-mono`} placeholder="RSSMRA80A01C351X" value={cf}
+              onChange={e => setCf(e.target.value.toUpperCase())} autoComplete="off" maxLength={16} required />
+          </div>
+          <div className="sm:col-span-2">
+            <label className={label} htmlFor="ps-via">Indirizzo</label>
+            <input id="ps-via" className={input} placeholder="Via e numero civico" value={via} autoComplete="street-address" onChange={e => setVia(e.target.value)} required />
+          </div>
+          <div>
+            <label className={label} htmlFor="ps-cap">CAP</label>
+            <input id="ps-cap" className={input} placeholder="95127" value={cap} inputMode="numeric" autoComplete="postal-code" maxLength={5} onChange={e => setCap(e.target.value.replace(/\D/g, ''))} required />
+          </div>
+          <div className="grid grid-cols-[1fr_72px] gap-3">
+            <div>
+              <label className={label} htmlFor="ps-citta">Città</label>
+              <input id="ps-citta" className={input} placeholder="Catania" value={citta} autoComplete="address-level2" onChange={e => setCitta(e.target.value)} required />
+            </div>
+            <div>
+              <label className={label} htmlFor="ps-prov">Prov.</label>
+              <input id="ps-prov" className={`${input} uppercase text-center`} placeholder="CT" value={provincia} maxLength={2} onChange={e => setProvincia(e.target.value.toUpperCase())} required />
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Quando */}
       <div className="mt-6">
