@@ -6,11 +6,24 @@ import { creaCheckout, fmtEur, getConfigParcheggio, localNow, prezzoParcheggioOr
 const pad = (n: number) => String(n).padStart(2, '0')
 const fmt = (d: Date) => `${d.toLocaleDateString('it-IT', { weekday: 'short' })} ${pad(d.getDate())}/${pad(d.getMonth() + 1)} · ${pad(d.getHours())}:${pad(d.getMinutes())}`
 
+// Prefissi telefonici: Italia di default, poi i Paesi più probabili per chi parcheggia a Catania
+const PREFISSI: { iso: string; code: string; flag: string }[] = [
+  { iso: 'IT', code: '39', flag: '🇮🇹' }, { iso: 'FR', code: '33', flag: '🇫🇷' }, { iso: 'DE', code: '49', flag: '🇩🇪' },
+  { iso: 'ES', code: '34', flag: '🇪🇸' }, { iso: 'GB', code: '44', flag: '🇬🇧' }, { iso: 'CH', code: '41', flag: '🇨🇭' },
+  { iso: 'AT', code: '43', flag: '🇦🇹' }, { iso: 'BE', code: '32', flag: '🇧🇪' }, { iso: 'NL', code: '31', flag: '🇳🇱' },
+  { iso: 'PT', code: '351', flag: '🇵🇹' }, { iso: 'PL', code: '48', flag: '🇵🇱' }, { iso: 'RO', code: '40', flag: '🇷🇴' },
+  { iso: 'GR', code: '30', flag: '🇬🇷' }, { iso: 'MT', code: '356', flag: '🇲🇹' }, { iso: 'IE', code: '353', flag: '🇮🇪' },
+  { iso: 'SE', code: '46', flag: '🇸🇪' }, { iso: 'DK', code: '45', flag: '🇩🇰' }, { iso: 'NO', code: '47', flag: '🇳🇴' },
+  { iso: 'CZ', code: '420', flag: '🇨🇿' }, { iso: 'HU', code: '36', flag: '🇭🇺' }, { iso: 'AL', code: '355', flag: '🇦🇱' },
+  { iso: 'US', code: '1', flag: '🇺🇸' }, { iso: 'TN', code: '216', flag: '🇹🇳' }, { iso: 'MA', code: '212', flag: '🇲🇦' },
+]
+
 export function ParcheggioSmartForm() {
   const [cfg, setCfg] = useState<ConfigParcheggio>({ attivo: true, minOre: 2, maxOre: 24 })
   const [cfgErr, setCfgErr] = useState(false)
   const [targa, setTarga] = useState('')
   const [telefono, setTelefono] = useState('')
+  const [prefisso, setPrefisso] = useState('39')
   const [vettura, setVettura] = useState('')
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
@@ -36,7 +49,10 @@ export function ParcheggioSmartForm() {
   }, [quando, inizio, ore])
 
   const targaOk = /^[A-Z0-9]{5,10}$/.test(targa.replace(/[^A-Z0-9]/g, ''))
-  const telOk = /^\+?[0-9 ]{8,16}$/.test(telefono.trim())
+  const telDigits = telefono.replace(/\D/g, '').replace(/^0+/, prefisso === '39' ? '' : '0')
+  // Italia: numero nudo come nel CRM (es. 3331234567); estero: E.164 con prefisso
+  const telefonoCompleto = prefisso === '39' ? telDigits : `+${prefisso}${telDigits}`
+  const telOk = telDigits.length >= (prefisso === '39' ? 9 : 6) && telefonoCompleto.length <= 16
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())
   const nomeOk = nome.trim().length >= 2
   const pronto = targaOk && telOk && emailOk && nomeOk && privacy && cfg.attivo && !loading
@@ -48,7 +64,7 @@ export function ParcheggioSmartForm() {
     try {
       const r = await creaCheckout({
         targa: targa.toUpperCase().replace(/[^A-Z0-9]/g, ''),
-        telefono: telefono.trim(), vettura: vettura.trim(), nome: nome.trim(), email: email.trim(),
+        telefono: telefonoCompleto, vettura: vettura.trim(), nome: nome.trim(), email: email.trim(),
         ore, inizio: quando === 'now' ? 'now' : inizio, consensoMarketing: marketing,
       })
       try { sessionStorage.setItem('ps_last', r.id) } catch { /* private mode */ }
@@ -83,8 +99,13 @@ export function ParcheggioSmartForm() {
         </div>
         <div>
           <label className={label} htmlFor="ps-tel">Cellulare</label>
-          <input id="ps-tel" className={input} placeholder="333 1234567" value={telefono} type="tel" autoComplete="tel"
-            onChange={e => setTelefono(e.target.value)} required />
+          <div className="flex gap-2">
+            <select aria-label="Prefisso internazionale" className={`${input} w-[7.5rem] shrink-0 px-2`} value={prefisso} onChange={e => setPrefisso(e.target.value)}>
+              {PREFISSI.map(p => <option key={p.iso} value={p.code}>{p.flag} +{p.code}</option>)}
+            </select>
+            <input id="ps-tel" className={input} placeholder={prefisso === '39' ? '333 1234567' : 'Numero senza prefisso'} value={telefono} type="tel" autoComplete="tel-national" inputMode="tel"
+              onChange={e => setTelefono(e.target.value)} required />
+          </div>
         </div>
         <div>
           <label className={label} htmlFor="ps-nome">Nome</label>
