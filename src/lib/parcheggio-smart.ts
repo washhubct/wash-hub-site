@@ -63,7 +63,6 @@ export async function getConfigParcheggio(): Promise<ConfigParcheggio> {
 
 export async function creaCheckout(payload: {
   targa: string; telefono: string; vettura?: string; nome: string; email: string; ore: number; inizio: string; consensoMarketing: boolean
-  cf: string; via: string; cap: string; citta: string; provincia: string
 }): Promise<{ id: string; url: string; prezzo: number }> {
   const r = await fetch(`${PARCHEGGIO_API}/checkout`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
