@@ -100,10 +100,10 @@ export function ParcheggioSmartForm() {
         <div>
           <label className={label} htmlFor="ps-tel">Cellulare</label>
           <div className="flex gap-2">
-            <select aria-label="Prefisso internazionale" className={`${input} w-[7.5rem] shrink-0 px-2`} value={prefisso} onChange={e => setPrefisso(e.target.value)}>
+            <select aria-label="Prefisso internazionale" className={`${input} !w-[6.5rem] flex-none px-2`} value={prefisso} onChange={e => setPrefisso(e.target.value)}>
               {PREFISSI.map(p => <option key={p.iso} value={p.code}>{p.flag} +{p.code}</option>)}
             </select>
-            <input id="ps-tel" className={input} placeholder={prefisso === '39' ? '333 1234567' : 'Numero senza prefisso'} value={telefono} type="tel" autoComplete="tel-national" inputMode="tel"
+            <input id="ps-tel" className={`${input} flex-1 min-w-0`} placeholder={prefisso === '39' ? '333 1234567' : 'Numero senza prefisso'} value={telefono} type="tel" autoComplete="tel-national" inputMode="tel"
               onChange={e => setTelefono(e.target.value)} required />
           </div>
         </div>
