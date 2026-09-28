@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 // Popup novità Parcheggio Smart: visibile per 15 giorni dal lancio (28/09 → 13/10/2026),
-// una volta per sessione, mai sulla pagina del Parcheggio Smart stessa.
+// una volta per sessione, SOLO in home page (quando si atterra sul sito).
 const FINE = '2026-10-13'
 const STORAGE_KEY = 'parcheggio-smart-novita-vista'
 
@@ -14,7 +14,7 @@ export function ParcheggioSmartPopup() {
   const pathname = usePathname()
 
   useEffect(() => {
-    if (pathname?.startsWith('/parcheggio-smart')) return
+    if (pathname !== '/') return
     const oggi = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0]
     if (oggi > FINE) return
     try { if (sessionStorage.getItem(STORAGE_KEY)) return } catch { /* private mode */ }
