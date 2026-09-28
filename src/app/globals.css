@@ -16,6 +16,8 @@
 }
 
 html { scroll-behavior: smooth; }
+/* Mai scroll orizzontale: animazioni laterali e aloni (es. bottone WhatsApp) non devono allargare la pagina */
+html, body { overflow-x: hidden; overflow-x: clip; }
 
 body {
   background: #FAFAF7;

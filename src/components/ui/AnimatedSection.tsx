@@ -15,10 +15,13 @@ export function AnimatedSection({ children, className, delay = 0, direction = 'u
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-8%' })
 
+  // Su mobile niente spostamento laterale: l'elemento sporgerebbe oltre il bordo dello schermo finché non entra
+  // in vista, e iOS Safari rende la pagina scorrevole a destra/sinistra (visto 28/09/2026 su home e parcheggio-smart).
+  const laterale = typeof window !== 'undefined' && window.innerWidth >= 768
   const initial = {
     opacity: 0,
-    y: direction === 'up' ? 40 : 0,
-    x: direction === 'left' ? -40 : direction === 'right' ? 40 : 0,
+    y: direction === 'up' || (!laterale && direction !== 'none') ? 40 : 0,
+    x: laterale ? (direction === 'left' ? -40 : direction === 'right' ? 40 : 0) : 0,
   }
 
   return (
