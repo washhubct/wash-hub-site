@@ -53,7 +53,7 @@ export default function ReferralPage() {
 
           {/* Come funziona */}
           <AnimatedSection className="mb-16">
-            <h2 className="font-display text-2xl font-black text-[#0F0F0F] mb-6 text-center"
+            <h2 id="come-funziona" className="font-display text-2xl font-black text-[#0F0F0F] mb-6 text-center scroll-mt-28"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
               Come funziona
             </h2>

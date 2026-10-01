@@ -11,7 +11,7 @@ const NAV = [
   { label: 'Parcheggio Smart', href: '/parcheggio-smart' },
   { label: 'Flotte', href: '/flotte' },
   { label: 'Gift Card', href: '/gift-card' },
-  { label: 'Porta un amico', href: '/referral' },
+  { label: 'Porta un amico', href: '/referral', badge: '€5' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contatti', href: '/contatti' },
 ]
@@ -82,10 +82,11 @@ export function Header() {
 
               {/* Nav links — desktop */}
               <nav className="hidden md:flex items-center">
-                {NAV.map(({ label, href }) => (
+                {NAV.map(({ label, href, badge }) => (
                   <Link key={href} href={href}
-                    className="px-3 py-1.5 text-sm font-medium text-white/70 hover:text-white rounded-full hover:bg-white/5 transition-all">
+                    className="px-3 py-1.5 text-sm font-medium text-white/70 hover:text-white rounded-full hover:bg-white/5 transition-all inline-flex items-center gap-1.5">
                     {label}
+                    {badge && <span className="px-1.5 py-0.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-[10px] font-black leading-none">{badge}</span>}
                   </Link>
                 ))}
               </nav>
@@ -121,15 +122,16 @@ export function Header() {
               className="absolute top-6 right-6 text-white/60 hover:text-white p-2">
               ✕
             </button>
-            {NAV.map(({ label, href }, i) => (
+            {NAV.map(({ label, href, badge }, i) => (
               <motion.div key={href}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}>
                 <Link href={href} onClick={() => setOpen(false)}
-                  className="block text-3xl font-black text-white hover:text-[#F5C518] transition-colors py-3 text-center"
+                  className="flex items-center justify-center gap-2 text-3xl font-black text-white hover:text-[#F5C518] transition-colors py-3 text-center"
                   style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
                   {label}
+                  {badge && <span className="px-2 py-1 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-black leading-none">{badge}</span>}
                 </Link>
               </motion.div>
             ))}

@@ -21,10 +21,10 @@ export default function HomePage() {
       <SocialProof />
       <Garanzia />
       <Differentiators />
+      <ReferralBanner />
       <SediPreview />
       <ParcheggioSmartBanner />
       <Reviews />
-      <ReferralBanner />
       <HomeCTA />
     </>
   )

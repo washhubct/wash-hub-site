@@ -90,6 +90,21 @@ export function Hero() {
           </Link>
         </motion.div>
 
+        {/* Porta un amico: sopra la piega anche su mobile (prima era l'ottava sezione, nero su nero) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: 'spring', damping: 20, stiffness: 70, delay: 0.8 }}
+          className="mt-6 flex justify-center"
+        >
+          <Link href="/referral"
+            className="group inline-flex items-center gap-2 pl-2 pr-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-semibold hover:bg-white/15 hover:border-[#F5C518]/60 transition-all">
+            <span className="w-7 h-7 rounded-full bg-[#F5C518] text-[#0F0F0F] flex items-center justify-center text-sm">🎁</span>
+            <span>Porta un amico <span className="text-white/60 font-medium">·</span> ogni amico vale <span className="text-[#F5C518] font-black">€5</span></span>
+            <span className="text-white/50 group-hover:text-[#F5C518] group-hover:translate-x-0.5 transition-all">→</span>
+          </Link>
+        </motion.div>
+
         {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
