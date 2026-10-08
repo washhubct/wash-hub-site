@@ -29,11 +29,11 @@ export function ReferralBanner() {
                 </p>
                 <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-black leading-[0.95] tracking-tight mb-4"
                   style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                  Ogni amico<br className="hidden sm:block" /> vale €5.
+                  €5 a te.<br className="hidden sm:block" /> €5 a lui.
                 </h2>
                 <p className="text-[#0F0F0F]/75 text-base md:text-lg max-w-md mx-auto md:mx-0 leading-relaxed">
-                  Hai già un codice personale. Ogni amico che prenota con il tuo codice
-                  ti regala €5 sul prossimo lavaggio. Senza limiti, per sempre.
+                  Hai già un codice personale. Il tuo amico ha €5 di sconto sul primo lavaggio,
+                  tu €5 sul prossimo. Senza limiti.
                 </p>
 
                 <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">

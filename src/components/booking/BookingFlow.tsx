@@ -228,9 +228,9 @@ export function BookingFlow() {
 
         {codiceCliente && (
           <div className="mt-8 mx-auto max-w-md p-6 rounded-2xl bg-[#0F0F0F] text-white text-left">
-            <p className="text-[#F5C518] text-xs font-semibold uppercase tracking-[0.18em] mb-2">Porta un amico, guadagni €5</p>
+            <p className="text-[#F5C518] text-xs font-semibold uppercase tracking-[0.18em] mb-2">Porta un amico: €5 a te, €5 a lui</p>
             <p className="text-white/70 text-sm mb-4">
-              Condividi il tuo codice. Per ogni amico che prenota, ti regaliamo <strong className="text-white">€5 di sconto</strong> sul prossimo lavaggio.
+              Condividi il tuo codice: il tuo amico ha <strong className="text-white">€5 di sconto</strong> sul primo lavaggio e tu <strong className="text-white">€5</strong> sul prossimo.
             </p>
             <div className="flex items-center justify-between gap-3 p-3 rounded-xl bg-white/5 border border-white/10 mb-4">
               <span className="text-[10px] uppercase tracking-wider text-white/40">Il tuo codice</span>
