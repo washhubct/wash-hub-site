@@ -61,7 +61,7 @@ export default function ReferralPage() {
               {[
                 { step: '01', title: 'Trova il tuo codice', desc: 'Inserisci il tuo numero di telefono qui sotto.' },
                 { step: '02', title: 'Condividilo', desc: 'Il tuo amico lo inserisce quando prenota online: €5 di sconto subito per lui.' },
-                { step: '03', title: 'Guadagni anche tu', desc: 'Quando il tuo amico ha lavato l’auto, a te arrivano €5 sul prossimo lavaggio.' },
+                { step: '03', title: 'Guadagni anche tu', desc: 'Quando il tuo amico ha lavato l’auto, a te arrivano €5 sul prossimo lavaggio, da usare entro un mese.' },
               ].map(({ step, title, desc }) => (
                 <div key={step} className="p-6 rounded-2xl bg-white border border-[#E8E8E4] text-center">
                   <span className="font-black text-3xl text-[#F5C518] block mb-2">{step}</span>
