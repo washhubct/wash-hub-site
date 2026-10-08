@@ -27,9 +27,6 @@ export function PrimaDopo() {
           <h2 className="font-display text-4xl md:text-6xl font-black leading-[0.95]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
             Trascina.<br /><span className="text-[#F5C518]">Guarda la differenza.</span>
           </h2>
-          <p className="mt-5 text-white/60 leading-relaxed max-w-md">
-            A Catania l&apos;auto si sporca in fretta. Noi la laviamo a mano, pezzo per pezzo, finché non torna come deve.
-          </p>
           <Link href="/prenota" className="mt-7 inline-flex items-center px-7 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black hover:scale-105 transition-transform">
             Prenota il lavaggio →
           </Link>

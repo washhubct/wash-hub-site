@@ -1,4 +1,5 @@
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { AutoVideo } from '@/components/ui/AutoVideo'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
@@ -30,15 +31,13 @@ export function ComeLaviamo() {
             <AnimatedSection key={p.n} delay={i * 0.08} className="snap-start shrink-0 w-[78%] sm:w-[46%] md:w-auto">
               <div className="h-full rounded-3xl overflow-hidden bg-white border border-[#0F0F0F]/10">
                 <div className="relative aspect-[4/5]">
-                  <video src={`${BASE}/brand/passi/${p.n}.mp4`} poster={`${BASE}/brand/passi/${p.n}.jpg`}
-                    autoPlay muted loop playsInline preload="metadata" aria-hidden
+                  <AutoVideo src={`${BASE}/brand/passi/${p.n}.mp4`} poster={`${BASE}/brand/passi/${p.n}.jpg`}
                     className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-transparent" />
                   <span className="absolute top-4 left-4 font-black text-5xl text-[#F5C518]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>{p.n}</span>
                 </div>
-                <div className="p-5">
+                <div className="px-5 py-4">
                   <div className="font-black text-xl text-[#0F0F0F]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>{p.titolo}</div>
-                  <p className="mt-2 text-sm text-[#0F0F0F]/60 leading-relaxed">{p.testo}</p>
                 </div>
               </div>
             </AnimatedSection>
