@@ -2,15 +2,17 @@
 
 import { useInView, motion } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
+import reviewsData from '@/data/reviews.json'
 
 const STATS = [
   { value: 4, suffix: '+', label: 'Anni di attività' },
   { value: 58300, suffix: '+', label: 'Auto lavate' },
-  { value: 4.9, suffix: '★', label: 'Rating Google' },
+  // Rating reale da Google Places (npm run fetch-reviews), mai scritto a mano
+  { value: reviewsData.rating, suffix: '★', label: 'Rating Google', decimali: 1 },
   { value: 2, suffix: '', label: 'Sedi attive' },
 ]
 
-function CountUp({ target, suffix, active, duration = 1800 }: { target: number, suffix: string, active: boolean, duration?: number }) {
+function CountUp({ target, suffix, active, duration = 1800, decimali }: { target: number, suffix: string, active: boolean, duration?: number, decimali?: number }) {
   const [count, setCount] = useState(0)
   const timer = useRef<NodeJS.Timeout | null>(null)
 
@@ -27,7 +29,7 @@ function CountUp({ target, suffix, active, duration = 1800 }: { target: number, 
     return () => { if (timer.current) clearInterval(timer.current) }
   }, [active, target, duration])
 
-  return <>{target < 100 ? count.toFixed(target % 1 !== 0 ? 1 : 0) : count.toLocaleString('it-IT')}{suffix}</>
+  return <>{target < 100 ? count.toFixed(decimali ?? (target % 1 !== 0 ? 1 : 0)).replace('.', ',') : count.toLocaleString('it-IT')}{suffix}</>
 }
 
 export function SocialProof() {
@@ -38,7 +40,7 @@ export function SocialProof() {
     <section ref={ref} className="bg-[#0F0F0F] py-16 md:py-20">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
-          {STATS.map(({ value, suffix, label }, i) => (
+          {STATS.map(({ value, suffix, label, decimali }, i) => (
             <motion.div
               key={label}
               initial={{ opacity: 0, y: 20 }}
@@ -48,7 +50,7 @@ export function SocialProof() {
             >
               <div className="font-display text-4xl md:text-5xl font-black text-[#F5C518] mb-2"
                 style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-                <CountUp target={value} suffix={suffix} active={isInView} />
+                <CountUp target={value} suffix={suffix} active={isInView} decimali={decimali} />
               </div>
               <p className="text-white/60 text-sm uppercase tracking-wider">{label}</p>
             </motion.div>

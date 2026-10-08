@@ -4,6 +4,8 @@ import { ParcheggioScelta } from '@/components/home/ParcheggioScelta'
 import { PrimaDopo } from '@/components/home/PrimaDopo'
 import { ComeLaviamo } from '@/components/home/ComeLaviamo'
 import { Garanzia } from '@/components/home/Garanzia'
+import { Differentiators } from '@/components/home/Differentiators'
+import { ParcheggioSmartBanner } from '@/components/home/ParcheggioSmartBanner'
 import { Reviews } from '@/components/home/Reviews'
 import { SediPreview } from '@/components/home/SediPreview'
 import { HomeCTA } from '@/components/home/HomeCTA'
@@ -25,10 +27,12 @@ export default function HomePage() {
       <ParcheggioScelta />
       <PrimaDopo />
       <ComeLaviamo />
+      <Differentiators />
       <Garanzia />
       <ReferralBanner />
-      <Reviews />
       <SediPreview />
+      <ParcheggioSmartBanner />
+      <Reviews />
       <HomeCTA />
     </>
   )

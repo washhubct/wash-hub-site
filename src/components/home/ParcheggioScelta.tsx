@@ -13,7 +13,7 @@ export function ParcheggioScelta() {
     <section id="parcheggio" className="py-16 md:py-24 bg-[#FAFAF7] scroll-mt-20">
       <div className="max-w-6xl mx-auto px-5 md:px-8">
         <AnimatedSection className="mb-8 md:mb-10">
-          <p className="text-[#0F0F0F]/50 text-xs font-bold uppercase tracking-[0.2em] mb-2">🅿️ Parcheggio al Lungomare</p>
+          <p className="text-[#0F0F0F]/50 text-xs font-bold uppercase tracking-[0.2em] mb-2">🅿️ Parcheggio · Wash Hub Lungomare</p>
           <h2 className="font-display text-4xl md:text-5xl font-black text-[#0F0F0F] leading-[0.95]"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
             Lasci l&apos;auto. Al resto pensiamo noi.

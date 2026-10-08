@@ -6,8 +6,8 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
-// Prima/dopo da trascinare con il dito. Immagini segnaposto (dal video hero): da sostituire con lo
-// scatto/la generazione Higgsfield di un'auto con cenere dell'Etna e salsedine → pulita.
+// Prima/dopo da trascinare con il dito. Coppia generata con Higgsfield Nano Banana Pro (08/10/2026):
+// dopo.jpg = scatto pulito, prima.jpg = stesso scatto sporcato (cenere, salsedine, fango), allineati al pixel.
 export function PrimaDopo() {
   const box = useRef<HTMLDivElement>(null)
   const [pos, setPos] = useState(55)

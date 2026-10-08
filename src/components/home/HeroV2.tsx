@@ -37,10 +37,10 @@ export function HeroV2() {
           <h1 className="mt-5 font-display text-[2.6rem] leading-[0.95] sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
             Il tuo pit-stop<br />
-            <span className="text-[#F5C518]">sul lungomare.</span>
+            <span className="text-[#F5C518]">a Catania.</span>
           </h1>
           <p className="mt-5 text-base md:text-xl text-white/75 max-w-xl leading-relaxed">
-            Lavaggio a mano, interni e parcheggio in Via Anfuso 35, Catania.
+            Lavaggio a mano e parcheggio al <b className="text-white">Lungomare</b>, self service 24/7 a <b className="text-white">Paesi Etnei</b>.
           </p>
         </motion.div>
 
@@ -64,7 +64,11 @@ export function HeroV2() {
           ))}
         </div>
 
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="mt-5">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} className="mt-5 flex flex-wrap gap-x-6 gap-y-3">
+          <Link href="/sedi/paesi-etnei" className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white">
+            <span className="w-6 h-6 rounded-full bg-white/15 flex items-center justify-center text-xs">🚿</span>
+            Self service 24/7 · Wash Hub POP Paesi Etnei →
+          </Link>
           <Link href="/referral" className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-white">
             <span className="w-6 h-6 rounded-full bg-[#F5C518] text-[#0F0F0F] flex items-center justify-center text-xs">🎁</span>
             Porta un amico: ogni amico vale <b className="text-[#F5C518]">€5</b> →
