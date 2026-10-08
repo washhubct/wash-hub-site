@@ -4,12 +4,9 @@ import { ParcheggioScelta } from '@/components/home/ParcheggioScelta'
 import { PrimaDopo } from '@/components/home/PrimaDopo'
 import { ComeLaviamo } from '@/components/home/ComeLaviamo'
 import { Garanzia } from '@/components/home/Garanzia'
-import { Differentiators } from '@/components/home/Differentiators'
-import { ParcheggioSmartBanner } from '@/components/home/ParcheggioSmartBanner'
 import { Reviews } from '@/components/home/Reviews'
 import { SediPreview } from '@/components/home/SediPreview'
 import { HomeCTA } from '@/components/home/HomeCTA'
-import { ReferralBanner } from '@/components/home/ReferralBanner'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -27,11 +24,8 @@ export default function HomePage() {
       <ParcheggioScelta />
       <PrimaDopo />
       <ComeLaviamo />
-      <Differentiators />
       <Garanzia />
-      <ReferralBanner />
       <SediPreview />
-      <ParcheggioSmartBanner />
       <Reviews />
       <HomeCTA />
     </>
