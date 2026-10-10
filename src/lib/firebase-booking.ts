@@ -21,7 +21,7 @@ export const SLOTS = [
   '17:00','17:30','18:00',
 ]
 
-const GIORNI_CHIUSI = ['2026-06-02', '2026-08-15', '2026-09-26', '2026-12-25', '2026-12-26', '2026-01-01']
+const GIORNI_CHIUSI = ['2026-06-02', '2026-08-15', '2026-09-26', '2026-10-10' /* maltempo */, '2026-12-25', '2026-12-26', '2026-01-01']
 
 // Periodi di chiusura continuativa (estremi inclusi, date ISO)
 export const CHIUSURE: { from: string; to: string; label: string }[] = [
