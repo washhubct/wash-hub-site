@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking, validaCodiceAmico, type EsitoCodiceAmico } from '@/lib/firebase-booking'
 import { getReferralCode, getVouchersAttivi, type VoucherAttivo } from '@/lib/referral'
+import { getPriority, startPriorityCheckout } from '@/lib/priority'
 
 const SERVICES = [
   { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min', prezzoFisso: '' },
@@ -66,6 +67,8 @@ export function BookingFlow() {
   const [referral, setReferral] = useState('')
   const [bookedSlots, setBookedSlots] = useState<Set<string>>(new Set())
   const [loadingSlots, setLoadingSlots] = useState(false)
+  // ⚡ Priority: orari a +€ nelle ore calde (live dalla dashboard), bloccati = ora calda già esaurita
+  const [prio, setPrio] = useState<{ priority: Set<string>; bloccati: Set<string>; supplemento: number }>({ priority: new Set(), bloccati: new Set(), supplemento: 5 })
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -110,10 +113,13 @@ export function BookingFlow() {
     if (!data) return
     setLoadingSlots(true)
     setOrario('')
-    getBookedSlots(data)
-      .then(s => setBookedSlots(s))
-      .catch(() => setBookedSlots(new Set()))
-      .finally(() => setLoadingSlots(false))
+    Promise.all([
+      getBookedSlots(data).catch(() => new Set<string>()),
+      getPriority(data).catch(() => null),
+    ]).then(([s, p]) => {
+      setBookedSlots(s)
+      setPrio(p?.attivo ? { priority: new Set(p.priority), bloccati: new Set(p.bloccati), supplemento: p.supplemento } : { priority: new Set(), bloccati: new Set(), supplemento: 5 })
+    }).finally(() => setLoadingSlots(false))
   }, [data])
 
   // Lookup voucher attivi appena il telefono è "abbastanza completo" (>= 9 cifre).
@@ -157,8 +163,10 @@ export function BookingFlow() {
 
   const localToday = getLocalToday()
 
+  const isPriority = prio.priority.has(orario)
   const isSlotDisabled = (slot: string) => {
-    if (bookedSlots.has(slot)) return true
+    if (prio.bloccati.has(slot)) return true
+    if (bookedSlots.has(slot) && !prio.priority.has(slot)) return true
     if (data === localToday) {
       const now = new Date()
       const [h, m] = slot.split(':').map(Number)
@@ -178,6 +186,16 @@ export function BookingFlow() {
       const prezzoFisso = isIntenso
         ? (TAGLIE.find(t => t.id === taglia)?.prezzo ?? '')
         : (SERVICES.find(s => s.id === servizio)?.prezzoFisso ?? '')
+      if (isPriority) {
+        const ck = await startPriorityCheckout({
+          servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
+          ...(prezzoFisso && { prezzo: prezzoFisso }),
+          ...(referral.trim() && { referral: referral.trim() }),
+          ...(voucherSel && { voucher: voucherSel }),
+        })
+        window.location.href = ck.url
+        return
+      }
       await saveBooking({
         servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
         ...(prezzoFisso && { prezzo: prezzoFisso }),
@@ -187,7 +205,7 @@ export function BookingFlow() {
       setDir(1)
       setStep('done')
     } catch (e) {
-      setError(e instanceof Error && e.message.startsWith('Siamo chiusi')
+      setError(e instanceof Error && (e.message.startsWith('Siamo chiusi') || isPriority)
         ? e.message
         : 'Errore di connessione. Riprova tra qualche secondo.')
       setSaving(false)
@@ -392,21 +410,29 @@ export function BookingFlow() {
                 <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
                   {SLOTS.map(slot => {
                     const disabled = isSlotDisabled(slot)
+                    const p = !disabled && prio.priority.has(slot)
                     return (
                       <button key={slot} disabled={disabled}
                         onClick={() => { setOrario(slot); goTo('dati') }}
                         className={`py-3 rounded-xl text-sm font-bold transition-all active:scale-[0.96] ${
                           disabled
                             ? 'bg-[#F0F0EC] text-[#C0C0BC] cursor-not-allowed line-through'
-                            : orario === slot
-                              ? 'bg-[#0F0F0F] text-white'
-                              : 'bg-white border-2 border-[#E8E8E4] text-[#0F0F0F] hover:border-[#F5C518]'
+                            : p
+                              ? 'bg-[#0F0F0F] text-[#F5C518] border-2 border-[#F5C518]'
+                              : orario === slot
+                                ? 'bg-[#0F0F0F] text-white'
+                                : 'bg-white border-2 border-[#E8E8E4] text-[#0F0F0F] hover:border-[#F5C518]'
                         }`}>
-                        {slot}
+                        {p ? <span className="flex flex-col leading-tight"><span>⚡ {slot}</span><span className="text-[10px] font-semibold text-white/70">+€{prio.supplemento}</span></span> : slot}
                       </button>
                     )
                   })}
                 </div>
+              )}
+              {!loadingSlots && prio.priority.size > 0 && (
+                <p className="mt-4 text-xs text-[#6B6B6B] leading-relaxed">
+                  <span className="font-bold text-[#0F0F0F]">⚡ Priority</span> = ora di punta: paghi +€{prio.supplemento} online e passi davanti alla coda.
+                </p>
               )}
             </motion.div>
           )}
@@ -427,6 +453,12 @@ export function BookingFlow() {
                   {new Date(data + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })} · ore {orario}
                 </p>
               </div>
+              {isPriority && (
+                <div className="rounded-2xl p-4 mb-6 bg-[#0F0F0F] text-white text-sm" style={{ border: '2px solid #F5C518' }}>
+                  <p className="font-black text-[#F5C518] text-base">⚡ Priority · +€{prio.supplemento}</p>
+                  <p className="mt-1 text-white/75 leading-relaxed">Passi davanti alla coda: entri in lavaggio entro 10 minuti dall&apos;arrivo, altrimenti ti restituiamo i €{prio.supplemento}. Paghi ora i €{prio.supplemento} online, il lavaggio in sede come sempre.</p>
+                </div>
+              )}
               <div className="space-y-4">
                 {[
                   { label: 'Nome e cognome *', value: nome, set: setNome, type: 'text', placeholder: 'Mario Rossi' },
@@ -499,7 +531,7 @@ export function BookingFlow() {
               {error && <p className="text-[#E63946] text-sm mt-4">{error}</p>}
               <button onClick={submit} disabled={saving}
                 className="w-full mt-6 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black text-base hover:bg-[#E0B210] disabled:opacity-60 transition-all active:scale-[0.98]">
-                {saving ? 'Invio in corso...' : 'Conferma prenotazione →'}
+                {saving ? 'Invio in corso...' : isPriority ? `Paga €${prio.supplemento} e conferma ⚡` : 'Conferma prenotazione →'}
               </button>
             </motion.div>
           )}

@@ -20,6 +20,9 @@ export function HeroV2() {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-5 md:px-8 pt-28 pb-10 md:py-32 text-white">
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', damping: 22, stiffness: 80, delay: 0.1 }}>
+          <Link href="/priority" className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md text-sm font-semibold text-white hover:bg-black/55 transition-colors" style={{ border: '1.5px solid #F5C518' }}>
+            <span className="text-[#F5C518]">⚡ Priority</span><span className="text-white/80">· salti la coda nelle ore di punta</span><span className="text-[#F5C518]">→</span>
+          </Link>
           <h1 className="font-display text-[2.8rem] leading-[0.95] sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
             Il tuo pit-stop<br />
