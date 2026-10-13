@@ -81,6 +81,7 @@ export function BookingFlow() {
   const [voucherSel, setVoucherSel] = useState<string>('') // codice voucher applicato
   // Caparra anti no-show: chiesta solo a chi ha già saltato una prenotazione (verifica sul telefono)
   const [caparra, setCaparra] = useState(0)
+  const [caparraPerTutti, setCaparraPerTutti] = useState(false)
   const [consensoCaparra, setConsensoCaparra] = useState(false)
 
   const dates = getDates()
@@ -141,7 +142,7 @@ export function BookingFlow() {
         .then(v => setVoucherDisponibili(v))
         .catch(() => setVoucherDisponibili([]))
       verificaCaparra(tel)
-        .then(r => setCaparra(r.caparra || 0))
+        .then(r => { setCaparra(r.caparra || 0); setCaparraPerTutti(!!r.perTutti) })
         .catch(() => setCaparra(0))
     }, 600)
     return () => clearTimeout(t)
@@ -551,7 +552,9 @@ export function BookingFlow() {
               {!isPriority && caparra > 0 && (
                 <div className="mt-5 p-4 rounded-2xl bg-white border-2 border-[#0F0F0F] text-sm">
                   <p className="font-black text-[#0F0F0F]">💳 Caparra di €{caparra}</p>
-                  <p className="mt-1 text-[#6B6B6B] leading-relaxed">Una volta una prenotazione con questo numero è saltata senza avviso, quindi per confermare chiediamo una caparra di €{caparra}. La scaliamo dal prezzo del lavaggio.</p>
+                  <p className="mt-1 text-[#6B6B6B] leading-relaxed">{caparraPerTutti
+                    ? <>Per confermare la prenotazione online chiediamo una caparra di €{caparra}: così il posto lo teniamo davvero per te. La scaliamo dal prezzo del lavaggio.</>
+                    : <>Una volta una prenotazione con questo numero è saltata senza avviso, quindi per confermare chiediamo una caparra di €{caparra}. La scaliamo dal prezzo del lavaggio.</>}</p>
                   <label className="mt-3 flex gap-3 items-start cursor-pointer">
                     <input type="checkbox" checked={consensoCaparra} onChange={e => setConsensoCaparra(e.target.checked)} className="mt-0.5 w-5 h-5 accent-[#0F0F0F] shrink-0" />
                     <span className="text-[#0F0F0F] leading-relaxed">Accetto di versare una caparra di €{caparra} a garanzia, scalata dal prezzo del lavaggio. Posso disdire gratis fino a 2 ore prima su wash-hub.it/disdici e mi viene restituita. Se non mi presento o disdico più tardi, viene trattenuta. <a href="/termini#prenotazioni" target="_blank" className="underline">Condizioni</a></span>

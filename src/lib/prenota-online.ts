@@ -11,7 +11,7 @@ const post = async (path: string, body: unknown) => {
   return d
 }
 
-export const verificaCaparra = (telefono: string): Promise<{ caparra: number; oreDisdetta: number }> => post('/verifica', { telefono })
+export const verificaCaparra = (telefono: string): Promise<{ caparra: number; oreDisdetta: number; perTutti?: boolean }> => post('/verifica', { telefono })
 
 export const startCaparraCheckout = (payload: {
   dataPren: string; orario: string; cliente: string; telefono: string; vettura: string; servizio: string
