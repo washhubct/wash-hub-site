@@ -63,7 +63,6 @@ export function Footer() {
                 ['FAQ', '/faq'],
                 ['Chi siamo', '/chi-siamo'],
                 ['Parcheggio Smart', '/parcheggio-smart', 'new'],
-                ['Gift Card', '/gift-card', 'soon'],
                 ['Porta un amico', '/referral', ''],
                 ['Prenota', '/prenota'],
                 ['Contatti', '/contatti'],

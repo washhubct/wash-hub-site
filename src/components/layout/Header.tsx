@@ -10,7 +10,6 @@ const NAV = [
   { label: 'Le nostre sedi', href: '/sedi' },
   { label: 'Parcheggio Smart', href: '/parcheggio-smart' },
   { label: 'Flotte', href: '/flotte' },
-  { label: 'Gift Card', href: '/gift-card' },
   { label: 'Porta un amico', href: '/referral', badge: '€5' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contatti', href: '/contatti' },
