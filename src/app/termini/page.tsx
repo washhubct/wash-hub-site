@@ -13,7 +13,7 @@ export default function TerminiPage() {
           style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
           Termini e Condizioni
         </h1>
-        <p className="text-white/50 mt-3">Ultimo aggiornamento: maggio 2026</p>
+        <p className="text-white/50 mt-3">Ultimo aggiornamento: ottobre 2026</p>
       </section>
 
       <section className="py-16 bg-[#FAFAF7]">
@@ -26,8 +26,10 @@ export default function TerminiPage() {
             </div>
 
             <div>
-              <h2 className="text-lg font-bold text-[#0F0F0F] mb-2">2. Conferma e cancellazione</h2>
-              <p>La prenotazione si intende confermata al momento dell'invio del modulo. In caso di impossibilità a presentarsi, ti chiediamo di avvisarci telefonicamente al 095 469 5153 con almeno 2 ore di anticipo.</p>
+              <h2 id="prenotazioni" className="text-lg font-bold text-[#0F0F0F] mb-2 scroll-mt-28">2. Conferma, disdetta e caparra</h2>
+              <p>La prenotazione si intende confermata al momento dell'invio del modulo (o del pagamento, quando richiesto). Puoi disdirla gratuitamente fino a 2 ore prima dell'orario scelto su wash-hub.it/disdici, oppure avvisandoci al 095 469 5153.</p>
+              <p className="mt-2"><strong>Caparra.</strong> Se in passato una prenotazione associata al tuo numero di telefono non è stata rispettata senza disdetta, per le nuove prenotazioni online chiediamo una caparra confirmatoria (art. 1385 c.c.) di €10, pagata online al momento della prenotazione e scalata dal prezzo del servizio. Se disdici almeno 2 ore prima, la caparra ti viene restituita sullo stesso metodo di pagamento. Se non ti presenti o disdici più tardi, la caparra viene trattenuta. Per applicare questa regola usiamo lo storico delle prenotazioni legato al numero di telefono.</p>
+              <p className="mt-2"><strong>Priority.</strong> Il supplemento Priority, pagato online, garantisce l'ingresso in lavaggio entro 10 minuti dall'arrivo all'orario scelto; se l'attesa è maggiore ti restituiamo il supplemento. Disdicendo almeno 2 ore prima, il supplemento viene rimborsato.</p>
             </div>
 
             <div>

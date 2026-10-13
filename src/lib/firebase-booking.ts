@@ -41,7 +41,7 @@ export async function getBookedSlots(date: string): Promise<Set<string>> {
   const booked = new Set<string>()
   snap.forEach(doc => {
     const d = doc.data()
-    if (d.orario) booked.add(d.orario)
+    if (d.orario && d.stato !== 'DISDETTA') booked.add(d.orario)   // disdetta online: l'orario torna libero
   })
   return booked
 }

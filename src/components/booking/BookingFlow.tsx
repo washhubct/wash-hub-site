@@ -5,6 +5,7 @@ import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking, validaCodiceAmico, type EsitoCodiceAmico } from '@/lib/firebase-booking'
 import { getReferralCode, getVouchersAttivi, type VoucherAttivo } from '@/lib/referral'
 import { getPriority, startPriorityCheckout } from '@/lib/priority'
+import { verificaCaparra, startCaparraCheckout } from '@/lib/prenota-online'
 
 const SERVICES = [
   { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min', prezzoFisso: '' },
@@ -78,6 +79,9 @@ export function BookingFlow() {
   // Voucher: dopo che il cliente digita il proprio telefono, lookup voucher attivi
   const [voucherDisponibili, setVoucherDisponibili] = useState<VoucherAttivo[]>([])
   const [voucherSel, setVoucherSel] = useState<string>('') // codice voucher applicato
+  // Caparra anti no-show: chiesta solo a chi ha già saltato una prenotazione (verifica sul telefono)
+  const [caparra, setCaparra] = useState(0)
+  const [consensoCaparra, setConsensoCaparra] = useState(false)
 
   const dates = getDates()
 
@@ -130,11 +134,15 @@ export function BookingFlow() {
       if (clean.length < 9) {
         setVoucherDisponibili([])
         setVoucherSel('')
+        setCaparra(0)
         return
       }
       getVouchersAttivi(tel)
         .then(v => setVoucherDisponibili(v))
         .catch(() => setVoucherDisponibili([]))
+      verificaCaparra(tel)
+        .then(r => setCaparra(r.caparra || 0))
+        .catch(() => setCaparra(0))
     }, 600)
     return () => clearTimeout(t)
   }, [tel])
@@ -186,6 +194,17 @@ export function BookingFlow() {
       const prezzoFisso = isIntenso
         ? (TAGLIE.find(t => t.id === taglia)?.prezzo ?? '')
         : (SERVICES.find(s => s.id === servizio)?.prezzoFisso ?? '')
+      if (!isPriority && caparra > 0) {
+        if (!consensoCaparra) { setError('Per confermare devi accettare le condizioni della caparra.'); setSaving(false); return }
+        const ck = await startCaparraCheckout({
+          servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa, consenso: true,
+          ...(prezzoFisso && { prezzo: prezzoFisso }),
+          ...(referral.trim() && { referral: referral.trim() }),
+          ...(voucherSel && { voucher: voucherSel }),
+        })
+        window.location.href = ck.url
+        return
+      }
       if (isPriority) {
         const ck = await startPriorityCheckout({
           servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
@@ -205,7 +224,7 @@ export function BookingFlow() {
       setDir(1)
       setStep('done')
     } catch (e) {
-      setError(e instanceof Error && (e.message.startsWith('Siamo chiusi') || isPriority)
+      setError(e instanceof Error && (e.message.startsWith('Siamo chiusi') || isPriority || caparra > 0)
         ? e.message
         : 'Errore di connessione. Riprova tra qualche secondo.')
       setSaving(false)
@@ -243,6 +262,7 @@ export function BookingFlow() {
           {servizioLabel} · {new Date(data + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })} · ore {orario}
         </p>
         <p className="text-[#6B6B6B]">Ti aspettiamo in Via Anfuso 35, Catania.</p>
+        <p className="mt-3 text-sm text-[#6B6B6B]">Imprevisto? Disdici gratis fino a 2 ore prima su <a href="/disdici" className="underline font-semibold text-[#0F0F0F]">wash-hub.it/disdici</a></p>
 
         {codiceCliente && (
           <div className="mt-8 mx-auto max-w-md p-6 rounded-2xl bg-[#0F0F0F] text-white text-left">
@@ -528,10 +548,22 @@ export function BookingFlow() {
                 </div>
               )}
 
+              {!isPriority && caparra > 0 && (
+                <div className="mt-5 p-4 rounded-2xl bg-white border-2 border-[#0F0F0F] text-sm">
+                  <p className="font-black text-[#0F0F0F]">💳 Caparra di €{caparra}</p>
+                  <p className="mt-1 text-[#6B6B6B] leading-relaxed">Una volta una prenotazione con questo numero è saltata senza avviso, quindi per confermare chiediamo una caparra di €{caparra}. La scaliamo dal prezzo del lavaggio.</p>
+                  <label className="mt-3 flex gap-3 items-start cursor-pointer">
+                    <input type="checkbox" checked={consensoCaparra} onChange={e => setConsensoCaparra(e.target.checked)} className="mt-0.5 w-5 h-5 accent-[#0F0F0F] shrink-0" />
+                    <span className="text-[#0F0F0F] leading-relaxed">Accetto di versare una caparra di €{caparra} a garanzia, scalata dal prezzo del lavaggio. Posso disdire gratis fino a 2 ore prima su wash-hub.it/disdici e mi viene restituita. Se non mi presento o disdico più tardi, viene trattenuta. <a href="/termini#prenotazioni" target="_blank" className="underline">Condizioni</a></span>
+                  </label>
+                </div>
+              )}
+              <p className="mt-5 text-xs text-[#6B6B6B]">Imprevisto? Puoi disdire gratis fino a 2 ore prima su <a href="/disdici" className="underline font-semibold text-[#0F0F0F]">wash-hub.it/disdici</a>.</p>
+
               {error && <p className="text-[#E63946] text-sm mt-4">{error}</p>}
               <button onClick={submit} disabled={saving}
                 className="w-full mt-6 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black text-base hover:bg-[#E0B210] disabled:opacity-60 transition-all active:scale-[0.98]">
-                {saving ? 'Invio in corso...' : isPriority ? `Paga €${prio.supplemento} e conferma ⚡` : 'Conferma prenotazione →'}
+                {saving ? 'Invio in corso...' : isPriority ? `Paga €${prio.supplemento} e conferma ⚡` : caparra > 0 ? `Paga la caparra €${caparra} e conferma →` : 'Conferma prenotazione →'}
               </button>
             </motion.div>
           )}
