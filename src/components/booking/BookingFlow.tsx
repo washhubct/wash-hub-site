@@ -6,6 +6,7 @@ import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking, validaCodiceAmico, 
 import { getReferralCode, getVouchersAttivi, type VoucherAttivo } from '@/lib/referral'
 import { getPriority, startPriorityCheckout } from '@/lib/priority'
 import { verificaCaparra, startCaparraCheckout } from '@/lib/prenota-online'
+import { startGaranzia } from '@/lib/garanzia'
 
 const SERVICES = [
   { id: 'Esterno', icon: '🚿', name: 'Esterno', price: 'da €14', time: '~15 min', prezzoFisso: '' },
@@ -82,6 +83,9 @@ export function BookingFlow() {
   // Caparra anti no-show: chiesta solo a chi ha già saltato una prenotazione (verifica sul telefono)
   const [caparra, setCaparra] = useState(0)
   const [caparraPerTutti, setCaparraPerTutti] = useState(false)
+  // Carta a garanzia (Stripe): penale solo se non si presenta. Quando è attiva sostituisce la caparra.
+  const [garanzia, setGaranzia] = useState(0)
+  const [consensoGaranzia, setConsensoGaranzia] = useState(false)
   const [consensoCaparra, setConsensoCaparra] = useState(false)
 
   const dates = getDates()
@@ -136,13 +140,14 @@ export function BookingFlow() {
         setVoucherDisponibili([])
         setVoucherSel('')
         setCaparra(0)
+        setGaranzia(0)
         return
       }
       getVouchersAttivi(tel)
         .then(v => setVoucherDisponibili(v))
         .catch(() => setVoucherDisponibili([]))
       verificaCaparra(tel)
-        .then(r => { setCaparra(r.caparra || 0); setCaparraPerTutti(!!r.perTutti) })
+        .then(r => { setCaparra(r.caparra || 0); setCaparraPerTutti(!!r.perTutti); setGaranzia((r as { garanzia?: number }).garanzia || 0) })
         .catch(() => setCaparra(0))
     }, 600)
     return () => clearTimeout(t)
@@ -195,6 +200,17 @@ export function BookingFlow() {
       const prezzoFisso = isIntenso
         ? (TAGLIE.find(t => t.id === taglia)?.prezzo ?? '')
         : (SERVICES.find(s => s.id === servizio)?.prezzoFisso ?? '')
+      if (!isPriority && garanzia > 0) {
+        if (!consensoGaranzia) { setError('Per confermare devi accettare la carta a garanzia.'); setSaving(false); return }
+        const g = await startGaranzia({
+          servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa, consenso: true,
+          ...(prezzoFisso && { prezzo: prezzoFisso }),
+          ...(referral.trim() && { referral: referral.trim() }),
+          ...(voucherSel && { voucher: voucherSel }),
+        })
+        window.location.href = g.url
+        return
+      }
       if (!isPriority && caparra > 0) {
         if (!consensoCaparra) { setError('Per confermare devi accettare le condizioni della caparra.'); setSaving(false); return }
         const ck = await startCaparraCheckout({
@@ -225,7 +241,7 @@ export function BookingFlow() {
       setDir(1)
       setStep('done')
     } catch (e) {
-      setError(e instanceof Error && (e.message.startsWith('Siamo chiusi') || isPriority || caparra > 0)
+      setError(e instanceof Error && (e.message.startsWith('Siamo chiusi') || isPriority || caparra > 0 || garanzia > 0)
         ? e.message
         : 'Errore di connessione. Riprova tra qualche secondo.')
       setSaving(false)
@@ -549,7 +565,17 @@ export function BookingFlow() {
                 </div>
               )}
 
-              {!isPriority && caparra > 0 && (
+              {!isPriority && garanzia > 0 && (
+                <div className="mt-5 p-4 rounded-2xl bg-white border-2 border-[#0F0F0F] text-sm">
+                  <p className="font-black text-[#0F0F0F]">🛡️ Carta a garanzia · ora non paghi niente</p>
+                  <p className="mt-1 text-[#6B6B6B] leading-relaxed">Per tenerti il posto ti chiediamo di lasciare una carta. Non addebitiamo nulla: il lavaggio lo paghi in sede come sempre.</p>
+                  <label className="mt-3 flex gap-3 items-start cursor-pointer">
+                    <input type="checkbox" checked={consensoGaranzia} onChange={e => setConsensoGaranzia(e.target.checked)} className="mt-0.5 w-5 h-5 accent-[#0F0F0F] shrink-0" />
+                    <span className="text-[#0F0F0F] leading-relaxed">Lascio la mia carta a garanzia: ora non pago niente. Posso disdire gratis fino a 2 ore prima su wash-hub.it/disdici. Se non mi presento o disdico più tardi, autorizzo WASH HUB ad addebitarmi una penale di €{garanzia}. <a href="/termini#prenotazioni" target="_blank" className="underline">Condizioni</a></span>
+                  </label>
+                </div>
+              )}
+              {!isPriority && !garanzia && caparra > 0 && (
                 <div className="mt-5 p-4 rounded-2xl bg-white border-2 border-[#0F0F0F] text-sm">
                   <p className="font-black text-[#0F0F0F]">💳 Caparra di €{caparra}</p>
                   <p className="mt-1 text-[#6B6B6B] leading-relaxed">{caparraPerTutti
@@ -566,7 +592,7 @@ export function BookingFlow() {
               {error && <p className="text-[#E63946] text-sm mt-4">{error}</p>}
               <button onClick={submit} disabled={saving}
                 className="w-full mt-6 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black text-base hover:bg-[#E0B210] disabled:opacity-60 transition-all active:scale-[0.98]">
-                {saving ? 'Invio in corso...' : isPriority ? `Paga €${prio.supplemento} e conferma ⚡` : caparra > 0 ? `Paga la caparra €${caparra} e conferma →` : 'Conferma prenotazione →'}
+                {saving ? 'Invio in corso...' : isPriority ? `Paga €${prio.supplemento} e conferma ⚡` : garanzia > 0 ? 'Lascia la carta e conferma →' : caparra > 0 ? `Paga la caparra €${caparra} e conferma →` : 'Conferma prenotazione →'}
               </button>
             </motion.div>
           )}
