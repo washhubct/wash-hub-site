@@ -6,14 +6,14 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 // Il lavaggio in 4 passaggi. Clip generate con Higgsfield (08/10/2026: 01 Kling 3.0 pro, 02-04 Seedance 2.0 1080p),
 // in public/brand/passi/NN.mp4 + poster NN.jpg. I prompt restano qui per rigenerarle.
 const PASSI = [
-  { n: '01', titolo: 'Prelavaggio', testo: 'Sciogliamo sale e polvere prima di toccare la carrozzeria: niente graffi.',
-    prompt: 'macro slow motion, pre-wash foam cannon spraying thick white foam on a dark car door, water droplets catching golden late-afternoon light, Catania seafront car wash, cinematic, shallow depth of field' },
-  { n: '02', titolo: 'Lavaggio a mano', testo: 'Guanto, due secchi, un pannello alla volta. Come faresti tu, ma meglio.',
-    prompt: 'close-up of a gloved hand washing a black car hood with a blue microfiber mitt, rich suds, slow motion, warm sunset reflections, professional hand car wash, cinematic' },
-  { n: '03', titolo: 'Asciugatura', testo: 'Panni in microfibra e aria: zero aloni, zero gocce sui cristalli.',
-    prompt: 'slow motion microfiber towel drying a glossy car roof, water beading and disappearing, sunlight sparkle, clean minimal frame, cinematic detail shot' },
-  { n: '04', titolo: 'Interni', testo: 'Aspirazione, plastiche, vetri. E se serve, la tappezzeria.',
+  { n: '01', file: '04', titolo: 'Interni', testo: 'Aspirazione, plastiche, vetri. E se serve, la tappezzeria.',
     prompt: 'interior car detailing, vacuum nozzle cleaning seats, soft light through windshield, dust particles in light beam, calm cinematic close-up' },
+  { n: '02', file: '01', titolo: 'Prelavaggio', testo: 'Sciogliamo sale e polvere prima di toccare la carrozzeria: niente graffi.',
+    prompt: 'macro slow motion, pre-wash foam cannon spraying thick white foam on a dark car door, water droplets catching golden late-afternoon light, Catania seafront car wash, cinematic, shallow depth of field' },
+  { n: '03', file: '02', titolo: 'Lavaggio a mano', testo: 'Guanto, due secchi, un pannello alla volta. Come faresti tu, ma meglio.',
+    prompt: 'close-up of a gloved hand washing a black car hood with a blue microfiber mitt, rich suds, slow motion, warm sunset reflections, professional hand car wash, cinematic' },
+  { n: '04', file: '03', titolo: 'Asciugatura', testo: 'Panni in microfibra e aria: zero aloni, zero gocce sui cristalli.',
+    prompt: 'slow motion microfiber towel drying a glossy car roof, water beading and disappearing, sunlight sparkle, clean minimal frame, cinematic detail shot' },
 ]
 
 export function ComeLaviamo() {
@@ -31,7 +31,7 @@ export function ComeLaviamo() {
             <AnimatedSection key={p.n} delay={i * 0.08} className="snap-start shrink-0 w-[78%] sm:w-[46%] md:w-auto">
               <div className="h-full rounded-3xl overflow-hidden bg-white border border-[#0F0F0F]/10">
                 <div className="relative aspect-[4/5]">
-                  <AutoVideo src={`${BASE}/brand/passi/${p.n}.mp4`} poster={`${BASE}/brand/passi/${p.n}.jpg`}
+                  <AutoVideo src={`${BASE}/brand/passi/${p.file}.mp4`} poster={`${BASE}/brand/passi/${p.file}.jpg`}
                     className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-transparent" />
                   <span className="absolute top-4 left-4 font-black text-5xl text-[#F5C518]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>{p.n}</span>
