@@ -35,15 +35,14 @@ export function isGiornoChiuso(dateStr: string) {
   return d.getDay() === 0
 }
 
+// Orari già presi: dal server (Cloud Function), senza nomi né telefoni.
+// La lettura pubblica di `prenotazioni` è chiusa nelle rules dal 14/10/2026 (privacy).
+const OCCUPATI_API = 'https://europe-west1-dashboard-washhub.cloudfunctions.net/priority/occupati'
 export async function getBookedSlots(date: string): Promise<Set<string>> {
-  const q = query(collection(db, 'prenotazioni'), where('dataPren', '==', date))
-  const snap = await getDocs(q)
-  const booked = new Set<string>()
-  snap.forEach(doc => {
-    const d = doc.data()
-    if (d.orario && d.stato !== 'DISDETTA') booked.add(d.orario)   // disdetta online: l'orario torna libero
-  })
-  return booked
+  const r = await fetch(`${OCCUPATI_API}?data=${encodeURIComponent(date)}`, { cache: 'no-store' })
+  if (!r.ok) throw new Error('orari non disponibili')
+  const d = await r.json()
+  return new Set<string>(Array.isArray(d.occupati) ? d.occupati : [])
 }
 
 export type EsitoCodiceAmico = 'ok' | 'self' | 'non-trovato'
