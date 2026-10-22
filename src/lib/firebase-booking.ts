@@ -1,6 +1,7 @@
 import { initializeApp, getApps } from 'firebase/app'
 import { getFirestore, collection, addDoc, getDocs, getDoc, query, where, doc, setDoc, increment, serverTimestamp } from 'firebase/firestore'
 import { getReferralCode } from './referral-code'
+import { PRENOTA_API } from './prenota-online'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCj0IlKMARo0IxnqaHoN-rSd0HINuwf6Po',
@@ -45,24 +46,32 @@ export async function getBookedSlots(date: string): Promise<Set<string>> {
   return new Set<string>(Array.isArray(d.occupati) ? d.occupati : [])
 }
 
-export type EsitoCodiceAmico = 'ok' | 'self' | 'non-trovato'
+export type EsitoCodiceAmico = 'ok' | 'self' | 'non-trovato' | 'gia-cliente' | 'errore'
 
 /**
  * Valida un codice amico rispetto al telefono del cliente che prenota.
  * - 'self': il codice è il proprio (calcolato dal telefono) o appartiene al proprio numero
  * - 'non-trovato': il codice non esiste o il titolare non l'ha ancora attivato
- *   (il doc referral nasce al primo lookup del titolare su /referral — senza
- *   telefono del titolare il gestionale non potrebbe comunque emettere il voucher)
+ * - 'gia-cliente': chi prenota ha già lavato da noi → il codice amico non vale (Guido 22/10/2026:
+ *   il referral premia solo i clienti NUOVI). Lo decide la Cloud Function, perché il sito
+ *   non può leggere prenotazioni e clienti.
+ * - 'errore': verifica non riuscita (rete/function): il codice NON viene salvato.
  */
 export async function validaCodiceAmico(codice: string, telefonoCliente: string): Promise<EsitoCodiceAmico> {
   const clean = codice.trim().toUpperCase()
-  const telClean = telefonoCliente.replace(/\D/g, '').slice(-9)
   if (getReferralCode(telefonoCliente) === clean) return 'self'
-  const snap = await getDoc(doc(db, 'referral', clean))
-  const d = snap.exists() ? snap.data() : null
-  if (!d?.telefono) return 'non-trovato'
-  if (d.telefono === telClean) return 'self'
-  return 'ok'
+  try {
+    const r = await fetch(`${PRENOTA_API}/referral/valida`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ codice: clean, telefono: telefonoCliente }),
+    })
+    if (!r.ok) return 'errore'
+    const d = await r.json()
+    const e = String(d?.esito || '')
+    return (['ok', 'self', 'non-trovato', 'gia-cliente'] as const).includes(e as never) ? (e as EsitoCodiceAmico) : 'errore'
+  } catch {
+    return 'errore'
+  }
 }
 
 export async function saveBooking(data: {
@@ -90,7 +99,7 @@ export async function saveBooking(data: {
       const esito = await validaCodiceAmico(data.referral, data.telefono)
       if (esito === 'ok') referralValido = data.referral.trim().toUpperCase()
     } catch {
-      // rete/rules: meglio perdere il referral che bloccare la prenotazione
+      // verifica non riuscita: meglio perdere il referral che bloccare la prenotazione
     }
   }
 

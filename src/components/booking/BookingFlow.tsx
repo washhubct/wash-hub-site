@@ -517,6 +517,8 @@ export function BookingFlow() {
                         {referralEsito === 'ok' && '✓ Codice valido — €5 di sconto sul tuo lavaggio'}
                         {referralEsito === 'self' && 'Non puoi usare il tuo stesso codice 😉'}
                         {referralEsito === 'non-trovato' && 'Codice non trovato. Chiedi al tuo amico di aprire wash-hub.it/referral per attivarlo.'}
+                        {referralEsito === 'gia-cliente' && 'Il codice amico vale solo per chi non ha mai lavato da noi. Bentornato comunque 😉'}
+                        {referralEsito === 'errore' && 'Non riusciamo a verificare il codice adesso. Riprova tra un attimo.'}
                       </p>
                     )}
                   </div>
