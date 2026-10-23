@@ -87,6 +87,9 @@ export function BookingFlow() {
   const [garanzia, setGaranzia] = useState(0)
   const [consensoGaranzia, setConsensoGaranzia] = useState(false)
   const [consensoCaparra, setConsensoCaparra] = useState(false)
+  // Codice amico: email obbligatoria + consenso marketing facoltativo e separato (Guido 23/10/2026)
+  const [email, setEmail] = useState('')
+  const [consensoMarketing, setConsensoMarketing] = useState(false)
 
   const dates = getDates()
 
@@ -168,12 +171,12 @@ export function BookingFlow() {
     }
     setReferralEsito('checking')
     const t = setTimeout(() => {
-      validaCodiceAmico(code, tel)
+      validaCodiceAmico(code, tel, nome, email)
         .then(e => setReferralEsito(e))
         .catch(() => setReferralEsito('idle'))
     }, 600)
     return () => clearTimeout(t)
-  }, [referral, tel])
+  }, [referral, tel, nome, email])
 
   const localToday = getLocalToday()
 
@@ -194,6 +197,12 @@ export function BookingFlow() {
       setError('Compila tutti i campi obbligatori.')
       return
     }
+    const conAmico = referral.trim().length > 0
+    if (conAmico && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) {
+      setError('Con il codice amico serve la tua email: la usiamo per lo sconto e per avvisarti.')
+      return
+    }
+    const datiAmico = conAmico ? { email: email.trim().toLowerCase(), consensoMarketing } : {}
     setSaving(true)
     setError('')
     try {
@@ -205,7 +214,7 @@ export function BookingFlow() {
         const g = await startGaranzia({
           servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa, consenso: true,
           ...(prezzoFisso && { prezzo: prezzoFisso }),
-          ...(referral.trim() && { referral: referral.trim() }),
+          ...(referral.trim() && { referral: referral.trim(), ...datiAmico }),
           ...(voucherSel && { voucher: voucherSel }),
         })
         window.location.href = g.url
@@ -216,7 +225,7 @@ export function BookingFlow() {
         const ck = await startCaparraCheckout({
           servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa, consenso: true,
           ...(prezzoFisso && { prezzo: prezzoFisso }),
-          ...(referral.trim() && { referral: referral.trim() }),
+          ...(referral.trim() && { referral: referral.trim(), ...datiAmico }),
           ...(voucherSel && { voucher: voucherSel }),
         })
         window.location.href = ck.url
@@ -226,7 +235,7 @@ export function BookingFlow() {
         const ck = await startPriorityCheckout({
           servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
           ...(prezzoFisso && { prezzo: prezzoFisso }),
-          ...(referral.trim() && { referral: referral.trim() }),
+          ...(referral.trim() && { referral: referral.trim(), ...datiAmico }),
           ...(voucherSel && { voucher: voucherSel }),
         })
         window.location.href = ck.url
@@ -235,7 +244,7 @@ export function BookingFlow() {
       await saveBooking({
         servizio: servizioLabel, dataPren: data, orario, cliente: nome, vettura, telefono: tel, targa,
         ...(prezzoFisso && { prezzo: prezzoFisso }),
-        ...(referral.trim() && { referral: referral.trim() }),
+        ...(referral.trim() && { referral: referral.trim(), ...datiAmico }),
         ...(voucherSel && { voucher: voucherSel }),
       })
       setDir(1)
@@ -523,6 +532,19 @@ export function BookingFlow() {
                     )}
                   </div>
                 ))}
+                {referral.trim() && (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Email * (per il codice amico)</label>
+                      <input type="email" value={email} placeholder="mario.rossi@email.it" onChange={e => setEmail(e.target.value)}
+                        className="w-full border border-[#E8E8E4] rounded-xl px-4 py-3 text-[#0F0F0F] bg-white focus:outline-none focus:border-[#F5C518] transition-colors text-sm placeholder:text-[#C0C0BC]" />
+                    </div>
+                    <label className="flex items-start gap-2 text-xs text-[#6B6B6B] leading-relaxed cursor-pointer">
+                      <input type="checkbox" checked={consensoMarketing} onChange={e => setConsensoMarketing(e.target.checked)} className="mt-0.5 accent-[#F5C518]" />
+                      <span>Voglio ricevere via email novità e offerte di WASH HUB (facoltativo, puoi annullare quando vuoi).</span>
+                    </label>
+                  </div>
+                )}
               </div>
 
               {/* Voucher attivi del cliente — proposti automaticamente al digitare il telefono */}

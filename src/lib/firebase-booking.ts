@@ -55,15 +55,16 @@ export type EsitoCodiceAmico = 'ok' | 'self' | 'non-trovato' | 'gia-cliente' | '
  * - 'gia-cliente': chi prenota ha già lavato da noi → il codice amico non vale (Guido 22/10/2026:
  *   il referral premia solo i clienti NUOVI). Lo decide la Cloud Function, perché il sito
  *   non può leggere prenotazioni e clienti.
+ * - 'gia-cliente' vale anche se nome e cognome sono già in anagrafica con un altro numero
  * - 'errore': verifica non riuscita (rete/function): il codice NON viene salvato.
  */
-export async function validaCodiceAmico(codice: string, telefonoCliente: string): Promise<EsitoCodiceAmico> {
+export async function validaCodiceAmico(codice: string, telefonoCliente: string, nome = '', email = ''): Promise<EsitoCodiceAmico> {
   const clean = codice.trim().toUpperCase()
   if (getReferralCode(telefonoCliente) === clean) return 'self'
   try {
     const r = await fetch(`${PRENOTA_API}/referral/valida`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ codice: clean, telefono: telefonoCliente }),
+      body: JSON.stringify({ codice: clean, telefono: telefonoCliente, nome, email }),
     })
     if (!r.ok) return 'errore'
     const d = await r.json()
@@ -85,6 +86,8 @@ export async function saveBooking(data: {
   prezzo?: string
   referral?: string
   voucher?: string
+  email?: string
+  consensoMarketing?: boolean
 }) {
   // Difesa in profondità: mai salvare prenotazioni in giorni chiusi
   // (il calendario li nasconde già, ma protegge da URL manipolati o tab vecchie)
@@ -96,7 +99,7 @@ export async function saveBooking(data: {
   let referralValido = ''
   if (data.referral) {
     try {
-      const esito = await validaCodiceAmico(data.referral, data.telefono)
+      const esito = await validaCodiceAmico(data.referral, data.telefono, data.cliente, data.email || '')
       if (esito === 'ok') referralValido = data.referral.trim().toUpperCase()
     } catch {
       // verifica non riuscita: meglio perdere il referral che bloccare la prenotazione
@@ -122,6 +125,8 @@ export async function saveBooking(data: {
     saldato: '',
     sedeId: 'lungomare',
     ...(referralValido && { referral: referralValido }),
+    ...(referralValido && data.email && { email: data.email, consensoMarketing: data.consensoMarketing === true,
+      ...(data.consensoMarketing === true && { consensoMarketingTs: Date.now() }) }),
     ...(data.voucher && { voucherCodice: data.voucher.toUpperCase() }),
   })
 

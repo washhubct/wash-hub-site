@@ -15,7 +15,7 @@ export const verificaCaparra = (telefono: string): Promise<{ caparra: number; or
 
 export const startCaparraCheckout = (payload: {
   dataPren: string; orario: string; cliente: string; telefono: string; vettura: string; servizio: string
-  targa?: string; prezzo?: string; referral?: string; voucher?: string; consenso: true
+  targa?: string; prezzo?: string; referral?: string; voucher?: string; email?: string; consensoMarketing?: boolean; consenso: true
 }): Promise<{ id: string; url: string; importo: number }> => post('/caparra/checkout', payload)
 
 export async function getCaparraStato(id: string): Promise<{ stato: string; dataPren: string; orario: string; servizio: string; importo: number; oreDisdetta: number }> {

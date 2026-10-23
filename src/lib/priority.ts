@@ -15,7 +15,7 @@ export async function getPriority(data: string): Promise<PriorityGiorno> {
 
 export async function startPriorityCheckout(payload: {
   dataPren: string; orario: string; cliente: string; telefono: string; vettura: string; servizio: string
-  targa?: string; prezzo?: string; referral?: string; voucher?: string
+  targa?: string; prezzo?: string; referral?: string; voucher?: string; email?: string; consensoMarketing?: boolean
 }): Promise<{ id: string; url: string; supplemento: number }> {
   const r = await fetch(`${PRIORITY_API}/checkout`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),

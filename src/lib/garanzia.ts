@@ -6,7 +6,7 @@ export const GARANZIA_API =
 
 export async function startGaranzia(payload: {
   dataPren: string; orario: string; cliente: string; telefono: string; vettura: string; servizio: string
-  targa?: string; prezzo?: string; referral?: string; voucher?: string; consenso: true
+  targa?: string; prezzo?: string; referral?: string; voucher?: string; email?: string; consensoMarketing?: boolean; consenso: true
 }): Promise<{ id: string; url: string }> {
   const r = await fetch(`${GARANZIA_API}/checkout`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
   const d = await r.json().catch(() => ({}))
