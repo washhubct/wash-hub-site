@@ -472,5 +472,113 @@
     "seen": 1793693863.012394,
     "ast_hash": "3b2787880f2f8248f6d3bff60bdf152e",
     "semantic_hash": "3b2787880f2f8248f6d3bff60bdf152e"
+  },
+  "public/brand/dopo.jpg": {
+    "mtime": 1791478262.0985508,
+    "seen": 1793874419.070076,
+    "ast_hash": "0cd499a3e59347bc826becb876aca97d",
+    "semantic_hash": ""
+  },
+  "public/brand/hero-poster.jpg": {
+    "mtime": 1791478795.6499343,
+    "seen": 1793874419.070077,
+    "ast_hash": "9de7e19476f63071fa4b64c553b45a55",
+    "semantic_hash": ""
+  },
+  "public/brand/logo-autolavaggi.png": {
+    "mtime": 1779491622.0,
+    "seen": 1793874419.070078,
+    "ast_hash": "d1fae2b3fe4c1d46918b96c8722762cf",
+    "semantic_hash": ""
+  },
+  "public/brand/logo-transparent.png": {
+    "mtime": 1779489381.0,
+    "seen": 1793874419.070078,
+    "ast_hash": "ff7f41efeace7655c523fb8488e65b47",
+    "semantic_hash": ""
+  },
+  "public/brand/logo.png": {
+    "mtime": 1779487819.0,
+    "seen": 1793874419.070079,
+    "ast_hash": "cda17434ba5ebc029b3871d772ed485e",
+    "semantic_hash": ""
+  },
+  "public/brand/passi/01.jpg": {
+    "mtime": 1791478262.0988777,
+    "seen": 1793874419.070079,
+    "ast_hash": "3a76f4cd2619ee1cb0f00c848da058e0",
+    "semantic_hash": ""
+  },
+  "public/brand/passi/02.jpg": {
+    "mtime": 1791478262.0994833,
+    "seen": 1793874419.07008,
+    "ast_hash": "ae801f9c7cb3ad0c78c82ee389500911",
+    "semantic_hash": ""
+  },
+  "public/brand/passi/03.jpg": {
+    "mtime": 1791478262.10021,
+    "seen": 1793874419.070081,
+    "ast_hash": "517bcef93ddc65493b4c1075f64e1b06",
+    "semantic_hash": ""
+  },
+  "public/brand/passi/04.jpg": {
+    "mtime": 1791479428.0215683,
+    "seen": 1793874419.070081,
+    "ast_hash": "b73c8baf4effee743a204fdd642e305a",
+    "semantic_hash": ""
+  },
+  "public/brand/prima.jpg": {
+    "mtime": 1791478262.101424,
+    "seen": 1793874419.070082,
+    "ast_hash": "22b24cfb4839dbc2ea847de0a8aca9f4",
+    "semantic_hash": ""
+  },
+  "public/chiusura-estiva-2026.jpg": {
+    "mtime": 1786614744.0,
+    "seen": 1793874419.070082,
+    "ast_hash": "ab879d98cb9e4e2ee360a1acd98f2969",
+    "semantic_hash": ""
+  },
+  "public/file.svg": {
+    "mtime": 1779483800.0,
+    "seen": 1793874419.0700831,
+    "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
+    "semantic_hash": ""
+  },
+  "public/globe.svg": {
+    "mtime": 1779483800.0,
+    "seen": 1793874419.0700831,
+    "ast_hash": "2aaafa6a49b6563925fe440891e32717",
+    "semantic_hash": ""
+  },
+  "public/next.svg": {
+    "mtime": 1779483800.0,
+    "seen": 1793874419.070084,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": ""
+  },
+  "public/vercel.svg": {
+    "mtime": 1779483800.0,
+    "seen": 1793874419.070084,
+    "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
+    "semantic_hash": ""
+  },
+  "public/window.svg": {
+    "mtime": 1779483800.0,
+    "seen": 1793874419.070085,
+    "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": ""
+  },
+  "src/app/icon.png": {
+    "mtime": 1779828403.0,
+    "seen": 1793874419.070085,
+    "ast_hash": "ff7f41efeace7655c523fb8488e65b47",
+    "semantic_hash": ""
+  },
+  "package-lock.json": {
+    "mtime": 1779487276.0,
+    "seen": 1793874419.0700889,
+    "ast_hash": "e3466397bd035caed10a9e2d56c317c0",
+    "semantic_hash": ""
   }
 }
