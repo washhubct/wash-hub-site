@@ -5,7 +5,7 @@ import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { SLOTS, isGiornoChiuso, getBookedSlots, saveBooking, validaCodiceAmico, type EsitoCodiceAmico } from '@/lib/firebase-booking'
 import { getReferralCode, getVouchersAttivi, type VoucherAttivo } from '@/lib/referral'
 import { getPriority, startPriorityCheckout } from '@/lib/priority'
-import { verificaCaparra, startCaparraCheckout } from '@/lib/prenota-online'
+import { verificaCaparra, startCaparraCheckout, giaPrenotato, sposta } from '@/lib/prenota-online'
 import { startGaranzia } from '@/lib/garanzia'
 
 const SERVICES = [
@@ -72,6 +72,9 @@ export function BookingFlow() {
   // ⚡ Priority: orari a +€ nelle ore calde (live dalla dashboard), bloccati = ora calda già esaurita
   const [prio, setPrio] = useState<{ priority: Set<string>; bloccati: Set<string>; supplemento: number }>({ priority: new Set(), bloccati: new Set(), supplemento: 5 })
   const [saving, setSaving] = useState(false)
+  // Stessa auto già prenotata quel giorno: orari trovati → si propone lo spostamento invece del doppione
+  const [dopp, setDopp] = useState<{ chiave: string; orari: string[] } | null>(null)
+  const [spostataDa, setSpostataDa] = useState('')
   const [error, setError] = useState('')
 
   // Validazione live del codice amico (esistenza + anti self-referral)
@@ -192,10 +195,36 @@ export function BookingFlow() {
     return false
   }
 
-  const submit = async () => {
+  // Vale solo per i dati con cui è stato controllato: se il cliente cambia orario/auto/telefono sparisce
+  const chiaveDopp = [data, orario, tel, vettura, targa].join('|')
+  const doppione = dopp?.chiave === chiaveDopp ? dopp.orari : null
+  const setDoppione = (orari: string[] | null) => setDopp(orari ? { chiave: chiaveDopp, orari } : null)
+
+  const spostaPrenotazione = async (daOrario: string) => {
+    setSaving(true)
+    setError('')
+    try {
+      await sposta({ telefono: tel, nome, dataPren: data, daOrario, aOrario: orario })
+      setSpostataDa(daOrario)
+      setDir(1)
+      setStep('done')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Errore di connessione. Riprova tra qualche secondo.')
+    }
+    setSaving(false)
+  }
+
+  const submit = async (secondoLavaggio = false) => {
     if (!nome.trim() || !tel.trim() || !vettura.trim()) {
       setError('Compila tutti i campi obbligatori.')
       return
+    }
+    if (!secondoLavaggio) {
+      setSaving(true)
+      const g = await giaPrenotato({ telefono: tel, dataPren: data, vettura, targa }).catch(() => ({ stessaAuto: [] as string[] }))
+      setSaving(false)
+      const altri = g.stessaAuto.filter(o => o !== orario)
+      if (altri.length) { setDoppione(altri); return }
     }
     const conAmico = referral.trim().length > 0
     if (conAmico && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) {
@@ -282,10 +311,11 @@ export function BookingFlow() {
         <div className="text-6xl mb-6">✅</div>
         <h2 className="font-display text-3xl font-black text-[#0F0F0F] mb-3"
           style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-          Prenotazione confermata!
+          {spostataDa ? 'Prenotazione spostata!' : 'Prenotazione confermata!'}
         </h2>
         <p className="text-[#6B6B6B] text-lg mb-2">
           {servizioLabel} · {new Date(data + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' })} · ore {orario}
+          {spostataDa && <span className="block text-sm mt-1">Non più alle {spostataDa}: quell&apos;orario è di nuovo libero.</span>}
         </p>
         <p className="text-[#6B6B6B]">Ti aspettiamo in Via Anfuso 35, Catania.</p>
         <p className="mt-3 text-sm text-[#6B6B6B]">Imprevisto? Disdici gratis fino a 2 ore prima su <a href="/disdici" className="underline font-semibold text-[#0F0F0F]">wash-hub.it/disdici</a></p>
@@ -307,7 +337,7 @@ export function BookingFlow() {
           </div>
         )}
 
-        <button onClick={() => { setStep('servizio'); setServizio(''); setTaglia(''); setData(''); setOrario(''); setNome(''); setTel(''); setVettura(''); setTarga(''); setReferral('') }}
+        <button onClick={() => { setStep('servizio'); setServizio(''); setTaglia(''); setData(''); setOrario(''); setNome(''); setTel(''); setVettura(''); setTarga(''); setReferral(''); setSpostataDa(''); setDoppione(null) }}
           className="mt-8 px-6 py-3 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] font-semibold text-sm hover:bg-[#0F0F0F] hover:text-white transition-all">
           Nuova prenotazione
         </button>
@@ -614,10 +644,28 @@ export function BookingFlow() {
               <p className="mt-5 text-xs text-[#6B6B6B]">Imprevisto? Puoi disdire gratis fino a 2 ore prima su <a href="/disdici" className="underline font-semibold text-[#0F0F0F]">wash-hub.it/disdici</a>.</p>
 
               {error && <p className="text-[#E63946] text-sm mt-4">{error}</p>}
-              <button onClick={submit} disabled={saving}
+              {doppione ? (
+                <div className="mt-6 p-5 rounded-2xl bg-white border-2 border-[#F5C518]">
+                  <p className="font-black text-[#0F0F0F]">Hai già prenotato {vettura.toUpperCase()} alle {doppione.join(' e alle ')} di questo giorno</p>
+                  <p className="mt-1 text-sm text-[#6B6B6B]">{isPriority ? 'Un posto Priority non può sostituire una prenotazione: se è un altro lavaggio, prosegui.' : `Vuoi spostarla alle ${orario} o è un altro lavaggio?`}</p>
+                  {!isPriority && doppione.map(o => (
+                    <button key={o} onClick={() => spostaPrenotazione(o)} disabled={saving}
+                      className="w-full mt-4 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black text-base hover:bg-[#E0B210] disabled:opacity-60 transition-all active:scale-[0.98]">
+                      {saving ? 'Un attimo…' : `Sposta dalle ${o} alle ${orario} →`}
+                    </button>
+                  ))}
+                  <button onClick={() => { setDoppione(null); submit(true) }} disabled={saving}
+                    className="w-full mt-3 py-3 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] font-semibold text-sm disabled:opacity-60">
+                    No, è un altro lavaggio: prenota anche alle {orario}
+                  </button>
+                  <button onClick={() => setDoppione(null)} className="w-full mt-2 py-2 text-sm text-[#6B6B6B] underline">Annulla</button>
+                </div>
+              ) : (
+              <button onClick={() => submit()} disabled={saving}
                 className="w-full mt-6 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black text-base hover:bg-[#E0B210] disabled:opacity-60 transition-all active:scale-[0.98]">
                 {saving ? 'Invio in corso...' : isPriority ? `Paga €${prio.supplemento} e conferma ⚡` : garanzia > 0 ? 'Lascia la carta e conferma →' : caparra > 0 ? `Paga la caparra €${caparra} e conferma →` : 'Conferma prenotazione →'}
               </button>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

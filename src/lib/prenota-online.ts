@@ -24,6 +24,15 @@ export async function getCaparraStato(id: string): Promise<{ stato: string; data
   return r.json()
 }
 
-export const disdici = (payload: { telefono: string; nome: string; dataPren: string }):
-  Promise<{ disdette: string[]; troppoTardi: string[]; rimborsi: { tipo: string; importo: number; ok: boolean }[]; oreDisdetta: number }> =>
+export type ScegliDisdetta = { orario: string; vettura: string; disdicibile: boolean }
+// Con più prenotazioni nello stesso giorno la prima chiamata torna `scegli`: si ripete con `orari`
+export const disdici = (payload: { telefono: string; nome: string; dataPren: string; orari?: string[] }):
+  Promise<{ disdette: string[]; troppoTardi: string[]; rimborsi: { tipo: string; importo: number; ok: boolean }[]; oreDisdetta: number; scegli?: ScegliDisdetta[] }> =>
   post('/disdici', payload)
+
+// Stessa vettura già prenotata quel giorno con questo telefono? (solo gli orari)
+export const giaPrenotato = (payload: { telefono: string; dataPren: string; vettura: string; targa?: string }): Promise<{ stessaAuto: string[] }> =>
+  post('/gia-prenotato', payload)
+
+export const sposta = (payload: { telefono: string; nome: string; dataPren: string; daOrario: string; aOrario: string }): Promise<{ ok: boolean; orario: string }> =>
+  post('/sposta', payload)
