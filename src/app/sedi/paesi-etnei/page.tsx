@@ -2,7 +2,7 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'WASH HUB POP Paesi Etnei — Autolavaggio Self Service 24/7',
+  title: { absolute: 'WASH HUB POP Paesi Etnei — Autolavaggio Self Service 24/7' },
   description: 'Autolavaggio self service aperto 24 ore su 24, 7 giorni su 7 ai Paesi Etnei, Catania. Nessuna prenotazione, sempre disponibile.',
 }
 

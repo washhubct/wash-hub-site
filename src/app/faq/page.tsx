@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const FAQ = [
   {
@@ -57,25 +57,22 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
     <AnimatedSection delay={index * 0.05}>
       <button
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
         className="w-full text-left p-6 rounded-2xl bg-white border border-[#E8E8E4] hover:border-[#F5C518]/50 transition-all"
       >
         <div className="flex items-start justify-between gap-4">
           <span className="font-bold text-[#0F0F0F] text-base leading-snug">{q}</span>
           <span className={`text-[#F5C518] text-xl font-black shrink-0 transition-transform duration-300 ${open ? 'rotate-45' : ''}`}>+</span>
         </div>
-        <AnimatePresence>
-          {open && (
-            <motion.p
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="text-[#6B6B6B] text-sm leading-relaxed mt-4 overflow-hidden"
-            >
-              {a}
-            </motion.p>
-          )}
-        </AnimatePresence>
+        {/* La risposta resta sempre nell'HTML (Google e AI la leggono), si apre solo l'altezza */}
+        <motion.div
+          initial={false}
+          animate={{ height: open ? 'auto' : 0, opacity: open ? 1 : 0 }}
+          transition={{ duration: 0.25 }}
+          className="overflow-hidden"
+        >
+          <p className="text-[#6B6B6B] text-sm leading-relaxed pt-4">{a}</p>
+        </motion.div>
       </button>
     </AnimatedSection>
   )

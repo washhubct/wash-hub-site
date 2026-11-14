@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Parcheggio Smart WASH HUB — apri il cancello con un codice',
     description: 'Paghi online, ricevi il codice, parcheggi da solo. Anche di notte. Via Anfuso 35, Catania.',
+    // openGraph di pagina sostituisce quello del layout: i campi comuni vanno ripetuti
+    type: 'website',
+    locale: 'it_IT',
+    url: './',
+    siteName: 'WASH HUB',
+    images: [{ url: '/og-default.jpg', width: 1200, height: 630 }],
   },
 }
 

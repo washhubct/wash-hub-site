@@ -3,7 +3,7 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Pacchetti Flotte e Aziende — WASH HUB Catania',
+  title: { absolute: 'Pacchetti Flotte e Aziende — WASH HUB Catania' },
   description: 'Soluzioni personalizzate per concessionarie, autonoleggi, taxi e flotte aziendali. Prezzi dedicati, fatturazione, slot riservati.',
 }
 

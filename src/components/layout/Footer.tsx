@@ -30,21 +30,21 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB Autolavaggi"
+            <img src={`${BASE}/brand/logo-autolavaggi.webp`} alt="WASH HUB Autolavaggi"
               className="h-20 w-auto mb-3" />
             <p className="text-sm leading-relaxed">
               Artigiani del lavaggio auto a Catania dal 2022. Due sedi, una sola ossessione: la perfezione.
             </p>
             <div className="flex gap-3 mt-5">
-              <a href="https://www.instagram.com/washhubcatania" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.instagram.com/washhubcatania" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
                 <IconInstagram />
               </a>
-              <a href="https://www.facebook.com/120281217832639" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.facebook.com/120281217832639" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
                 <IconFacebook />
               </a>
-              <a href="https://www.tiktok.com/@washhublungomare" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.tiktok.com/@washhublungomare" target="_blank" rel="noopener noreferrer" aria-label="TikTok"
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:border-[#F5C518] hover:text-[#F5C518] transition-colors">
                 <IconTikTok />
               </a>

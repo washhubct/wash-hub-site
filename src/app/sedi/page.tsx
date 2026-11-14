@@ -46,7 +46,7 @@ export default function SediPage() {
                   style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
                   WASH HUB Lungomare
                 </h2>
-                <p className="text-[#C8A84E] text-sm mb-5">Via del Lungomare, Catania</p>
+                <p className="text-[#C8A84E] text-sm mb-5">Via Anfuso 35, Catania</p>
                 <div className="space-y-2 text-white/60 text-sm mb-6 flex-1">
                   <p>🕗 Lun–Sab 7:30–18:30 · Domenica chiuso</p>
                   <p>👨‍🔧 Operatori esperti inclusi</p>
@@ -77,7 +77,7 @@ export default function SediPage() {
                   style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
                   WASH HUB POP
                 </h2>
-                <p className="text-[#0F0F0F]/60 text-sm mb-5">Paesi Etnei, Catania</p>
+                <p className="text-[#0F0F0F]/60 text-sm mb-5">Via Galileo Galilei 28, San Gregorio di Catania</p>
                 <div className="space-y-2 text-[#0F0F0F]/70 text-sm mb-6 flex-1">
                   <p className="font-bold text-[#0F0F0F]">⏰ Aperto 24 ore · 7 giorni su 7</p>
                   <p>🧼 Lavaggio manuale Lun–Dom 8:00–19:00</p>

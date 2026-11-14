@@ -42,21 +42,23 @@ export function Header() {
             <div className="max-w-7xl mx-auto px-5 md:px-8 h-16 md:h-20 flex items-center justify-between">
               <Link href="/" aria-label="WASH HUB" className="pointer-events-auto">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB"
+                <img src={`${BASE}/brand/logo-autolavaggi.webp`} alt="WASH HUB"
                   className="h-20 md:h-24 w-auto drop-shadow-lg" />
               </Link>
-              <Link href="/prenota"
-                className="pointer-events-auto hidden md:flex items-center px-5 py-2.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-bold hover:bg-[#E0B210] transition-colors shadow-lg">
-                Prenota ora
-              </Link>
-              {/* Mobile burger */}
-              <button onClick={() => setOpen(!open)}
-                className="pointer-events-auto md:hidden flex flex-col gap-1.5 p-2 text-white drop-shadow-lg"
-                aria-label="Menu">
-                <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'rotate-45 translate-y-2')} />
-                <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'opacity-0')} />
-                <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && '-rotate-45 -translate-y-2')} />
-              </button>
+              <div className="pointer-events-auto flex items-center gap-2">
+                <Link href="/prenota"
+                  className="flex items-center px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-bold hover:bg-[#E0B210] transition-colors shadow-lg">
+                  Prenota ora
+                </Link>
+                {/* Mobile burger — fondo scuro: la barra è trasparente e le pagine interne hanno sfondo chiaro */}
+                <button onClick={() => setOpen(!open)}
+                  className="md:hidden flex flex-col items-center justify-center gap-1.5 w-10 h-10 rounded-full bg-[#0F0F0F]/80 backdrop-blur text-white shadow-lg"
+                  aria-label="Menu" aria-expanded={open}>
+                  <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'rotate-45 translate-y-2')} />
+                  <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && 'opacity-0')} />
+                  <span className={cn('block w-5 h-0.5 bg-current transition-all duration-200', open && '-rotate-45 -translate-y-2')} />
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
@@ -75,7 +77,7 @@ export function Header() {
               {/* Logo mini */}
               <Link href="/" aria-label="WASH HUB" className="mr-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`${BASE}/brand/logo-autolavaggi.png`} alt="WASH HUB"
+                <img src={`${BASE}/brand/logo-autolavaggi.webp`} alt="WASH HUB"
                   className="h-7 w-auto" />
               </Link>
 
@@ -99,7 +101,7 @@ export function Header() {
               {/* Mobile burger dentro la pill */}
               <button onClick={() => setOpen(!open)}
                 className="md:hidden flex flex-col gap-1 p-1.5 text-white ml-1"
-                aria-label="Menu">
+                aria-label="Menu" aria-expanded={open}>
                 <span className={cn('block w-4 h-0.5 bg-current transition-all duration-200', open && 'rotate-45 translate-y-1.5')} />
                 <span className={cn('block w-4 h-0.5 bg-current transition-all duration-200', open && 'opacity-0')} />
                 <span className={cn('block w-4 h-0.5 bg-current transition-all duration-200', open && '-rotate-45 -translate-y-1.5')} />
@@ -118,6 +120,7 @@ export function Header() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-40 bg-[#0F0F0F]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-2 md:hidden">
             <button onClick={() => setOpen(false)}
+              aria-label="Chiudi menu"
               className="absolute top-6 right-6 text-white/60 hover:text-white p-2">
               ✕
             </button>

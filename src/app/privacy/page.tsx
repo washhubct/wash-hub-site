@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — WASH HUB',
+  title: 'Privacy Policy',
   description: 'Informativa sul trattamento dei dati personali di WASH HUB.',
 }
 

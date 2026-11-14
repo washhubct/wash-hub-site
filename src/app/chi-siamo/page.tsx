@@ -2,7 +2,7 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Chi siamo — La storia di WASH HUB',
+  title: { absolute: 'Chi siamo — La storia di WASH HUB' },
   description: 'WASH HUB nasce nel 2022 a Catania dalla passione per il lavaggio auto professionale. La nostra storia, il nostro team, i nostri valori.',
 }
 

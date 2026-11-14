@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Termini e Condizioni — WASH HUB',
+  title: 'Termini e Condizioni',
   description: 'Termini e condizioni del servizio WASH HUB Catania.',
 }
 

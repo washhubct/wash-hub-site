@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Priority — salti la coda | WASH HUB Catania',
+  title: { absolute: 'Priority — salti la coda | WASH HUB Catania' },
   description: 'Nelle ore di punta prenoti con Priority: passi davanti alla coda al lavaggio WASH HUB Lungomare.',
 }
 

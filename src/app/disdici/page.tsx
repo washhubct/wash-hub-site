@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Disdici } from '@/components/booking/Disdici'
 
-export const metadata: Metadata = { title: 'Disdici la prenotazione — WASH HUB', description: 'Disdici gratis la tua prenotazione WASH HUB fino a 2 ore prima.' }
+export const metadata: Metadata = { title: 'Disdici la prenotazione', description: 'Disdici gratis la tua prenotazione WASH HUB fino a 2 ore prima.', robots: { index: false, follow: true } }
 
 export default function DisdiciPage() {
   return (

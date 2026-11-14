@@ -3,7 +3,7 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'WASH HUB Lungomare — Autolavaggio Premium Catania',
+  title: { absolute: 'WASH HUB Lungomare — Autolavaggio Premium Catania' },
   description: 'Lavaggio auto premium con operatori a Catania Lungomare. Tappezzeria, parcheggio, servizio personalizzato. Aperto lun–sab 7:30–18:30.',
 }
 
