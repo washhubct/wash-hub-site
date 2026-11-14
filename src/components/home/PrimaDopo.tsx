@@ -38,9 +38,9 @@ export function PrimaDopo() {
             style={{ border: '3px solid #F5C518' }}
             onPointerDown={e => { (e.target as HTMLElement).setPointerCapture?.(e.pointerId); muovi(e.clientX) }}
             onPointerMove={e => { if (e.buttons || e.pointerType === 'touch') muovi(e.clientX) }}>
-            <img src={`${BASE}/brand/dopo.jpg`} alt="Auto dopo il lavaggio" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+            <img src={`${BASE}/brand/dopo.jpg`} alt="Auto dopo il lavaggio" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
             <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-              <img src={`${BASE}/brand/prima.jpg`} alt="Auto prima del lavaggio" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+              <img src={`${BASE}/brand/prima.jpg`} alt="Auto prima del lavaggio" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
             </div>
             <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 text-xs font-bold">PRIMA</span>
             <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-[#F5C518] text-[#0F0F0F] text-xs font-bold">DOPO</span>

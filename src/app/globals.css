@@ -29,3 +29,6 @@ body {
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+/* Bottone WhatsApp nascosto mentre il menu mobile è aperto (classe messa da Header) */
+body.menu-open .wa-fab { display: none; }

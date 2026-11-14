@@ -31,6 +31,7 @@ export function Footer() {
           <div className="md:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${BASE}/brand/logo-autolavaggi.webp`} alt="WASH HUB Autolavaggi"
+              width={80} height={80} loading="lazy" decoding="async"
               className="h-20 w-auto mb-3" />
             <p className="text-sm leading-relaxed">
               Artigiani del lavaggio auto a Catania dal 2022. Due sedi, una sola ossessione: la perfezione.
@@ -53,7 +54,7 @@ export function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Navigazione</h4>
+            <p className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Navigazione</p>
             <ul className="space-y-2 text-sm">
               {([
                 ['Home', '/'],
@@ -68,7 +69,7 @@ export function Footer() {
                 ['Contatti', '/contatti'],
               ] as [string, string, string?][]).map(([l, h, badge]) => (
                 <li key={h} className="flex items-center gap-2">
-                  <Link href={h} className="hover:text-white transition-colors">{l}</Link>
+                  <Link href={h} prefetch={h === '/prenota' || h === '/referral' ? false : undefined} className="hover:text-white transition-colors">{l}</Link>
                   {badge === 'new' && <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#C8A84E]/20 text-[#C8A84E]">New</span>}
                   {badge === 'soon' && <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#F5C518]/20 text-[#F5C518]">Soon</span>}
                 </li>
@@ -78,15 +79,15 @@ export function Footer() {
 
           {/* Sedi */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Le sedi</h4>
+            <p className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Le sedi</p>
             <div className="space-y-4 text-sm">
               <div>
-                <p className="text-white font-medium">WASH HUB Lungomare</p>
+                <p className="text-white font-medium"><Link href="/sedi/lungomare" className="hover:underline">WASH HUB Lungomare</Link></p>
                 <p>Via Anfuso 35, Catania</p>
-                <p>Lun–Sab 7:30–18:30</p>
+                <p>Lun–Sab 8:00–18:30</p>
               </div>
               <div>
-                <p className="text-[#F5C518] font-medium">WASH HUB POP · Paesi Etnei</p>
+                <p className="text-[#F5C518] font-medium"><Link href="/sedi/paesi-etnei" className="hover:underline">WASH HUB POP · Paesi Etnei</Link></p>
                 <p>Via Galileo Galilei 28, San Gregorio di Catania</p>
                 <p>Manuale Lun–Dom 8:00–19:00</p>
                 <p className="text-[#F5C518]">Self service 24/7</p>
@@ -96,7 +97,7 @@ export function Footer() {
 
           {/* Contatti */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contatti</h4>
+            <p className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contatti</p>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="mailto:info@washhub.it" className="hover:text-white transition-colors">
@@ -109,7 +110,7 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-            <Link href="/prenota"
+            <Link href="/prenota" prefetch={false}
               className="inline-flex items-center mt-5 px-5 py-2.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-bold hover:bg-[#E0B210] transition-colors">
               Prenota ora →
             </Link>
@@ -119,10 +120,11 @@ export function Footer() {
         {/* Partner */}
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center gap-4">
           <span className="text-xs text-white/30 uppercase tracking-widest shrink-0">Prodotti certificati</span>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <a href="https://www.mafra.it" target="_blank" rel="noopener noreferrer">
-            <img src="https://mafra.it/wp-content/uploads/2025/04/logo-60-mafra-anniversary-Since-1965-e1745477899242.png"
-              alt="MA-FRA" className="h-8 w-auto opacity-50 hover:opacity-80 transition-opacity" />
+            {/* Logo in locale: niente richiesta a un sito esterno a ogni pagina */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${BASE}/brand/mafra.png`} alt="MA-FRA" width={61} height={32} loading="lazy" decoding="async"
+              className="h-8 w-auto opacity-50 hover:opacity-80 transition-opacity" />
           </a>
         </div>
 

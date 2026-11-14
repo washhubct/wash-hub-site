@@ -13,7 +13,9 @@ const STATS = [
 ]
 
 function CountUp({ target, suffix, active, duration = 1800, decimali }: { target: number, suffix: string, active: boolean, duration?: number, decimali?: number }) {
-  const [count, setCount] = useState(0)
+  // Parte dal valore vero: nell'HTML statico (Google, AI, chi non ha JS) c'è il numero, non 0.
+  // Il conteggio riparte da zero solo quando il blocco entra in vista.
+  const [count, setCount] = useState(target)
   const timer = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {

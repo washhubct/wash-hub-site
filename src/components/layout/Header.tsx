@@ -28,6 +28,12 @@ export function Header() {
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
+  // Menu mobile aperto: il bottone WhatsApp non deve coprire le voci (vedi .wa-fab in globals.css)
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', open)
+    return () => document.body.classList.remove('menu-open')
+  }, [open])
+
   return (
     <>
       {/* Top bar — visibile solo prima dello scroll; quando appare la pill, sparisce */}
@@ -46,7 +52,7 @@ export function Header() {
                   className="h-20 md:h-24 w-auto drop-shadow-lg" />
               </Link>
               <div className="pointer-events-auto flex items-center gap-2">
-                <Link href="/prenota"
+                <Link href="/prenota" prefetch={false}
                   className="flex items-center px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-bold hover:bg-[#E0B210] transition-colors shadow-lg">
                   Prenota ora
                 </Link>
@@ -72,8 +78,8 @@ export function Header() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
             transition={{ type: 'spring', damping: 20, stiffness: 300 }}
-            className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
-            <div className="flex items-center gap-1 px-3 py-2 rounded-full bg-[#0F0F0F]/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+            className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+            <div className="pointer-events-auto flex items-center gap-1 px-3 py-2 rounded-full bg-[#0F0F0F]/90 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
               {/* Logo mini */}
               <Link href="/" aria-label="WASH HUB" className="mr-2">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -93,7 +99,7 @@ export function Header() {
               </nav>
 
               {/* CTA */}
-              <Link href="/prenota"
+              <Link href="/prenota" prefetch={false}
                 className="ml-2 px-4 py-1.5 rounded-full bg-[#F5C518] text-[#0F0F0F] text-sm font-bold hover:bg-[#E0B210] transition-colors">
                 Prenota
               </Link>
@@ -138,7 +144,7 @@ export function Header() {
               </motion.div>
             ))}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-              <Link href="/prenota" onClick={() => setOpen(false)}
+              <Link href="/prenota" prefetch={false} onClick={() => setOpen(false)}
                 className="mt-6 flex items-center justify-center px-8 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold text-lg">
                 Prenota ora →
               </Link>
