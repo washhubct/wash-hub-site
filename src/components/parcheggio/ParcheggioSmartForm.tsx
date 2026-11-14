@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 import { creaCheckout, fmtEur, getConfigParcheggio, localNow, prezzoParcheggioOre, type ConfigParcheggio } from '@/lib/parcheggio-smart'
 
 const pad = (n: number) => String(n).padStart(2, '0')
@@ -34,6 +34,8 @@ export function ParcheggioSmartForm() {
   const [privacy, setPrivacy] = useState(false)
   const [loading, setLoading] = useState(false)
   const [err, setErr] = useState('')
+  // false nell'HTML statico, true nel browser: l'orario "adesso" del build non coincide mai con quello di chi apre la pagina
+  const montato = useSyncExternalStore(() => () => {}, () => true, () => false)
 
   useEffect(() => {
     getConfigParcheggio()
@@ -164,7 +166,7 @@ export function ParcheggioSmartForm() {
       {/* Riepilogo */}
       <div className="mt-6 rounded-2xl bg-[#0F0F0F] text-white p-5 flex items-center justify-between gap-4">
         <div className="text-sm text-white/60 leading-relaxed">
-          {finestra ? (<>
+          {!montato ? (<><div>&nbsp;</div><div>&nbsp;</div></>) : finestra ? (<>
             <div>Dal <span className="text-white font-semibold">{fmt(finestra.start)}</span></div>
             <div>alle <span className="text-white font-semibold">{fmt(finestra.end)}</span></div>
           </>) : 'Scegli un orario valido'}
@@ -178,7 +180,7 @@ export function ParcheggioSmartForm() {
       <div className="mt-5 space-y-3">
         <label className="flex items-start gap-3 text-sm text-[#6B6B6B] cursor-pointer">
           <input type="checkbox" checked={privacy} onChange={e => setPrivacy(e.target.checked)} className="mt-1 accent-[#C8A84E]" required />
-          <span>Ho letto la <a href="/privacy" className="underline hover:text-[#0F0F0F]">privacy policy</a> e accetto le <a href="/termini" className="underline hover:text-[#0F0F0F]">condizioni</a>. Il codice vale solo nella fascia scelta: oltre l&rsquo;orario si paga la differenza al banco.</span>
+          <span>Ho letto la <a href="/privacy/" className="underline hover:text-[#0F0F0F]">privacy policy</a> e accetto le <a href="/termini/" className="underline hover:text-[#0F0F0F]">condizioni</a>. Il codice vale solo nella fascia scelta: oltre l&rsquo;orario si paga la differenza al banco.</span>
         </label>
         <label className="flex items-start gap-3 text-sm cursor-pointer rounded-xl border border-[#C8A84E]/40 bg-[#C8A84E]/10 px-4 py-3">
           <input type="checkbox" checked={marketing} onChange={e => setMarketing(e.target.checked)} className="mt-1 accent-[#C8A84E]" />

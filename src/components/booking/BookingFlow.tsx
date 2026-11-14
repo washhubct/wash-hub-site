@@ -53,6 +53,8 @@ const slide: Variants = {
 
 type Step = 'servizio' | 'moto-avviso' | 'taglia' | 'data' | 'orario' | 'dati' | 'done'
 const STEP_ORDER: Step[] = ['servizio', 'taglia', 'data', 'orario', 'dati']
+// Pallino della barra in alto (STEPS) per ogni schermata: servizio, avviso moto e taglia stanno tutti sotto "Servizio"
+const STEP_BARRA: Record<Step, number> = { servizio: 0, 'moto-avviso': 0, taglia: 0, data: 1, orario: 2, dati: 3, done: 4 }
 
 export function BookingFlow() {
   const [step, setStep] = useState<Step>('servizio')
@@ -93,6 +95,7 @@ export function BookingFlow() {
   // Codice amico: email obbligatoria + consenso marketing facoltativo e separato (Guido 23/10/2026)
   const [email, setEmail] = useState('')
   const [consensoMarketing, setConsensoMarketing] = useState(false)
+  const [copiato, setCopiato] = useState(false)
 
   const dates = getDates()
 
@@ -286,7 +289,7 @@ export function BookingFlow() {
     }
   }
 
-  const stepIdx = STEP_ORDER.indexOf(step)
+  const stepIdx = STEP_BARRA[step]
 
   if (step === 'done') {
     const codiceCliente = tel ? getReferralCode(tel) : ''
@@ -301,7 +304,7 @@ export function BookingFlow() {
       if (typeof navigator !== 'undefined' && navigator.clipboard) {
         try {
           await navigator.clipboard.writeText(`${shareText} https://wash-hub.it/prenota`)
-          alert('Codice copiato negli appunti!')
+          setCopiato(true)
         } catch { /* clipboard non disponibile */ }
       }
     }
@@ -318,7 +321,7 @@ export function BookingFlow() {
           {spostataDa && <span className="block text-sm mt-1">Non più alle {spostataDa}: quell&apos;orario è di nuovo libero.</span>}
         </p>
         <p className="text-[#6B6B6B]">Ti aspettiamo in Via Anfuso 35, Catania.</p>
-        <p className="mt-3 text-sm text-[#6B6B6B]">Imprevisto? Disdici gratis fino a 2 ore prima su <a href="/disdici" className="underline font-semibold text-[#0F0F0F]">wash-hub.it/disdici</a></p>
+        <p className="mt-3 text-sm text-[#6B6B6B]">Imprevisto? Disdici gratis fino a 2 ore prima su <a href="/disdici/" className="underline font-semibold text-[#0F0F0F]">wash-hub.it/disdici</a></p>
 
         {codiceCliente && (
           <div className="mt-8 mx-auto max-w-md p-6 rounded-2xl bg-[#0F0F0F] text-white text-left">
@@ -332,7 +335,7 @@ export function BookingFlow() {
             </div>
             <button onClick={condividi}
               className="w-full px-6 py-3 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold text-sm hover:bg-[#E0B210] transition-all">
-              Condividi codice
+              {copiato ? 'Codice copiato ✓' : 'Condividi codice'}
             </button>
           </div>
         )}
@@ -481,6 +484,14 @@ export function BookingFlow() {
                 <div className="text-center py-12 text-[#6B6B6B]">
                   <div className="inline-block w-8 h-8 border-2 border-[#F5C518] border-t-transparent rounded-full animate-spin mb-3" />
                   <p className="text-sm">Verifico disponibilità...</p>
+                </div>
+              ) : SLOTS.every(isSlotDisabled) ? (
+                <div className="text-center py-10">
+                  <p className="font-bold text-[#0F0F0F] mb-5">Per questo giorno non ci sono più orari liberi.</p>
+                  <button onClick={() => goTo('data')}
+                    className="px-6 py-3 rounded-full bg-[#0F0F0F] text-white font-bold text-sm hover:bg-[#1a1a1a] transition-all">
+                    Scegli un altro giorno
+                  </button>
                 </div>
               ) : (
                 <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
@@ -641,7 +652,7 @@ export function BookingFlow() {
                   </label>
                 </div>
               )}
-              <p className="mt-5 text-xs text-[#6B6B6B]">Imprevisto? Puoi disdire gratis fino a 2 ore prima su <a href="/disdici" className="underline font-semibold text-[#0F0F0F]">wash-hub.it/disdici</a>.</p>
+              <p className="mt-5 text-xs text-[#6B6B6B]">Imprevisto? Puoi disdire gratis fino a 2 ore prima su <a href="/disdici/" className="underline font-semibold text-[#0F0F0F]">wash-hub.it/disdici</a>.</p>
 
               {error && <p className="text-[#E63946] text-sm mt-4">{error}</p>}
               {doppione ? (
