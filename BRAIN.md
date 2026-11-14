@@ -18,7 +18,7 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 
 ## Progetto: scopo, stack, repo, deploy, env
 
-- Sito vetrina + prenotazione online di WASH HUB (autolavaggio Catania): sede Lungomare (Via Anfuso 35, operatori, Lun-Sab 7:30-18:30) e sede POP Paesi Etnei (Via Galileo Galilei 28, San Gregorio, self-service 24/7).
+- Sito vetrina + prenotazione online di WASH HUB (autolavaggio Catania): sede Lungomare (Via Anfuso 35, operatori, Lun-Sab 8:00-18:30) e sede POP Paesi Etnei (Via Galileo Galilei 28, San Gregorio, self-service 24/7).
 - Dominio produzione `wash-hub.it` (CNAME in `public/CNAME`); telefono 095 469 5153, email info@washhub.it.
 - Stack: Next.js 16 App Router, React 19, TypeScript 5, Tailwind v4 (config inline in `globals.css`), Framer Motion 12, Firebase JS SDK 12 (solo Firestore client).
 - Font via next/font: Bricolage Grotesque (headline), Instrument Serif (citazioni), Inter (body).
@@ -100,7 +100,7 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 ## Stato attuale e prossimi passi
 
 - Sito in produzione su wash-hub.it con prenotazione, Priority, caparra/garanzia, disdetta, referral, Parcheggio Smart.
-- Recensioni: Google 5,0★ con 20 recensioni (verificato 08/10/2026); aggiornare con `npm run fetch-reviews`.
+- Recensioni: Google 5,0★ con 22 recensioni (dato di Guido, 14/11/2026); aggiornare con `npm run fetch-reviews`.
 - Aperti: abbonamenti (prezzi + Payment Link Stripe reali), gift card se torna utile, immagini stub Higgsfield residue in `sedi/page.tsx`, `servizi/page.tsx`, `SediPreview.tsx`.
 - Da valutare: Google Analytics 4 (non integrato), Resend per email contatti (non serve finché non c'è un form).
 - `GIORNI_CHIUSI` contiene date 2026 da ripulire e integrare per il 2027.
