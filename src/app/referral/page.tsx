@@ -36,11 +36,11 @@ export default function ReferralPage() {
   return (
     <div className="pt-20">
       <section className="py-20 bg-[#0F0F0F] text-white text-center">
-        <AnimatedSection>
-          <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-3">Porta un amico</p>
+        <AnimatedSection eager>
+          <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-3">WASH HUB Lungomare</p>
           <h1 className="font-display text-5xl md:text-6xl font-black mb-4"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-            Referral.
+            Porta un amico.
           </h1>
           <p className="text-white/50 text-lg max-w-md mx-auto">
             Ogni amico che porti vale uno sconto per te. Semplice.

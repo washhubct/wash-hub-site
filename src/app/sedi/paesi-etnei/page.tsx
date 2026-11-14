@@ -1,25 +1,28 @@
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { schemaPaginaSede, sedePop } from '@/lib/schema'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: { absolute: 'WASH HUB POP Paesi Etnei — Autolavaggio Self Service 24/7' },
-  description: 'Autolavaggio self service aperto 24 ore su 24, 7 giorni su 7 ai Paesi Etnei, Catania. Nessuna prenotazione, sempre disponibile.',
+  title: { absolute: 'Self service 24/7 a San Gregorio di Catania | WASH HUB POP' },
+  description: 'Autolavaggio self service aperto 24 ore su 24 a San Gregorio di Catania (Paesi Etnei), Via Galileo Galilei 28. Lavaggio manuale lun–dom 8:00–19:00.',
 }
 
 export default function PaesiEtneiPage() {
   return (
     <div className="pt-20">
+      <JsonLd data={schemaPaginaSede(sedePop)} />
       {/* Hero giallo */}
       <section className="relative min-h-[70vh] flex items-end overflow-hidden bg-[#F5C518]">
         <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pb-16 md:pb-24 w-full">
-          <AnimatedSection>
+          <AnimatedSection eager>
             <span className="inline-block px-4 py-2 rounded-full text-sm font-black uppercase tracking-wider mb-4 bg-[#E63946] text-white">
-              SELF 24/7
+              WASH HUB POP · Paesi Etnei
             </span>
-            <h1 className="font-display text-5xl md:text-7xl font-black text-[#0F0F0F] leading-tight"
+            <h1 className="font-display text-4xl md:text-6xl font-black text-[#0F0F0F] leading-tight"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-              WASH HUB POP<br />
-              Paesi Etnei
+              Autolavaggio self service 24/7<br />
+              a San Gregorio di Catania
             </h1>
             <p className="text-[#0F0F0F]/60 text-xl mt-4 max-w-lg font-medium">
               Sempre aperto. Nessuna attesa. La tua auto pulita quando vuoi tu.
@@ -108,7 +111,7 @@ export default function PaesiEtneiPage() {
                 <div className="space-y-3">
                   {[
                     { step: '01', title: 'Arrivi in orario', desc: 'I nostri operatori sono disponibili tutti i giorni, lunedì–domenica, 8:00–19:00.' },
-                    { step: '02', title: 'Trovi i nostri operatori', desc: 'Nessuna prenotazione necessaria — pass direct, ti accogliamo all\'arrivo.' },
+                    { step: '02', title: 'Trovi i nostri operatori', desc: 'Nessuna prenotazione necessaria: passi direttamente, ti accogliamo all\'arrivo.' },
                     { step: '03', title: 'Scegli il servizio', desc: 'Esterno, tradizionale o Performance Intenso. Ti consigliamo noi.' },
                     { step: '04', title: 'Ritiri l\'auto pulita', desc: 'Lavoro fatto a mano, con cura. Come piace a noi.' },
                   ].map(({ step, title, desc }) => (

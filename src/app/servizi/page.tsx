@@ -1,20 +1,55 @@
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { HiggsfieldImage } from '@/components/ui/HiggsfieldImage'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { LUNGOMARE_ID } from '@/lib/schema'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Servizi — Lavaggi, Tappezzeria, Abbonamenti',
-  description: 'Listino completo: lavaggio esterno, tradizionale, Performance Intenso, moto, tappezzeria. Abbonamenti mensili disponibili.',
+  title: 'Listino lavaggio auto a mano a Catania',
+  description: 'Listino lavaggio auto a mano al Lungomare di Catania: esterno da €14, tradizionale da €18, Performance Intenso da €29, moto €12. Interni, tappezzeria, motore.',
 }
 
-const LAVAGGI = [
-  { icon: '🚿', name: 'Esterno', desc: 'Carrozzeria, vetri, cerchi, passaruota', price: 'da €14', time: '~15 min' },
-  { icon: '🧼', name: 'Lavaggio Tradizionale', desc: 'Completo con aspirazione e cura abitacolo', price: 'da €18', time: '~30 min' },
-  { icon: '⭐', name: 'Performance Intenso', desc: 'Come il Tradizionale, ma intenso: esterno e interni curati a fondo con trattamento schiumogeno. Utilitaria e berlina €29 · SUV, monovolume e station wagon €35. Auto molto sporca o pelo animale: supplemento valutato in sede.', price: 'da €29', time: 'Varia in base al veicolo' },
-  { icon: '🏍️', name: 'Moto / Scooter', desc: 'Lavaggio completo con delicatezza', price: '€12', time: '~20 min' },
-  { icon: '🪡', name: 'Tappezzeria', desc: 'Interni, sedili, door panel — su prenotazione', price: 'Su preventivo', time: 'Varia' },
+// prezzoFisso / prezzoMin / prezzoMax: gli stessi prezzi di `price`, in numeri, per i dati strutturati
+type Lavaggio = { icon: string; name: string; desc: string; price: string; time: string; prezzoFisso?: number; prezzoMin?: number; prezzoMax?: number }
+
+const LAVAGGI: Lavaggio[] = [
+  { icon: '🚿', name: 'Esterno', desc: 'Carrozzeria, vetri, cerchi, passaruota', price: 'da €14', time: '~15 min', prezzoMin: 14 },
+  { icon: '🧼', name: 'Lavaggio Tradizionale', desc: 'Lavaggio completo interno ed esterno: carrozzeria, aspirazione e cura abitacolo', price: 'da €18', time: '~30 min', prezzoMin: 18 },
+  { icon: '⭐', name: 'Performance Intenso', desc: 'Come il Tradizionale, ma intenso: esterno e interni curati a fondo con trattamento schiumogeno. Utilitaria e berlina €29 · SUV, monovolume e station wagon €35. Auto molto sporca o pelo animale: supplemento valutato in sede.', price: 'da €29', time: 'Varia in base al veicolo', prezzoMin: 29, prezzoMax: 35 },
+  { icon: '🏍️', name: 'Moto / Scooter', desc: 'Lavaggio completo con delicatezza', price: '€12', time: '~20 min', prezzoFisso: 12 },
+  { icon: '🪡', name: 'Tappezzeria', desc: 'Interni, sedili, pannelli porta: su prenotazione', price: 'Su preventivo', time: 'Varia' },
 ]
+
+// Servizi senza listino fisso: tempi e costo si chiedono in sede o su WhatsApp
+const EXTRA = [
+  { icon: '🧽', name: 'Smacchiatura e sanificazione interni', desc: 'Sedili e tessuti smacchiati a fondo, abitacolo sanificato.' },
+  { icon: '🔧', name: 'Lavaggio motore', desc: 'Vano motore pulito con cura.' },
+  { icon: '❄️', name: 'Sanificazione impianto clima', desc: 'Bomboletta sanificante, presidio medico-chirurgico, per l\'impianto di climatizzazione.' },
+]
+
+const schemaServizi = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': 'https://wash-hub.it/servizi/#service',
+  name: 'Lavaggio auto a mano',
+  serviceType: 'Autolavaggio a mano',
+  url: 'https://wash-hub.it/servizi/',
+  provider: { '@type': 'AutoWash', '@id': LUNGOMARE_ID, name: 'WASH HUB Lungomare', url: 'https://wash-hub.it/sedi/lungomare/' },
+  areaServed: { '@type': 'City', name: 'Catania' },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Listino lavaggi',
+    itemListElement: LAVAGGI.filter(l => l.prezzoFisso || l.prezzoMin).map(l => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: l.name },
+      priceCurrency: 'EUR',
+      ...(l.prezzoFisso
+        ? { price: l.prezzoFisso }
+        : { priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'EUR', minPrice: l.prezzoMin, ...(l.prezzoMax ? { maxPrice: l.prezzoMax } : {}) } }),
+    })),
+  },
+}
 
 // Inserisci qui i Payment Link di Stripe (crea su dashboard.stripe.com)
 const STRIPE_LINKS = {
@@ -76,13 +111,14 @@ const ABBONAMENTI = [
 export default function ServiziPage() {
   return (
     <div className="pt-20">
+      <JsonLd data={schemaServizi} />
       {/* Header */}
       <section className="py-20 md:py-28 bg-[#0F0F0F] text-white text-center">
-        <AnimatedSection>
-          <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">Cosa offriamo</p>
-          <h1 className="font-display text-5xl md:text-6xl font-black"
+        <AnimatedSection eager className="px-5">
+          <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">I nostri servizi</p>
+          <h1 className="font-display text-4xl md:text-6xl font-black"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-            I nostri servizi.
+            Listino lavaggio auto a Catania
           </h1>
         </AnimatedSection>
       </section>
@@ -118,6 +154,46 @@ export default function ServiziPage() {
               className="inline-flex items-center px-8 py-4 rounded-full bg-[#F5C518] text-[#0F0F0F] font-bold hover:bg-[#E0B210] transition-colors">
               Prenota ora →
             </Link>
+            <p className="mt-5 text-sm text-[#6B6B6B]">
+              Prezzi della sede <Link href="/sedi/lungomare" className="underline font-semibold text-[#0F0F0F]">WASH HUB Lungomare</Link>
+              {' · '}
+              <Link href="/priority" className="underline font-semibold text-[#0F0F0F]">Priority nelle ore di punta</Link>
+              {' · '}
+              <Link href="/faq" className="underline font-semibold text-[#0F0F0F]">Domande frequenti</Link>
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Interni, motore e clima */}
+      <section className="py-20 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-5 md:px-8">
+          <AnimatedSection className="mb-10">
+            <p className="text-[#C8A84E] text-sm font-semibold uppercase tracking-[0.2em] mb-3">Al Lungomare, su richiesta</p>
+            <h2 className="font-display text-3xl md:text-4xl font-black text-[#0F0F0F]"
+              style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+              Interni, motore e clima
+            </h2>
+            <p className="text-[#6B6B6B] mt-3 max-w-2xl">Tempi e costo dipendono dall&rsquo;auto: chiedili in sede o su WhatsApp.</p>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {EXTRA.map(({ icon, name, desc }, i) => (
+              <AnimatedSection key={name} delay={i * 0.08}
+                className="bg-[#FAFAF7] border border-[#E8E8E4] rounded-2xl p-6">
+                <div className="text-3xl mb-4">{icon}</div>
+                <h3 className="font-display text-lg font-bold text-[#0F0F0F] mb-2"
+                  style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+                  {name}
+                </h3>
+                <p className="text-[#6B6B6B] text-sm">{desc}</p>
+              </AnimatedSection>
+            ))}
+          </div>
+          <AnimatedSection className="mt-8 text-center">
+            <a href="https://wa.me/390954695153" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center px-8 py-4 rounded-full bg-[#0F0F0F] text-white font-bold hover:bg-[#1a1a1a] transition-colors">
+              Chiedi tempi e costo su WhatsApp →
+            </a>
           </AnimatedSection>
         </div>
       </section>
@@ -137,7 +213,7 @@ export default function ServiziPage() {
               </h2>
               <p className="text-white/60 leading-relaxed text-lg mb-6"
                 style={{ fontFamily: 'var(--font-instrument)', fontStyle: 'italic' }}>
-                &ldquo;Interventi di precisione su interni: sedili, tetti, cruscotti, door panel. Il servizio che ci ha resi famosi tra gli intenditori.&rdquo;
+                &ldquo;Interventi di precisione su interni: sedili, tetti, cruscotti, pannelli porta. Il servizio che ci ha resi famosi tra gli intenditori.&rdquo;
               </p>
               <div className="space-y-2 text-white/50 text-sm mb-8">
                 {['Pulizia e rigenerazione cuoio', 'Smacchiatura profonda tessuti', 'Restauro plastica abitacolo', 'Trattamento tetto anti-aloni'].map(s => (
@@ -168,10 +244,14 @@ export default function ServiziPage() {
             <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">In arrivo</p>
             <h2 className="font-display text-4xl md:text-5xl font-black text-white mb-5"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-              Abbonamenti mensili.
+              Abbonamenti lavaggio.
             </h2>
-            <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
-              Stiamo preparando piani su misura per chi lava spesso. Risparmio garantito, zero pensieri.
+            <p className="text-white/50 text-lg mb-6 max-w-xl mx-auto">
+              Stiamo preparando piani su misura per chi lava spesso.
+            </p>
+            <p className="text-white/50 text-sm mb-10 max-w-xl mx-auto">
+              Cerchi l&rsquo;abbonamento mensile per il parcheggio? È già attivo:{' '}
+              <Link href="/sedi/lungomare" className="text-[#F5C518] font-semibold hover:underline">parcheggio al Lungomare →</Link>
             </p>
             <div className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl border border-white/10 bg-white/5 mb-10">
               <span className="text-2xl">🔔</span>

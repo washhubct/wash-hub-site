@@ -4,18 +4,9 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import reviewsData from '@/data/reviews.json'
 
-const FALLBACK_REVIEWS = [
-  { name: 'Marco T.', rating: 5, text: 'Finalmente un autolavaggio serio a Catania. Auto impeccabile, staff professionale e veloce. Il Performance Intenso vale ogni euro.', date: 'un mese fa', avatar: '' },
-  { name: 'Alessia R.', rating: 5, text: 'La tappezzeria era piena di macchie ostinate. L\'hanno restituita come nuova. Servizio top, consiglio a tutti.', date: '2 mesi fa', avatar: '' },
-  { name: 'Salvatore L.', rating: 5, text: 'Ho prenotato online in 2 minuti, arrivato e in mezzora la mia Audi A6 sembrava uscita dal concessionario. Tornerò sicuramente.', date: '2 mesi fa', avatar: '' },
-  { name: 'Valentina C.', rating: 5, text: 'Ho portato la moto — gentilissimi, molto attenti. Si capisce subito che ci tengono davvero alla qualità del lavoro.', date: '3 mesi fa', avatar: '' },
-  { name: 'Francesca P.', rating: 5, text: 'Il self service ai Paesi Etnei è sempre pulito e funzionante. Averlo 24/7 è una comodità enorme. Bravi!', date: '4 mesi fa', avatar: '' },
-  { name: 'Giuseppe M.', rating: 5, text: 'Staff cordiale e competente. Hanno trattato la mia macchina con una cura che non avevo mai visto in altri autolavaggi.', date: '4 mesi fa', avatar: '' },
-]
-
-const rawReviews = reviewsData.reviews.filter(r => r.text && r.text.trim().length > 0)
-const reviews = rawReviews.length > 0 ? rawReviews : FALLBACK_REVIEWS
-const rating = reviewsData.rating || 4.9
+// Solo recensioni vere da Google (npm run fetch-reviews). Se non ce ne sono, la sezione non esce: mai testi inventati.
+const reviews = reviewsData.reviews.filter(r => r.text && r.text.trim().length > 0)
+const rating = reviewsData.rating
 const totalRatings = reviewsData.totalRatings
 
 const Stars = ({ n }: { n: number }) => (
@@ -29,6 +20,8 @@ const Stars = ({ n }: { n: number }) => (
 export function Reviews() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
+
+  if (reviews.length === 0) return null
 
   return (
     <section ref={ref} className="bg-[#0F0F0F] py-20 md:py-28 overflow-hidden">
@@ -68,13 +61,13 @@ export function Reviews() {
               transition={{ type: 'spring', damping: 20, delay: i * 0.08 }}
               className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
             >
-              <Stars n={r.rating} />
+              <Stars n={Number(r.rating)} />
               <p className="text-white/80 text-sm leading-relaxed mt-4 mb-5">&ldquo;{r.text}&rdquo;</p>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center">
                 <div className="flex items-center gap-2">
                   {r.avatar ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={r.avatar} alt={r.name} className="w-8 h-8 rounded-full object-cover" />
+                    <img src={r.avatar} alt="" width={32} height={32} loading="lazy" decoding="async" className="w-8 h-8 rounded-full object-cover" />
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-[#F5C518]/20 flex items-center justify-center text-[#F5C518] text-xs font-bold">
                       {r.name[0]}
@@ -82,7 +75,6 @@ export function Reviews() {
                   )}
                   <span className="text-white text-sm font-semibold">{r.name}</span>
                 </div>
-                <span className="text-white/30 text-xs">{r.date}</span>
               </div>
             </motion.div>
           ))}

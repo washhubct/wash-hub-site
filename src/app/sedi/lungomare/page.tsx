@@ -1,26 +1,29 @@
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { schemaPaginaSede, sedeLungomare } from '@/lib/schema'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: { absolute: 'WASH HUB Lungomare — Autolavaggio Premium Catania' },
-  description: 'Lavaggio auto premium con operatori a Catania Lungomare. Tappezzeria, parcheggio, servizio personalizzato. Aperto lun–sab 7:30–18:30.',
+  title: { absolute: 'Autolavaggio a mano sul Lungomare di Catania | WASH HUB' },
+  description: 'Lavaggio auto a mano con operatori sul Lungomare di Catania, Via Anfuso 35. Interni, tappezzeria, sanificazione e parcheggio. Aperto lun–sab 8:00–18:30.',
 }
 
 export default function LungomareePage() {
   return (
     <div className="pt-20">
+      <JsonLd data={schemaPaginaSede(sedeLungomare)} />
       {/* Hero */}
       <section className="relative min-h-[70vh] flex items-end overflow-hidden bg-[#0F0F0F]">
         <div className="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pb-16 md:pb-24 w-full">
-          <AnimatedSection>
+          <AnimatedSection eager>
             <span className="inline-block px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-4 bg-[#C8A84E] text-[#0F0F0F]">
-              Premium
+              WASH HUB Lungomare
             </span>
-            <h1 className="font-display text-5xl md:text-7xl font-black text-white leading-tight"
+            <h1 className="font-display text-4xl md:text-6xl font-black text-white leading-tight"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-              WASH HUB<br />
-              <span style={{ color: '#C8A84E' }}>Lungomare</span>
+              Autolavaggio<br className="sm:hidden" /> a mano<br />
+              <span style={{ color: '#C8A84E' }}>sul Lungomare<br className="sm:hidden" /> di Catania</span>
             </h1>
             <p className="text-white/60 text-xl mt-4 max-w-lg">
               La sede storica. Dove ogni lavaggio è un&rsquo;esperienza.
@@ -45,7 +48,7 @@ export default function LungomareePage() {
               <div className="space-y-4">
                 {[
                   ['📍 Indirizzo', 'Via Anfuso 35, Catania'],
-                  ['🕗 Orari', 'Lunedì–Sabato 7:30–18:30'],
+                  ['🕗 Orari', 'Lunedì–Sabato 8:00–18:30'],
                   ['📞 Telefono', '095 469 5153'],
                   ['✉️ Email', 'info@washhub.it'],
                 ].map(([label, val]) => (
@@ -60,13 +63,23 @@ export default function LungomareePage() {
                 style={{ background: '#C8A84E', color: '#0F0F0F' }}>
                 Prenota online →
               </Link>
+              <p className="mt-5 text-sm text-[#6B6B6B]">
+                <Link href="/servizi" className="underline font-semibold text-[#0F0F0F]">Listino completo</Link>
+                {' · '}
+                <Link href="/priority" className="underline font-semibold text-[#0F0F0F]">Priority nelle ore di punta</Link>
+                {' · '}
+                <Link href="/faq" className="underline font-semibold text-[#0F0F0F]">Domande frequenti</Link>
+              </p>
             </AnimatedSection>
 
             <AnimatedSection direction="right" delay={0.1} className="space-y-4">
               {[
-                { icon: '🧼', title: 'Lavaggio completo', desc: 'Esterno, interno, cerchi, vetri. Risultato impeccabile.' },
-                { icon: '🪡', title: 'Tappezzeria premium', desc: 'Sedili, tetti, pannelli porta. Servizio su prenotazione.' },
+                { icon: '🧼', title: 'Lavaggio completo interno ed esterno', desc: 'Carrozzeria, cerchi, vetri e abitacolo. Risultato impeccabile.' },
                 { icon: '✨', title: 'Performance Intenso', desc: 'Il Tradizionale spinto al massimo, con trattamento schiumogeno.' },
+                { icon: '🧽', title: 'Smacchiatura e sanificazione interni', desc: 'Sedili e tessuti smacchiati a fondo, abitacolo sanificato.' },
+                { icon: '❄️', title: 'Sanificazione impianto clima', desc: 'Bomboletta sanificante, presidio medico-chirurgico.' },
+                { icon: '🔧', title: 'Lavaggio motore', desc: 'Vano motore pulito con cura, su richiesta.' },
+                { icon: '🪡', title: 'Tappezzeria premium', desc: 'Sedili, tetti, pannelli porta. Servizio su prenotazione.' },
                 { icon: '🅿️', title: 'Parcheggio', desc: 'Ad ore o abbonamento mensile — posti coperti e scoperti.' },
               ].map(({ icon, title, desc }) => (
                 <div key={title} className="flex gap-4 p-5 rounded-2xl bg-white border border-[#E8E8E4]">
@@ -125,6 +138,10 @@ export default function LungomareePage() {
               style={{ background: '#C8A84E', color: '#0F0F0F' }}>
               💬 Tariffe e disponibilità su WhatsApp →
             </a>
+            <Link href="/parcheggio-smart"
+              className="inline-flex items-center justify-center px-8 py-4 rounded-full font-bold text-sm border border-white/25 text-white hover:bg-white/10 transition-all">
+              Parcheggio Smart: entri con un codice →
+            </Link>
           </div>
         </div>
       </section>

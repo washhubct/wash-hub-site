@@ -7,10 +7,12 @@ import { Garanzia } from '@/components/home/Garanzia'
 import { Reviews } from '@/components/home/Reviews'
 import { SediPreview } from '@/components/home/SediPreview'
 import { HomeCTA } from '@/components/home/HomeCTA'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { schemaSedi } from '@/lib/schema'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'WASH HUB — Lavaggio a mano e parcheggio a Catania',
+  title: 'WASH HUB — Autolavaggio a mano e parcheggio a Catania',
   description: 'Lavaggio auto a mano, interni e parcheggio sul lungomare di Catania (Via Anfuso 35). Self service 24/7 ai Paesi Etnei. Prenota online in un minuto.',
 }
 
@@ -19,6 +21,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={schemaSedi} />
       <HeroV2 />
       <SocialProof />
       <ParcheggioScelta />

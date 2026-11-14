@@ -19,7 +19,7 @@ export default function PriorityPage() {
         <div className="max-w-3xl mx-auto px-5 md:px-8 text-center">
           <p className="text-[#F5C518] text-xs font-bold uppercase tracking-[0.25em] mb-4">WASH HUB Lungomare</p>
           <h1 className="font-display text-5xl md:text-7xl font-black leading-[0.95]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-            ⚡ Priority.<br /><span className="text-[#F5C518]">Salti la coda.</span>
+            Priority.<br /><span className="text-[#F5C518]">Salti la coda.</span>
           </h1>
           <p className="mt-5 text-white/70 text-lg">+€5 sul lavaggio, nelle ore di punta.</p>
           <div className="mt-10 grid sm:grid-cols-3 gap-3 text-left">

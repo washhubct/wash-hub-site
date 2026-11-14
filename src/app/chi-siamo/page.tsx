@@ -12,7 +12,7 @@ export default function ChiSiamoPage() {
       {/* Hero */}
       <section className="relative py-28 md:py-36 overflow-hidden bg-[#0F0F0F]">
         <div className="max-w-4xl mx-auto px-5 md:px-8 text-center text-white">
-          <AnimatedSection>
+          <AnimatedSection eager>
             <h1 className="font-display text-5xl md:text-7xl font-black leading-tight"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
               La nostra storia.

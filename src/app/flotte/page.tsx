@@ -28,7 +28,7 @@ export default function FlottePage() {
     <div className="pt-20">
       <section className="py-20 md:py-28 bg-[#0F0F0F] text-white">
         <div className="max-w-4xl mx-auto px-5 md:px-8 text-center">
-          <AnimatedSection>
+          <AnimatedSection eager>
             <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-3">Per le aziende</p>
             <h1 className="font-display text-5xl md:text-6xl font-black leading-tight mb-6"
               style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>

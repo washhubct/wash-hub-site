@@ -1,23 +1,26 @@
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { HiggsfieldImage } from '@/components/ui/HiggsfieldImage'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { schemaSedi } from '@/lib/schema'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Le nostre sedi',
-  description: 'WASH HUB Lungomare (operatori, premium) e WASH HUB POP Paesi Etnei (self service 24/7). Trova la sede più vicina a te.',
+  title: 'Autolavaggio a Catania: Lungomare e Paesi Etnei',
+  description: 'Due autolavaggi WASH HUB a Catania: Lungomare, a mano con operatori (Via Anfuso 35), e POP Paesi Etnei, self service 24/7 a San Gregorio di Catania.',
 }
 
 export default function SediPage() {
   return (
     <div className="pt-20">
+      <JsonLd data={schemaSedi} />
       {/* Header */}
       <section className="py-20 md:py-28 bg-[#0F0F0F] text-white text-center">
-        <AnimatedSection className="max-w-3xl mx-auto px-5 md:px-8">
+        <AnimatedSection eager className="max-w-3xl mx-auto px-5 md:px-8">
           <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-4">Due sedi</p>
           <h1 className="font-display text-5xl md:text-6xl font-black leading-tight"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-            Siamo dove sei tu.
+            Due autolavaggi a Catania.
           </h1>
           <p className="text-white/60 text-xl mt-5 max-w-xl mx-auto">
             Lungomare per un&rsquo;esperienza premium con operatori. Paesi Etnei per la libertà del self service 24/7.
@@ -48,7 +51,7 @@ export default function SediPage() {
                 </h2>
                 <p className="text-[#C8A84E] text-sm mb-5">Via Anfuso 35, Catania</p>
                 <div className="space-y-2 text-white/60 text-sm mb-6 flex-1">
-                  <p>🕗 Lun–Sab 7:30–18:30 · Domenica chiuso</p>
+                  <p>🕗 Lun–Sab 8:00–18:30 · Domenica chiuso</p>
                   <p>👨‍🔧 Operatori esperti inclusi</p>
                   <p>🪡 Servizio tappezzeria disponibile</p>
                   <p>🅿️ Parcheggio interno</p>
@@ -81,7 +84,7 @@ export default function SediPage() {
                 <div className="space-y-2 text-[#0F0F0F]/70 text-sm mb-6 flex-1">
                   <p className="font-bold text-[#0F0F0F]">⏰ Aperto 24 ore · 7 giorni su 7</p>
                   <p>🧼 Lavaggio manuale Lun–Dom 8:00–19:00</p>
-                  <p>🪙 Self service a gettoni</p>
+                  <p>🪙 Self service: monete, carta, contactless</p>
                   <p>🚗 Nessuna prenotazione necessaria</p>
                   <p>⚡ Pronto in pochi minuti</p>
                 </div>

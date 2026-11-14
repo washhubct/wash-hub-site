@@ -3,10 +3,29 @@ import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { ParcheggioSmartForm } from '@/components/parcheggio/ParcheggioSmartForm'
 import { INDIRIZZO, MAPS_URL } from '@/lib/parcheggio-smart'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { LUNGOMARE_ID } from '@/lib/schema'
+
+const schemaParcheggio = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': 'https://wash-hub.it/parcheggio-smart/#service',
+  name: 'Parcheggio Smart',
+  serviceType: 'Parcheggio a ore con accesso a codice',
+  description: 'Parcheggio al Lungomare di Catania senza operatore: paghi online, ricevi un codice e apri il cancello da solo, anche di notte.',
+  url: 'https://wash-hub.it/parcheggio-smart/',
+  provider: { '@type': 'AutoWash', '@id': LUNGOMARE_ID, name: 'WASH HUB Lungomare', url: 'https://wash-hub.it/sedi/lungomare/' },
+  areaServed: { '@type': 'City', name: 'Catania' },
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'EUR',
+    priceSpecification: { '@type': 'UnitPriceSpecification', price: 2, priceCurrency: 'EUR', unitCode: 'HUR', unitText: 'ora' },
+  },
+}
 
 export const metadata: Metadata = {
-  title: 'Parcheggio Smart — codice cancello, anche di notte',
-  description: 'Parcheggio interno al Lungomare di Catania senza operatore: paghi online, ricevi un codice a 6 cifre e apri il cancello da solo. Da 2 ore, anche di notte. €2/ora, max €15 al giorno.',
+  title: 'Parcheggio Smart a Catania, anche di notte',
+  description: 'Parcheggio al Lungomare di Catania senza operatore: paghi online, ricevi un codice e apri il cancello. Da 2 ore, anche di notte. €2/ora, max €15 al giorno.',
   openGraph: {
     title: 'Parcheggio Smart WASH HUB — apri il cancello con un codice',
     description: 'Paghi online, ricevi il codice, parcheggi da solo. Anche di notte. Via Anfuso 35, Catania.',
@@ -35,12 +54,13 @@ const FAQ = [
 export default function ParcheggioSmartPage() {
   return (
     <div className="pt-20">
+      <JsonLd data={schemaParcheggio} />
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#0F0F0F] text-white">
         <div className="absolute inset-0 pointer-events-none" aria-hidden
           style={{ background: 'radial-gradient(60% 50% at 80% 20%, rgba(200,168,78,0.25), transparent 70%)' }} />
         <div className="relative max-w-7xl mx-auto px-5 md:px-8 py-20 md:py-28 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <AnimatedSection>
+          <AnimatedSection eager>
             <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-5" style={{ background: '#C8A84E', color: '#0F0F0F' }}>
               Novità · Lungomare
             </span>
@@ -55,12 +75,19 @@ export default function ParcheggioSmartPage() {
                 <span key={t} className="px-3 py-1 rounded-full text-xs border border-white/20 text-white/70">{t}</span>
               ))}
             </div>
+            {/* Su telefono il modulo sta sotto: scorciatoia per arrivarci subito */}
+            <div className="mt-8 lg:hidden">
+              <a href="#prendi-codice"
+                className="inline-flex items-center px-7 py-3.5 rounded-full font-bold text-sm" style={{ background: '#C8A84E', color: '#0F0F0F' }}>
+                Prendi il codice ↓
+              </a>
+            </div>
             <a href={MAPS_URL} target="_blank" rel="noopener" className="inline-flex items-center gap-2 mt-8 text-sm text-white/60 hover:text-white transition">
               📍 {INDIRIZZO} <span aria-hidden>↗</span>
             </a>
           </AnimatedSection>
 
-          <AnimatedSection direction="right" delay={0.1} className="lg:justify-self-end w-full max-w-xl">
+          <AnimatedSection eager className="lg:justify-self-end w-full max-w-xl">
             <div id="prendi-codice" className="scroll-mt-28">
               <ParcheggioSmartForm />
             </div>
