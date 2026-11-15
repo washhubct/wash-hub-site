@@ -43,7 +43,7 @@ const FORMULE = [
   },
   {
     icona: '⏱️', titolo: 'A ore, paghi all’uscita', prezzo: '€2', unita: '/ ora',
-    testo: 'Entri, parcheggi e paghi quando esci. Minimo 2 ore, poi paghi il tempo che usi.',
+    testo: 'Entri, parcheggi e paghi quando esci. Minimo 2 ore, poi paghi il tempo che usi. L’operatore è presente dalle 7:30 alle 18:30.',
     cta: 'Come arrivare', href: MAPPE.lungomare.indicazioni, evidenza: false,
   },
   {
@@ -54,11 +54,11 @@ const FORMULE = [
 ]
 
 export const metadata: Metadata = {
-  title: 'Parcheggio Lungomare Catania, anche di notte',
-  description: 'Parcheggio in Via Anfuso 35 sul Lungomare di Catania: a ore da €2 (minimo 2 ore), con codice anche di notte, o in abbonamento mensile da €100.',
+  title: 'Parcheggio Lungomare Catania, aperto 24 ore su 24',
+  description: 'Parcheggio in Via Anfuso 35 sul Lungomare di Catania, accessibile 24 ore su 24: a ore da €2 (minimo 2 ore), con codice anche di notte, abbonamento mensile da €100.',
   openGraph: {
     title: 'Parcheggio sul Lungomare di Catania — WASH HUB',
-    description: 'A ore, con codice anche di notte o in abbonamento mensile. Via Anfuso 35, Catania.',
+    description: 'Accessibile 24 ore su 24: a ore, con codice anche di notte o in abbonamento mensile. Via Anfuso 35, Catania.',
     // openGraph di pagina sostituisce quello del layout: i campi comuni vanno ripetuti
     type: 'website',
     locale: 'it_IT',
@@ -75,8 +75,9 @@ const STEPS = [
 ]
 
 const FAQ = [
+  { q: 'Che orari ha il parcheggio?', a: 'Il parcheggio è accessibile 24 ore su 24. L’operatore è presente dalle 7:30 alle 18:30; negli altri orari entri ed esci con il codice di Parcheggio Smart.' },
   { q: 'Funziona anche di notte e nei festivi?', a: 'Sì. Il codice vale nella fascia che scegli tu, a qualsiasi ora, anche quando l’autolavaggio è chiuso.' },
-  { q: 'E se resto più a lungo?', a: 'Il codice scade all’orario indicato. Prendi un nuovo codice da qui oppure paga la differenza al banco in orario di apertura.' },
+  { q: 'E se resto più a lungo?', a: 'Il codice scade all’orario indicato. Prendi un nuovo codice da qui oppure paga la differenza all’operatore, presente dalle 7:30 alle 18:30.' },
   { q: 'Posso prenotare per dopo?', a: 'Sì, fino a 7 giorni prima: scegli data e ora di inizio. Il codice si attiva 5 minuti prima.' },
   { q: 'Quanto costa?', a: '€2 all’ora con minimo 2 ore. Fino a 6 ore paghi al massimo €8, fino a 24 ore al massimo €15. La stessa tariffa del parcheggio a ore.' },
   { q: 'C’è un minimo di ore?', a: 'Sì, 2 ore. Con il parcheggio a ore poi paghi il tempo che usi, a €2 l’ora; con Parcheggio Smart scegli tu le ore quando prendi il codice.' },
@@ -107,9 +108,10 @@ export default function ParcheggioSmartPage() {
               Il parcheggio interno di WASH HUB è in Via Anfuso 35 a Catania. Con Parcheggio Smart paghi online, ricevi un codice a 6 cifre
               e apri il cancello quando vuoi: €2 l&rsquo;ora, minimo 2 ore. In alternativa parcheggi a ore e paghi all&rsquo;uscita,
               oppure scegli l&rsquo;<a href="#formule" className="underline text-white">abbonamento mensile</a>.
+              Il parcheggio è accessibile 24 ore su 24; l&rsquo;operatore è presente dalle 7:30 alle 18:30.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
-              {['Minimo 2 ore', 'Max €15 al giorno', 'Nessun operatore', 'Codice in 10 secondi'].map(t => (
+              {['Aperto 24 ore su 24', 'Operatore 7:30–18:30', 'Minimo 2 ore', 'Max €15 al giorno', 'Codice in 10 secondi'].map(t => (
                 <span key={t} className="px-3 py-1 rounded-full text-xs border border-white/20 text-white/70">{t}</span>
               ))}
             </div>
@@ -210,7 +212,8 @@ export default function ParcheggioSmartPage() {
           </div>
           <AnimatedSection className="mt-8">
             <p className="text-[#6B6B6B] leading-relaxed max-w-3xl">
-              Ti serve di notte o quando l&rsquo;autolavaggio è chiuso? Parcheggio Smart. Parcheggi qui tutti i giorni? Con l&rsquo;abbonamento il posto è tuo.
+              Il parcheggio è accessibile 24 ore su 24 e l&rsquo;operatore è presente dalle 7:30 alle 18:30: fuori da quell&rsquo;orario entri con Parcheggio Smart.
+              Parcheggi qui tutti i giorni? Con l&rsquo;abbonamento il posto è tuo.
               Il parcheggio è nella sede <Link href="/sedi/lungomare" className="underline font-semibold text-[#0F0F0F]">WASH HUB Lungomare</Link>:
               mentre l&rsquo;auto è ferma puoi anche <Link href="/prenota" className="underline font-semibold text-[#0F0F0F]">prenotare un lavaggio</Link>.
             </p>

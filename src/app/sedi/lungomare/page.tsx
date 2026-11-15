@@ -143,6 +143,7 @@ export default function LungomareePage() {
             <p className="text-white/60 text-lg max-w-2xl mb-12">
               Non solo lavaggio: al Lungomare trovi anche il parcheggio. A ore, con minimo 2 ore e poi paghi
               il tempo che usi, oppure in abbonamento mensile con posto riservato — coperto o scoperto.
+              È accessibile 24 ore su 24; l&rsquo;operatore è presente dalle 7:30 alle 18:30.
             </p>
           </AnimatedSection>
 

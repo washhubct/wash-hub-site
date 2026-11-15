@@ -24,7 +24,7 @@ export function InBreve() {
             Su richiesta <Link href="/servizi/sanificazione-interni" className={L}>smacchiatura e sanificazione degli interni</Link>,
             lavaggio motore, sanificazione dell&rsquo;impianto clima e tappezzeria.
             Siamo aperti dal lunedì al sabato, 8:00–18:30, con <Link href="/prenota" className={L}>prenotazione online</Link> e{' '}
-            <Link href="/parcheggio-smart" className={L}>parcheggio interno</Link> a €2 l&rsquo;ora.
+            <Link href="/parcheggio-smart" className={L}>parcheggio interno</Link> a €2 l&rsquo;ora, accessibile 24 ore su 24.
           </p>
           <p>
             A San Gregorio di Catania, in Via Galileo Galilei 28, c&rsquo;è{' '}
