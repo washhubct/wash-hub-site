@@ -8,6 +8,7 @@ export const dynamic = 'force-static'
 const PAGINE = [
   '/',
   '/servizi/',
+  '/servizi/sanificazione-interni/',
   '/sedi/',
   '/parcheggio-smart/',
   '/sedi/lungomare/',

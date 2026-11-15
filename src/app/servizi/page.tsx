@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { HiggsfieldImage } from '@/components/ui/HiggsfieldImage'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { LUNGOMARE_ID } from '@/lib/schema'
+import { briciole, fornitoreLungomare } from '@/lib/schema'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -22,91 +22,47 @@ const LAVAGGI: Lavaggio[] = [
 ]
 
 // Servizi senza listino fisso: tempi e costo si chiedono in sede o su WhatsApp
-const EXTRA = [
-  { icon: '🧽', name: 'Smacchiatura e sanificazione interni', desc: 'Sedili e tessuti smacchiati a fondo, abitacolo sanificato.' },
+const EXTRA: { icon: string; name: string; desc: string; href?: string }[] = [
+  { icon: '🧽', name: 'Smacchiatura e sanificazione interni', desc: 'Sedili e tessuti smacchiati a fondo, abitacolo sanificato.', href: '/servizi/sanificazione-interni' },
   { icon: '🔧', name: 'Lavaggio motore', desc: 'Vano motore pulito con cura.' },
-  { icon: '❄️', name: 'Sanificazione impianto clima', desc: 'Bomboletta sanificante, presidio medico-chirurgico, per l\'impianto di climatizzazione.' },
+  { icon: '❄️', name: 'Sanificazione impianto clima', desc: 'Bomboletta sanificante, presidio medico-chirurgico, per l\'impianto di climatizzazione.', href: '/servizi/sanificazione-interni' },
 ]
 
+// Tutti gli 8 servizi nel catalogo: prezzo solo dove c'è un listino, gli altri sono su preventivo
 const schemaServizi = {
   '@context': 'https://schema.org',
-  '@type': 'Service',
-  '@id': 'https://wash-hub.it/servizi/#service',
-  name: 'Lavaggio auto a mano',
-  serviceType: 'Autolavaggio a mano',
-  url: 'https://wash-hub.it/servizi/',
-  provider: { '@type': 'AutoWash', '@id': LUNGOMARE_ID, name: 'WASH HUB Lungomare', url: 'https://wash-hub.it/sedi/lungomare/' },
-  areaServed: { '@type': 'City', name: 'Catania' },
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Listino lavaggi',
-    itemListElement: LAVAGGI.filter(l => l.prezzoFisso || l.prezzoMin).map(l => ({
-      '@type': 'Offer',
-      itemOffered: { '@type': 'Service', name: l.name },
-      priceCurrency: 'EUR',
-      ...(l.prezzoFisso
-        ? { price: l.prezzoFisso }
-        : { priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'EUR', minPrice: l.prezzoMin, ...(l.prezzoMax ? { maxPrice: l.prezzoMax } : {}) } }),
-    })),
-  },
+  '@graph': [
+    {
+      '@type': 'Service',
+      '@id': 'https://wash-hub.it/servizi/#service',
+      name: 'Lavaggio auto a mano',
+      serviceType: 'Autolavaggio a mano',
+      url: 'https://wash-hub.it/servizi/',
+      provider: fornitoreLungomare,
+      areaServed: { '@type': 'City', name: 'Catania' },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Listino lavaggi',
+        itemListElement: [
+          ...LAVAGGI.map(l => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: l.name, description: l.desc },
+            ...(l.prezzoFisso
+              ? { priceCurrency: 'EUR', price: l.prezzoFisso }
+              : l.prezzoMin
+                ? { priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', priceCurrency: 'EUR', minPrice: l.prezzoMin, ...(l.prezzoMax ? { maxPrice: l.prezzoMax } : {}) } }
+                : {}),
+          })),
+          ...EXTRA.map(e => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: e.name, description: e.desc, ...(e.href ? { url: `https://wash-hub.it${e.href}/` } : {}) },
+          })),
+        ],
+      },
+    },
+    briciole([['Servizi e listino', '/servizi/']]),
+  ],
 }
-
-// Inserisci qui i Payment Link di Stripe (crea su dashboard.stripe.com)
-const STRIPE_LINKS = {
-  starter: 'https://buy.stripe.com/PLACEHOLDER_STARTER',
-  pro: 'https://buy.stripe.com/PLACEHOLDER_PRO',
-  vip: 'https://buy.stripe.com/PLACEHOLDER_VIP',
-}
-
-const ABBONAMENTI = [
-  {
-    tier: 'Starter',
-    tagline: 'Il minimo garantito',
-    price: '29',
-    listino: '32',
-    saving: '3',
-    washes: 4,
-    features: [
-      '4 lavaggi esterno/mese',
-      'Prenota con priorità',
-      'Sconto 10% su servizi extra',
-    ],
-    highlight: false,
-    stripeLink: STRIPE_LINKS.starter,
-  },
-  {
-    tier: 'Pro',
-    tagline: 'Il più scelto',
-    price: '59',
-    listino: '72',
-    saving: '13',
-    washes: 9,
-    features: [
-      '8 lavaggi esterno/mese',
-      '1 lavaggio completo incluso',
-      'Sconto 20% su servizi extra',
-      'Reminder automatici WhatsApp',
-    ],
-    highlight: true,
-    stripeLink: STRIPE_LINKS.pro,
-  },
-  {
-    tier: 'VIP',
-    tagline: 'Tutto senza limiti',
-    price: '99',
-    listino: '130',
-    saving: '31',
-    washes: 999,
-    features: [
-      'Lavaggi esterno illimitati',
-      '2 lavaggi completi/mese',
-      '1 tappezzeria base/mese',
-      'Corsia riservata, zero attesa',
-    ],
-    highlight: false,
-    stripeLink: STRIPE_LINKS.vip,
-  },
-]
 
 export default function ServiziPage() {
   return (
@@ -160,6 +116,8 @@ export default function ServiziPage() {
               <Link href="/priority" className="underline font-semibold text-[#0F0F0F]">Priority nelle ore di punta</Link>
               {' · '}
               <Link href="/faq" className="underline font-semibold text-[#0F0F0F]">Domande frequenti</Link>
+              {' · '}
+              <Link href="/flotte" className="underline font-semibold text-[#0F0F0F]">Aziende e flotte</Link>
             </p>
           </AnimatedSection>
         </div>
@@ -177,7 +135,7 @@ export default function ServiziPage() {
             <p className="text-[#6B6B6B] mt-3 max-w-2xl">Tempi e costo dipendono dall&rsquo;auto: chiedili in sede o su WhatsApp.</p>
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {EXTRA.map(({ icon, name, desc }, i) => (
+            {EXTRA.map(({ icon, name, desc, href }, i) => (
               <AnimatedSection key={name} delay={i * 0.08}
                 className="bg-[#FAFAF7] border border-[#E8E8E4] rounded-2xl p-6">
                 <div className="text-3xl mb-4">{icon}</div>
@@ -186,6 +144,11 @@ export default function ServiziPage() {
                   {name}
                 </h3>
                 <p className="text-[#6B6B6B] text-sm">{desc}</p>
+                {href && (
+                  <Link href={href} className="inline-block mt-3 text-sm font-semibold text-[#0F0F0F] underline">
+                    Come funziona →
+                  </Link>
+                )}
               </AnimatedSection>
             ))}
           </div>
@@ -251,7 +214,7 @@ export default function ServiziPage() {
             </p>
             <p className="text-white/50 text-sm mb-10 max-w-xl mx-auto">
               Cerchi l&rsquo;abbonamento mensile per il parcheggio? È già attivo:{' '}
-              <Link href="/sedi/lungomare" className="text-[#F5C518] font-semibold hover:underline">parcheggio al Lungomare →</Link>
+              <Link href="/parcheggio-smart#formule" className="text-[#F5C518] font-semibold hover:underline">le formule del parcheggio al Lungomare →</Link>
             </p>
             <div className="inline-flex items-center gap-3 px-6 py-4 rounded-2xl border border-white/10 bg-white/5 mb-10">
               <span className="text-2xl">🔔</span>
