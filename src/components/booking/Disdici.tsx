@@ -50,9 +50,9 @@ export function Disdici() {
         </div>
       ) : (
         <div className="space-y-4">
-          <div><label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Telefono usato per prenotare</label><input className={input} type="tel" value={tel} onChange={e => setTel(e.target.value)} placeholder="333 123 4567" /></div>
-          <div><label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Nome o cognome</label><input className={input} value={nome} onChange={e => setNome(e.target.value)} placeholder="Rossi" /></div>
-          <div><label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Giorno della prenotazione</label><input className={input} type="date" value={data} onChange={e => setData(e.target.value)} /></div>
+          <div><label htmlFor="dis-tel" className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Telefono usato per prenotare</label><input id="dis-tel" name="dis-tel" autoComplete="tel" className={input} type="tel" value={tel} onChange={e => setTel(e.target.value)} placeholder="333 123 4567" /></div>
+          <div><label htmlFor="dis-nome" className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Nome o cognome</label><input id="dis-nome" name="dis-nome" autoComplete="family-name" className={input} value={nome} onChange={e => setNome(e.target.value)} placeholder="Rossi" /></div>
+          <div><label htmlFor="dis-giorno" className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Giorno della prenotazione</label><input id="dis-giorno" name="dis-giorno" className={input} type="date" value={data} onChange={e => setData(e.target.value)} /></div>
           {msg && <p className="text-sm text-[#E63946]">{msg}</p>}
           <button onClick={() => invia()} disabled={stato === 'invio'} className="w-full py-4 rounded-full bg-[#0F0F0F] text-white font-black disabled:opacity-60">{stato === 'invio' ? 'Un attimo…' : 'Disdici la prenotazione'}</button>
           <p className="text-xs text-[#6B6B6B] text-center">Gratis fino a 2 ore prima. Se avevi pagato caparra o Priority, te li restituiamo.</p>

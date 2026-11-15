@@ -136,7 +136,7 @@ export function ParcheggioSmartForm() {
           ))}
         </div>
         {quando === 'custom' && (
-          <input type="datetime-local" className={`${input} mt-3`} value={inizio} min={localNow()} onChange={e => setInizio(e.target.value)} />
+          <input type="datetime-local" aria-label="Data e ora di inizio sosta" className={`${input} mt-3`} value={inizio} min={localNow()} onChange={e => setInizio(e.target.value)} />
         )}
       </div>
 

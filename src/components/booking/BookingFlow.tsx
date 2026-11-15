@@ -368,7 +368,7 @@ export function BookingFlow() {
       </div>
 
       <div className="overflow-hidden">
-        <AnimatePresence mode="wait" custom={dir}>
+        <AnimatePresence mode="wait" custom={dir} initial={false}>
           {/* STEP 1 — Servizio */}
           {step === 'servizio' && (
             <motion.div key="servizio" custom={dir} variants={slide} initial="initial" animate="animate" exit="exit">
@@ -548,15 +548,15 @@ export function BookingFlow() {
               )}
               <div className="space-y-4">
                 {[
-                  { label: 'Nome e cognome *', value: nome, set: setNome, type: 'text', placeholder: 'Mario Rossi' },
-                  { label: 'Telefono *', value: tel, set: setTel, type: 'tel', placeholder: '333 123 4567' },
-                  { label: 'Tipo vettura *', value: vettura, set: setVettura, type: 'text', placeholder: 'BMW Serie 3' },
-                  { label: 'Targa (opzionale)', value: targa, set: setTarga, type: 'text', placeholder: 'AB123CD' },
-                  { label: 'Codice amico (opzionale)', value: referral, set: setReferral, type: 'text', placeholder: 'WHXXXX' },
-                ].map(({ label, value, set, type, placeholder }) => (
+                  { id: 'pren-nome', auto: 'name', label: 'Nome e cognome *', value: nome, set: setNome, type: 'text', placeholder: 'Mario Rossi' },
+                  { id: 'pren-tel', auto: 'tel', label: 'Telefono *', value: tel, set: setTel, type: 'tel', placeholder: '333 123 4567' },
+                  { id: 'pren-vettura', auto: 'off', label: 'Tipo vettura *', value: vettura, set: setVettura, type: 'text', placeholder: 'BMW Serie 3' },
+                  { id: 'pren-targa', auto: 'off', label: 'Targa (opzionale)', value: targa, set: setTarga, type: 'text', placeholder: 'AB123CD' },
+                  { id: 'pren-codice-amico', auto: 'off', label: 'Codice amico (opzionale)', value: referral, set: setReferral, type: 'text', placeholder: 'WHXXXX' },
+                ].map(({ id, auto, label, value, set, type, placeholder }) => (
                   <div key={label}>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">{label}</label>
-                    <input type={type} value={value} placeholder={placeholder}
+                    <label htmlFor={id} className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">{label}</label>
+                    <input id={id} name={id} autoComplete={auto} type={type} value={value} placeholder={placeholder}
                       onChange={e => set(e.target.value)}
                       className="w-full border border-[#E8E8E4] rounded-xl px-4 py-3 text-[#0F0F0F] bg-white focus:outline-none focus:border-[#F5C518] transition-colors text-sm placeholder:text-[#C0C0BC]" />
                     {label.startsWith('Codice amico') && referralEsito !== 'idle' && (
@@ -576,8 +576,8 @@ export function BookingFlow() {
                 {referral.trim() && (
                   <div className="space-y-3">
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Email * (per il codice amico)</label>
-                      <input type="email" value={email} placeholder="mario.rossi@email.it" onChange={e => setEmail(e.target.value)}
+                      <label htmlFor="pren-email" className="block text-xs font-semibold uppercase tracking-wider text-[#6B6B6B] mb-2">Email * (per il codice amico)</label>
+                      <input id="pren-email" name="pren-email" autoComplete="email" type="email" value={email} placeholder="mario.rossi@email.it" onChange={e => setEmail(e.target.value)}
                         className="w-full border border-[#E8E8E4] rounded-xl px-4 py-3 text-[#0F0F0F] bg-white focus:outline-none focus:border-[#F5C518] transition-colors text-sm placeholder:text-[#C0C0BC]" />
                     </div>
                     <label className="flex items-start gap-2 text-xs text-[#6B6B6B] leading-relaxed cursor-pointer">

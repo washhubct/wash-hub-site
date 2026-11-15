@@ -82,6 +82,9 @@ export default function ReferralPage() {
               <div className="flex gap-3 mb-4">
                 <input
                   type="tel"
+                  name="ref-tel"
+                  autoComplete="tel"
+                  aria-label="Il telefono con cui hai prenotato"
                   value={tel}
                   onChange={e => setTel(e.target.value)}
                   placeholder="333 123 4567"
