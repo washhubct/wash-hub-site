@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { getPriorityStato } from '@/lib/priority'
+import { MAPPE } from '@/lib/sedi'
 
 // Ritorno da SumUp: verifica il pagamento (la function ricontrolla su SumUp) e conferma la prenotazione Priority.
 export function ConfermaPriority() {
@@ -41,7 +42,7 @@ export function ConfermaPriority() {
       <p className="mt-4 text-[#F5C518] font-bold text-lg capitalize">{giorno} · ore {s.orario}</p>
       <p className="text-white/70 text-sm mt-1">{s.servizio}</p>
       <p className="mt-6 text-white/75 text-sm leading-relaxed max-w-sm mx-auto">Arriva all&apos;orario scelto e dillo all&apos;ingresso: passi davanti alla coda. Il lavaggio lo paghi in sede come sempre.</p>
-      <a href="https://www.google.com/maps/search/?api=1&query=Wash+Hub+Lungomare+Via+Anfuso+35+Catania" target="_blank" rel="noopener noreferrer"
+      <a href={MAPPE.lungomare.indicazioni} target="_blank" rel="noopener noreferrer"
         className="mt-7 inline-flex px-6 py-3 rounded-full bg-[#F5C518] text-[#0F0F0F] font-black">📍 Via Anfuso 35 · Come arrivare</a>
     </div>
   )

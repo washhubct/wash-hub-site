@@ -7,7 +7,7 @@ export const PARCHEGGIO_API =
   'https://europe-west1-dashboard-washhub.cloudfunctions.net/parcheggioSmart'
 
 export const INDIRIZZO = 'Via Anfuso 35, Catania'
-export const MAPS_URL = 'https://maps.google.com/?q=Wash+Hub+Lungomare+Via+Anfuso+35+Catania'
+export const MAPS_URL = 'https://www.google.com/maps/dir/?api=1&destination=Wash+Hub+-+Lungomare&destination_place_id=ChIJE7A-YnH9ExMRlssUFfIZGao'
 
 export interface ConfigParcheggio {
   attivo: boolean

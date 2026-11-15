@@ -22,7 +22,7 @@ export default function PrivacyPage() {
 
             <div>
               <h2 className="text-lg font-bold text-[#0F0F0F] mb-2">1. Titolare del trattamento</h2>
-              <p>WASH HUB di Consoli Guido, con sede in Via Anfuso 35, Catania (CT). Email: info@washhub.it — Tel: 095 469 5153.</p>
+              <p>LAST MILE SRL, titolare del marchio WASH HUB, con sede legale in Via Duca degli Abruzzi 180, 95126 Catania (CT). P.IVA e C.F. 06183200879, REA CT-475508. Email: info@washhub.it — Tel: 095 469 5153.</p>
             </div>
 
             <div>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { SOCIETA } from '@/lib/sedi'
 
 const IconInstagram = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -59,6 +60,7 @@ export function Footer() {
               {([
                 ['Home', '/'],
                 ['Servizi', '/servizi'],
+                ['Sanificazione interni', '/servizi/sanificazione-interni'],
                 ['Le nostre sedi', '/sedi'],
                 ['Flotte & Aziende', '/flotte'],
                 ['FAQ', '/faq'],
@@ -84,7 +86,7 @@ export function Footer() {
               <div>
                 <p className="text-white font-medium"><Link href="/sedi/lungomare" className="hover:underline">WASH HUB Lungomare</Link></p>
                 <p>Via Anfuso 35, Catania</p>
-                <p>Lun–Sab 8:00–18:30</p>
+                <p>Lun–Sab 8:00–18:30 · Dom chiuso</p>
               </div>
               <div>
                 <p className="text-[#F5C518] font-medium"><Link href="/sedi/paesi-etnei" className="hover:underline">WASH HUB POP · Paesi Etnei</Link></p>
@@ -129,7 +131,10 @@ export function Footer() {
         </div>
 
         <div className="mt-6 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/40">
-          <p>© {new Date().getFullYear()} WASH HUB. Tutti i diritti riservati.</p>
+          <div className="text-center md:text-left space-y-1">
+            <p>© {new Date().getFullYear()} WASH HUB. Tutti i diritti riservati.</p>
+            <p>{SOCIETA.ragioneSociale} · P.IVA e C.F. {SOCIETA.partitaIva} · REA {SOCIETA.rea} · Sede legale: {SOCIETA.sedeLegale}</p>
+          </div>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-white/60 transition-colors">Privacy Policy</Link>
             <Link href="/termini" className="hover:text-white/60 transition-colors">Termini e Condizioni</Link>

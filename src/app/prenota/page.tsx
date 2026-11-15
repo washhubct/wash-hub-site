@@ -2,7 +2,7 @@ import { BookingFlow } from '@/components/booking/BookingFlow'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Prenota — WASH HUB Catania' },
+  title: 'Prenota il lavaggio auto a Catania',
   description: 'Prenota il tuo lavaggio auto online. Scegli servizio, data e orario. Conferma in 2 minuti.',
 }
 
