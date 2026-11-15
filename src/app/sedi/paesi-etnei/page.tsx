@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: { absolute: 'Self service 24/7 a San Gregorio di Catania | WASH HUB POP' },
-  description: 'Autolavaggio self service aperto 24 ore su 24 a San Gregorio di Catania (Paesi Etnei), Via Galileo Galilei 28. Lavaggio manuale lun–dom 8:00–19:00.',
+  description: 'Autolavaggio self service aperto 24 ore su 24 a San Gregorio di Catania, Via Galileo Galilei 28. Lavaggio a mano lun–sab 8:00–19:00, domenica 8:00–13:30.',
 }
 
 export default function PaesiEtneiPage() {
@@ -58,9 +58,10 @@ export default function PaesiEtneiPage() {
               <div className="space-y-4 mb-8">
                 {[
                   ['📍 Indirizzo', 'Via Galileo Galilei 28, San Gregorio di Catania\npresso stazione LUKoil'],
-                  ['🧼 Servizio manuale', 'Lun–Dom 8:00–19:00'],
+                  ['🧼 Servizio manuale', 'Lun–Sab 8:00–19:00 · Dom 8:00–13:30'],
                   ['⏰ Self service', 'Aperto 24/7 — auto, interni, camion'],
                   ['🪙 Pagamento', 'Monete · Carta · Contactless'],
+                  ['📞 Telefono', '095 469 5153'],
                 ].map(([label, val]) => (
                   <div key={label} className="flex gap-3 items-baseline">
                     <span className="text-[#6B6B6B] text-sm w-36 shrink-0">{label}</span>
@@ -110,7 +111,7 @@ export default function PaesiEtneiPage() {
                 </h3>
                 <div className="space-y-3">
                   {[
-                    { step: '01', title: 'Arrivi in orario', desc: 'I nostri operatori sono disponibili tutti i giorni, lunedì–domenica, 8:00–19:00.' },
+                    { step: '01', title: 'Arrivi in orario', desc: 'I nostri operatori ci sono tutti i giorni: lunedì–sabato 8:00–19:00, domenica 8:00–13:30.' },
                     { step: '02', title: 'Trovi i nostri operatori', desc: 'Nessuna prenotazione necessaria: passi direttamente, ti accogliamo all\'arrivo.' },
                     { step: '03', title: 'Scegli il servizio', desc: 'Esterno, tradizionale o Performance Intenso. Ti consigliamo noi.' },
                     { step: '04', title: 'Ritiri l\'auto pulita', desc: 'Lavoro fatto a mano, con cura. Come piace a noi.' },

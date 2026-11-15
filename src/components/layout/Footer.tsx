@@ -89,7 +89,7 @@ export function Footer() {
               <div>
                 <p className="text-[#F5C518] font-medium"><Link href="/sedi/paesi-etnei" className="hover:underline">WASH HUB POP · Paesi Etnei</Link></p>
                 <p>Via Galileo Galilei 28, San Gregorio di Catania</p>
-                <p>Manuale Lun–Dom 8:00–19:00</p>
+                <p>Manuale Lun–Sab 8:00–19:00 · Dom 8:00–13:30</p>
                 <p className="text-[#F5C518]">Self service 24/7</p>
               </div>
             </div>

@@ -71,8 +71,14 @@ export default function ContattiPage() {
                 </h2>
                 <div className="space-y-3 text-sm text-[#6B6B6B]">
                   <p className="flex gap-3"><span>📍</span><span>Via Galileo Galilei 28, San Gregorio di Catania — stazione LUKoil</span></p>
-                  <p className="flex gap-3"><span>🧼</span><span>Lavaggio manuale Lun–Dom 8:00–19:00</span></p>
+                  <p className="flex gap-3"><span>🧼</span><span>Lavaggio manuale Lun–Sab 8:00–19:00 · Dom 8:00–13:30</span></p>
                   <p className="flex gap-3"><span>⏰</span><span className="text-[#0F0F0F] font-semibold">Self service aperto 24/7</span></p>
+                  <p className="flex gap-3">
+                    <span>📞</span>
+                    <a href="tel:+390954695153" className="text-[#0F0F0F] font-medium hover:text-[#C8A84E] transition-colors">
+                      095 469 5153
+                    </a>
+                  </p>
                 </div>
                 <a href="https://www.google.com/maps/search/?api=1&query=Via+Galileo+Galilei+28+San+Gregorio+di+Catania" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-full border-2 border-[#0F0F0F] text-[#0F0F0F] text-sm font-semibold hover:bg-[#0F0F0F] hover:text-white transition-all">

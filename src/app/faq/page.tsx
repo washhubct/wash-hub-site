@@ -50,7 +50,7 @@ const FAQ: Voce[] = [
   },
   {
     q: 'Il self service ai Paesi Etnei è sempre aperto?',
-    a: 'Sì, il self service è aperto 24 ore su 24, 7 giorni su 7, inclusi domenica e festivi. Gli operatori per il lavaggio manuale sono invece disponibili dal lunedì alla domenica dalle 8:00 alle 19:00.',
+    a: 'Sì, il self service è aperto 24 ore su 24, 7 giorni su 7, inclusi domenica e festivi. Gli operatori per il lavaggio manuale sono invece disponibili dal lunedì al sabato dalle 8:00 alle 19:00 e la domenica dalle 8:00 alle 13:30.',
     link: { href: '/sedi/paesi-etnei', label: 'La sede POP Paesi Etnei' },
   },
   {

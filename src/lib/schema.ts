@@ -53,6 +53,8 @@ export const sedeLungomare = {
   areaServed: { '@type': 'City', name: 'Catania' },
 }
 
+const INDIRIZZO_POP = { '@type': 'PostalAddress', streetAddress: 'Via Galileo Galilei 28', addressLocality: 'San Gregorio di Catania', addressRegion: 'CT', postalCode: '95027', addressCountry: 'IT' }
+
 export const sedePop = {
   '@type': 'AutoWash',
   '@id': POP_ID,
@@ -60,13 +62,25 @@ export const sedePop = {
   description: 'Autolavaggio self service aperto 24 ore su 24 presso la stazione LUKoil di San Gregorio di Catania. Lavaggio manuale con operatori.',
   url: `${SITO}/sedi/paesi-etnei/`,
   image: `${SITO}/og-default.jpg`,
-  address: { '@type': 'PostalAddress', streetAddress: 'Via Galileo Galilei 28', addressLocality: 'San Gregorio di Catania', addressRegion: 'CT', postalCode: '95027', addressCountry: 'IT' },
+  telephone: '+390954695153',
+  address: INDIRIZZO_POP,
   geo: { '@type': 'GeoCoordinates', latitude: 37.5670384, longitude: 15.0997132 },
   hasMap: 'https://www.google.com/maps?cid=651137855682298991',
   openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' }],
   paymentAccepted: 'Monete, carta, contactless',
   priceRange: '€',
   parentOrganization: { '@id': ORG_ID },
+  // Il self service è sempre aperto; gli operatori del lavaggio a mano hanno orari propri
+  department: {
+    '@type': 'AutoWash',
+    name: 'WASH HUB POP — Lavaggio a mano',
+    telephone: '+390954695153',
+    address: INDIRIZZO_POP,
+    openingHoursSpecification: [
+      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '08:00', closes: '19:00' },
+      { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Sunday'], opens: '08:00', closes: '13:30' },
+    ],
+  },
 }
 
 // Home, /sedi/ e /contatti/: tutte e due le sedi alla pari
