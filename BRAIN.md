@@ -27,7 +27,7 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 - Deploy = push su `main` → GitHub Actions `.github/workflows/deploy.yml` (Node 20, `npm ci`, `npm run build` con `NEXT_PUBLIC_BASE_PATH=''`) → GitHub Pages, 2-5 min.
 - `basePath` di default `/wash-hub-site` (staging Pages senza dominio); in produzione vuoto via env.
 - Comandi: `npm run dev`, `npm run build` (output in `out/`), `npm run lint`, `npm run fetch-reviews`.
-- Env (solo nomi, mai valori): `NEXT_PUBLIC_BASE_PATH`, `NEXT_PUBLIC_PRENOTA_API`, `NEXT_PUBLIC_PRIORITY_API`, `NEXT_PUBLIC_GARANZIA_API`, `NEXT_PUBLIC_PARCHEGGIO_API`; per lo script recensioni `GOOGLE_PLACES_API_KEY`, `MAPS_URL`, `PLACE_ID`.
+- Env (solo nomi, mai valori): `NEXT_PUBLIC_BASE_PATH`, `NEXT_PUBLIC_PRENOTA_API`, `NEXT_PUBLIC_PRIORITY_API`, `NEXT_PUBLIC_GARANZIA_API`, `NEXT_PUBLIC_PARCHEGGIO_API`; per lo script recensioni solo `RECENSIONI_API` (facoltativa, nessuna API key).
 - Nessun `.env` nel repo: le URL delle Cloud Function hanno default hardcoded nei file `src/lib/*.ts`.
 - Backend = progetto Firebase `dashboard-washhub` (gestionale `~/Progetti/dashdebug`, dashboard.washhub.it); le Cloud Function stanno in `dashdebug/functions`, region `europe-west1`.
 - La config Firebase web in `src/lib/firebase-booking.ts` è pubblica per design (client key), non è un secret.
@@ -36,20 +36,20 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 ## Architettura e file chiave
 
 - `src/app/layout.tsx` — root layout: font, metadata SEO, JSON-LD LocalBusiness delle due sedi, Header/Footer/WhatsAppButton/ParcheggioSmartPopup.
-- `src/app/page.tsx` — home: HeroV2, SocialProof, InBreve (fatti chiave in prosa), ParcheggioScelta, PrimaDopo, ComeLaviamo, Garanzia, Reviews, SediPreview, HomeCTA.
+- `src/app/page.tsx` — home: HeroV2 (riceve voto e numero recensioni da `src/data/reviews.json`), SocialProof, InBreve (fatti chiave in prosa), ParcheggioScelta, PrimaDopo, ComeLaviamo, Garanzia, SediPreview, Reviews, ReferralBanner, HomeCTA.
 - `src/app/prenota/page.tsx` — pagina prenotazione, monta `BookingFlow`.
 - `src/app/prenota/{priority,caparra,garanzia}/page.tsx` — pagine di conferma dopo checkout (polling stato via Function).
 - `src/app/disdici/page.tsx` — disdetta online (gratis fino a 2h prima).
 - `src/app/priority/page.tsx` — landing Priority (salta la coda nelle ore calde).
 - `src/app/referral/page.tsx` — "Porta un amico": codice dal telefono, statistiche, voucher.
 - `src/app/parcheggio-smart/page.tsx` + `conferma/page.tsx` — acquisto codice cancello parcheggio e conferma con polling.
-- `src/app/servizi/page.tsx` — listino (`LAVAGGI`) e servizi su richiesta (`EXTRA`, solo Lungomare); `servizi/sanificazione-interni/page.tsx` — pagina dedicata a smacchiatura e sanificazione interni (su richiesta, senza prezzo fisso).
+- `src/app/servizi/page.tsx` — listino (`LAVAGGI`) e servizi su richiesta (`EXTRA`, solo Lungomare); `servizi/sanificazione-interni/page.tsx` — pagina dedicata a smacchiatura e sanificazione interni (su richiesta, da €100: prezzo esatto a preventivo).
 - `src/app/sedi/`, `sedi/lungomare`, `sedi/paesi-etnei` — pagine sedi (Lungomare include tariffe parcheggio); alla sede POP non si prenota: lì i pulsanti sono indicazioni e telefono.
 - `src/app/{chi-siamo,contatti,faq,flotte,privacy,termini}/` — pagine statiche; `termini` contiene disdetta, caparra art. 1385, garanzia art. 1382, Priority.
 - `src/app/sitemap.ts`, `robots.ts` — SEO statici (`force-static`).
 - `src/components/booking/BookingFlow.tsx` — wizard 4 step (Servizio, Data, Orario, Dati): servizi `SERVICES`, slot, Priority, caparra, garanzia, codice amico, voucher.
 - `src/components/booking/Conferma{Priority,Caparra,Garanzia}.tsx`, `Disdici.tsx` — client delle pagine conferma/disdetta.
-- `src/components/home/*` — sezioni home; `Hero.tsx` e `Differentiators.tsx`, `ReferralBanner.tsx`, `ParcheggioSmartBanner.tsx` non sono più montati in home.
+- `src/components/home/*` — sezioni home; `Hero.tsx`, `Differentiators.tsx` e `ParcheggioSmartBanner.tsx` non sono più montati in home.
 - `src/components/layout/Header.tsx` — navbar floating pill (voci `NAV`, menu desktop da `lg`, sotto menu a tutto schermo), top-bar che sparisce allo scroll, sulla pagina POP il pulsante è "Come arrivare"; `Footer.tsx` con logo MA-FRA e dati societari.
 - `src/components/parcheggio/ParcheggioSmartForm.tsx`, `ConfermaCodice.tsx` — form acquisto (prefisso internazionale, E.164) e stato codice.
 - `src/components/ui/` — AnimatedSection, AutoVideo (autoplay iPhone), HiggsfieldImage/Video (stub asset), Logo, ParcheggioSmartPopup, WhatsAppButton.
@@ -79,15 +79,16 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 - Con il codice amico l'email è obbligatoria; consenso marketing facoltativo e separato.
 - Self-referral bloccato lato client (codice calcolato dal telefono) e lato Function.
 - Performance Intenso a prezzo per taglia (utilitaria/berlina €29, SUV/monovolume/station €35), prezzo definito in sede: niente prezzo fisso in prenotazione.
-- Parcheggio Smart: tariffa identica al gestionale (€2/h, max €8 fino a 6h, max €15 fino a 24h, minimo 2h); a ore con pagamento all'uscita vale "minimo 2 ore, poi paghi il tempo che usi"; abbonamento mensile scoperto €100, coperto €140 (richiesta via WhatsApp); nome ed email obbligatori, codice inviato via email.
+- Parcheggio Smart: tariffa identica al gestionale (€2/h, max €8 fino a 6h, max €15 fino a 24h, minimo 2h); a ore con pagamento all'uscita vale "minimo 2 ore, poi paghi il tempo che usi"; abbonamento mensile scoperto €100, coperto €140 (richiesta via WhatsApp); nome ed email obbligatori, codice inviato via email; parcheggio accessibile 24 ore su 24, operatore presente 7:30–18:30.
 - Dati fattura nel form parcheggio: provato e revertito (troppo attrito nel form).
 - Gift card rimossa (pagina, menu, footer) finché non serve Stripe.
 - Abbonamenti lavaggio: in arrivo, nessun prezzo pubblicato (l'unico abbonamento attivo è quello mensile del parcheggio).
-- Home 2026: hero con due scelte (lavaggio/parcheggio), passaggi con gli Interni al primo posto, sezioni ripetute rimosse per accorciare del 25%; niente orari liberi in vista.
+- Home 2026: hero con due scelte (lavaggio/parcheggio), voto Google sopra le scelte e pillola Priority sotto, "Porta un amico" dopo le recensioni, passaggi con gli Interni al primo posto, sezioni ripetute rimosse per accorciare del 25%; niente orari liberi in vista.
 - Video in autoplay su iPhone tramite `AutoVideo`; animazioni laterali solo da `md` in su per evitare scroll orizzontale.
 - Giorni chiusi gestiti in `GIORNI_CHIUSI`/`CHIUSURE` con difesa in profondità in `saveBooking`.
 - Palette: giallo brand #F5C518, gold #C8A84E solo per Lungomare, rosso #E63946 solo CTA/badge, dark #0F0F0F, cream #FAFAF7.
 - Niente sconti o promozioni nei contenuti (regola brand), tranne il referral €5.
+- Recensioni Google automatiche: `scripts/fetch-reviews.mjs` legge la Function `recensioniGoogle` (dashdebug, Places API con cache 12 h) prima di ogni build e aggiorna `src/data/reviews.json`; il workflow di deploy gira anche ogni giorno alle 04:17 UTC; se la lettura fallisce resta il JSON committato.
 
 ## Regole non negoziabili
 
