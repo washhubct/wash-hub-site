@@ -3,8 +3,9 @@ import { AutoVideo } from '@/components/ui/AutoVideo'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
-// Il lavaggio in 4 passaggi. Clip generate con Higgsfield (08/10/2026: 01 Kling 3.0 pro, 02-04 Seedance 2.0 1080p),
-// in public/brand/passi/NN.mp4 + poster NN.jpg. I prompt restano qui per rigenerarle.
+// Il lavaggio in 4 passaggi. Clip generate con Higgsfield da Silvio (15/11/2026, 600x800, senza audio),
+// in public/brand/passi/NN.mp4 + poster NN.jpg (il campo `file` dice quale clip usa ogni passaggio).
+// I prompt qui sotto sono quelli delle clip di ottobre 2026.
 const PASSI = [
   { n: '01', file: '04', titolo: 'Interni', testo: 'Aspirazione, plastiche, vetri. E se serve, la tappezzeria.',
     prompt: 'interior car detailing, vacuum nozzle cleaning seats, soft light through windshield, dust particles in light beam, calm cinematic close-up' },
