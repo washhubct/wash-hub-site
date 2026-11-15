@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Ogni mattina (04:17 UTC) il sito si ricostruisce con voto e recensioni Google aggiornati
+  schedule:
+    - cron: '17 4 * * *'
   workflow_dispatch:
 
 permissions:
@@ -24,6 +27,8 @@ jobs:
           node-version: '20'
           cache: 'npm'
       - run: npm ci
+      # Voto e recensioni Google dal gestionale; se non risponde resta il file committato
+      - run: npm run fetch-reviews
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: ''

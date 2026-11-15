@@ -1,102 +1,55 @@
 #!/usr/bin/env node
 /**
- * Fetch Google Reviews → src/data/reviews.json
+ * Recensioni Google → src/data/reviews.json
  *
- * Usage:
- *   GOOGLE_PLACES_API_KEY=xxx node scripts/fetch-reviews.mjs
+ * Legge voto, numero di recensioni e recensioni dalla Cloud Function `recensioniGoogle` del gestionale
+ * (Places API con il token del suo service account): qui non serve nessuna API key.
+ * Gira prima di ogni build su GitHub Actions (push + giro giornaliero) e a mano con `npm run fetch-reviews`.
+ * Se l'endpoint non risponde o i dati non tornano, resta il file già committato e la build va avanti.
  *
- * Oppure con URL Google Maps custom:
- *   GOOGLE_PLACES_API_KEY=xxx MAPS_URL="https://maps.google.com/?cid=..." node scripts/fetch-reviews.mjs
+ *   RECENSIONI_API=https://... node scripts/fetch-reviews.mjs   (solo per provare un altro endpoint)
  */
 
-import { writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dir = dirname(fileURLToPath(import.meta.url))
 const OUT = resolve(__dir, '../src/data/reviews.json')
+const API = process.env.RECENSIONI_API || 'https://europe-west1-dashboard-washhub.cloudfunctions.net/recensioniGoogle'
 
-const API_KEY = process.env.GOOGLE_PLACES_API_KEY
-const MAPS_URL = process.env.MAPS_URL || ''
-
-// Place ID fisso di WASH HUB Lungomare (da Maps URL kgmid=/g/11y39jbpys)
-// Puoi sovrascriverlo con PLACE_ID=xxx
-const DEFAULT_PLACE_ID = process.env.PLACE_ID || ''
-
-if (!API_KEY) {
-  console.error('❌  Manca GOOGLE_PLACES_API_KEY')
-  console.error('   Ottienila su: https://console.cloud.google.com → API & Services → Places API')
-  process.exit(1)
-}
-
-async function findPlaceId(mapsUrl) {
-  // Estrai nome dal URL se presente (?q=...)
-  const urlObj = new URL(mapsUrl)
-  const query = urlObj.searchParams.get('q') || 'Wash Hub Lungomare Catania'
-
-  const res = await fetch(
-    `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=place_id,name&key=${API_KEY}`
-  )
-  const data = await res.json()
-  if (data.candidates?.[0]?.place_id) return data.candidates[0].place_id
-  throw new Error(`Place non trovato per query: "${query}"`)
-}
-
-async function fetchReviews(placeId) {
-  const fields = 'name,rating,reviews,user_ratings_total'
-  const res = await fetch(
-    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=${fields}&language=it&reviews_sort=newest&key=${API_KEY}`
-  )
-  const data = await res.json()
-  if (data.status !== 'OK') throw new Error(`Places API error: ${data.status} — ${data.error_message || ''}`)
-  return data.result
+function valida(d) {
+  if (!d || typeof d !== 'object') throw new Error('risposta vuota')
+  if (!(typeof d.rating === 'number' && d.rating >= 1 && d.rating <= 5)) throw new Error(`voto non valido: ${d.rating}`)
+  if (!(Number.isInteger(d.totalRatings) && d.totalRatings > 0)) throw new Error(`numero recensioni non valido: ${d.totalRatings}`)
+  if (!Array.isArray(d.reviews)) throw new Error('elenco recensioni mancante')
+  const reviews = d.reviews
+    .filter(r => r && typeof r.name === 'string' && r.name && typeof r.text === 'string' && r.text.trim() && r.rating >= 1 && r.rating <= 5)
+    .map(r => ({ name: r.name, avatar: String(r.avatar || ''), rating: r.rating, text: r.text.trim(), date: String(r.date || ''), time: Number(r.time) || 0 }))
+  return {
+    placeId: String(d.placeId || ''),
+    placeName: String(d.placeName || ''),
+    rating: d.rating,
+    totalRatings: d.totalRatings,
+    updatedAt: String(d.updatedAt || new Date().toISOString()),
+    reviews,
+  }
 }
 
 async function main() {
-  let placeId = DEFAULT_PLACE_ID
+  const res = await fetch(API, { signal: AbortSignal.timeout(20000) })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  const nuovo = valida(await res.json())
 
-  if (!placeId && MAPS_URL) {
-    console.log('🔍  Cerco Place ID da URL...')
-    placeId = await findPlaceId(MAPS_URL)
-    console.log(`✅  Place ID trovato: ${placeId}`)
+  // Se Google non restituisce recensioni con testo, teniamo quelle già in pagina e aggiorniamo solo i numeri
+  if (nuovo.reviews.length === 0) {
+    try { nuovo.reviews = JSON.parse(readFileSync(OUT, 'utf8')).reviews || [] } catch { /* nessun file precedente */ }
   }
 
-  if (!placeId) {
-    // Fallback: cerca per nome
-    console.log('🔍  Cerco Place ID per nome "Wash Hub Lungomare Catania"...')
-    const res = await fetch(
-      `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent('Wash Hub Lungomare Catania')}&inputtype=textquery&fields=place_id,name&key=${API_KEY}`
-    )
-    const data = await res.json()
-    placeId = data.candidates?.[0]?.place_id
-    if (!placeId) throw new Error('Place non trovato. Passa PLACE_ID=xxx come env var.')
-    console.log(`✅  Place ID: ${placeId}`)
-  }
-
-  console.log('📥  Scarico recensioni...')
-  const place = await fetchReviews(placeId)
-
-  const reviews = (place.reviews || []).map(r => ({
-    name: r.author_name,
-    avatar: r.profile_photo_url || '',
-    rating: r.rating,
-    text: r.text,
-    date: r.relative_time_description,
-    time: r.time,
-  }))
-
-  const output = {
-    placeId,
-    placeName: place.name,
-    rating: place.rating,
-    totalRatings: place.user_ratings_total,
-    updatedAt: new Date().toISOString(),
-    reviews,
-  }
-
-  writeFileSync(OUT, JSON.stringify(output, null, 2))
-  console.log(`✅  ${reviews.length} recensioni salvate → src/data/reviews.json`)
-  console.log(`⭐  Rating: ${place.rating} (${place.user_ratings_total} recensioni totali)`)
+  writeFileSync(OUT, JSON.stringify(nuovo, null, 2) + '\n')
+  console.log(`✅  ${nuovo.rating} ★ · ${nuovo.totalRatings} recensioni totali · ${nuovo.reviews.length} in vetrina → src/data/reviews.json`)
 }
 
-main().catch(e => { console.error('❌ ', e.message); process.exit(1) })
+main().catch(e => {
+  console.warn(`⚠️  Recensioni non aggiornate (${e.message}): resta src/data/reviews.json già presente.`)
+})
