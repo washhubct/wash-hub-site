@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 const BENEFITS = [
-  { icon: '💰', title: 'Prezzi dedicati', body: 'Tariffe scontate in base ai volumi mensili. Più auto lavi, più risparmi.' },
+  { icon: '💰', title: 'Prezzi dedicati', body: 'Tariffe dedicate, definite in base ai volumi mensili della tua flotta.' },
   { icon: '🧾', title: 'Fatturazione semplice', body: 'Fattura mensile riepilogativa. Zero contanti, tutto tracciato per la contabilità.' },
   { icon: '📅', title: 'Slot prioritari', body: 'Orari dedicati per evitare attese. Le tue auto pronte quando servono.' },
   { icon: '🚗', title: 'Qualsiasi veicolo', body: 'Berline, SUV, furgoni, veicoli commerciali. Gestiamo qualsiasi flotta.' },
