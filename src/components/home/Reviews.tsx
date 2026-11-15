@@ -21,7 +21,7 @@ export function Reviews() {
   if (reviews.length === 0) return null
 
   return (
-    <section className="bg-[#0F0F0F] py-20 md:py-28 overflow-hidden">
+    <section id="recensioni" className="bg-[#0F0F0F] py-20 md:py-28 overflow-hidden scroll-mt-20">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <AnimatedSection className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <div>

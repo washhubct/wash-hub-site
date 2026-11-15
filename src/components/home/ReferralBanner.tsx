@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 
-// "Porta un amico": programma loyalty permanente (non una promo). Stava in fondo alla home,
-// nero su nero: su mobile nessuno ci arrivava. Ora è un biglietto giallo in alto nella pagina.
+// "Porta un amico": programma loyalty permanente (non una promo). Biglietto giallo dopo le recensioni:
+// nel primo schermo della home al suo posto c'è il voto Google (Guido 15/11/2026).
 const PASSI = [
   { n: '1', t: 'Trova il tuo codice', d: 'Basta il tuo numero di telefono.' },
   { n: '2', t: 'Passalo a un amico', d: 'WhatsApp, a voce, come vuoi.' },

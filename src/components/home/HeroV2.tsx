@@ -6,8 +6,9 @@ import { AutoVideo } from '@/components/ui/AutoVideo'
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
-// Hero: poche parole, due scelte grandi (lavaggio / parcheggio) e Porta un amico ben in vista.
-export function HeroV2() {
+// Hero: poche parole, il voto Google (dato reale da reviews.json, passato dalla pagina), due scelte grandi
+// (lavaggio / parcheggio) e sotto la pillola Priority. Porta un amico sta più giù nella home (ReferralBanner).
+export function HeroV2({ voto, recensioni }: { voto: number; recensioni: number }) {
   const scelte = [
     { href: '/prenota', icona: '🧽', titolo: 'Lavaggio', cta: 'Prenota', giallo: true },
     { href: '#parcheggio', icona: '🅿️', titolo: 'Parcheggio', cta: 'Scopri', giallo: false },
@@ -20,9 +21,6 @@ export function HeroV2() {
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-5 md:px-8 pt-28 pb-10 md:py-32 text-white">
         <motion.div initial={false} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', damping: 22, stiffness: 80, delay: 0.1 }}>
-          <Link href="/priority" className="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md text-sm font-semibold text-white hover:bg-black/55 transition-colors" style={{ border: '1.5px solid #F5C518' }}>
-            <span className="text-[#F5C518]">⚡ Priority</span><span className="text-white/80">· salti la coda nelle ore di punta</span><span className="text-[#F5C518]">→</span>
-          </Link>
           <h1 className="font-display text-[2.8rem] leading-[0.95] sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
             Autolavaggio<br className="sm:hidden" /> a mano<br />
@@ -32,6 +30,13 @@ export function HeroV2() {
             <span className="font-semibold text-white">Lungomare</span> · Via Anfuso 35 · lun–sab 8:00–18:30<br />
             <span className="font-semibold text-white">Paesi Etnei</span> · self service 24 ore su 24
           </p>
+          {voto > 0 && recensioni > 0 && (
+            <a href="#recensioni" className="mt-4 inline-flex items-center gap-2 text-[15px] md:text-lg font-semibold text-white hover:text-[#F5C518] transition-colors">
+              <span aria-hidden className="text-[#F5C518] tracking-tight">★★★★★</span>
+              <span>{voto.toFixed(1).replace('.', ',')} su Google</span>
+              <span className="font-normal text-white/80">· {recensioni} recensioni</span>
+            </a>
+          )}
         </motion.div>
 
         <div className="mt-8 grid grid-cols-2 gap-3 md:gap-4 max-w-2xl">
@@ -51,15 +56,9 @@ export function HeroV2() {
           ))}
         </div>
 
-        <motion.div initial={false} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="mt-4 max-w-2xl">
-          <Link href="/referral" prefetch={false}
-            className="flex items-center gap-4 rounded-3xl px-5 py-4 bg-[#0F0F0F]/70 backdrop-blur-md text-white hover:bg-[#0F0F0F]/85 transition-colors"
-            style={{ border: '2px dashed #F5C518' }}>
-            <span className="shrink-0 w-12 h-12 rounded-2xl bg-[#F5C518] flex items-center justify-center text-2xl">🎁</span>
-            <span className="flex-1 font-black text-lg md:text-xl leading-tight" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-              Porta un amico, <span className="text-[#F5C518]">ricevi €5</span>
-            </span>
-            <span className="hidden sm:block shrink-0 text-[#F5C518] font-black text-xl">→</span>
+        <motion.div initial={false} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="mt-5">
+          <Link href="/priority" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md text-sm font-semibold text-white hover:bg-black/55 transition-colors" style={{ border: '1.5px solid #F5C518' }}>
+            <span className="text-[#F5C518]">⚡ Priority</span><span className="text-white/80">· salti la coda nelle ore di punta</span><span className="text-[#F5C518]">→</span>
           </Link>
         </motion.div>
       </div>

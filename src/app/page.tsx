@@ -6,10 +6,12 @@ import { PrimaDopo } from '@/components/home/PrimaDopo'
 import { ComeLaviamo } from '@/components/home/ComeLaviamo'
 import { Garanzia } from '@/components/home/Garanzia'
 import { Reviews } from '@/components/home/Reviews'
+import { ReferralBanner } from '@/components/home/ReferralBanner'
 import { SediPreview } from '@/components/home/SediPreview'
 import { HomeCTA } from '@/components/home/HomeCTA'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { schemaSedi } from '@/lib/schema'
+import reviewsData from '@/data/reviews.json'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -23,7 +25,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={schemaSedi} />
-      <HeroV2 />
+      <HeroV2 voto={reviewsData.rating} recensioni={reviewsData.totalRatings} />
       <SocialProof />
       <InBreve />
       <ParcheggioScelta />
@@ -32,6 +34,7 @@ export default function HomePage() {
       <Garanzia />
       <SediPreview />
       <Reviews />
+      <ReferralBanner />
       <HomeCTA />
     </>
   )
