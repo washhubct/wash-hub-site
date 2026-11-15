@@ -15,7 +15,7 @@ export function HeroV2() {
 
   return (
     <section className="relative min-h-[100dvh] flex items-end md:items-center overflow-hidden bg-[#0F0F0F]">
-      <AutoVideo eager src={`${BASE}/brand/hero-bg.mp4`} poster={`${BASE}/brand/hero-poster.jpg`} className="absolute inset-0 w-full h-full object-cover" />
+      <AutoVideo eager src={`${BASE}/brand/hero-bg-720.mp4`} poster={`${BASE}/brand/hero-poster.jpg`} className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/40 to-black/85" />
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-5 md:px-8 pt-28 pb-10 md:py-32 text-white">
@@ -28,8 +28,9 @@ export function HeroV2() {
             Autolavaggio<br className="sm:hidden" /> a mano<br />
             <span className="text-[#F5C518]">a Catania.</span>
           </h1>
-          <p className="mt-4 text-base md:text-lg text-white/75">
-            Il tuo pit-stop: Lungomare · Paesi Etnei
+          <p className="mt-4 text-[15px] md:text-lg leading-snug text-white/90">
+            <span className="font-semibold text-white">Lungomare</span> · Via Anfuso 35 · lun–sab 8:00–18:30<br />
+            <span className="font-semibold text-white">Paesi Etnei</span> · self service 24 ore su 24
           </p>
         </motion.div>
 

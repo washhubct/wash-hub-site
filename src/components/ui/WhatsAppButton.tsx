@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 
@@ -11,8 +12,19 @@ const IconWhatsApp = () => (
 
 export function WhatsAppButton() {
   const pathname = usePathname() || ''
+  const home = pathname === '/'
+  // In home la prima schermata ha già le sue scelte e il tondo copriva "Porta un amico": compare dopo un po' di scroll
+  const [sceso, setSceso] = useState(false)
+  useEffect(() => {
+    if (!home) return
+    const onScroll = () => setSceso(window.scrollY > window.innerHeight * 0.6)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [home])
   // Dove c'è un modulo con il bottone in basso (prenotazione, parcheggio) il tondo lo coprirebbe
   if (pathname.startsWith('/prenota') || pathname.startsWith('/parcheggio-smart')) return null
+  if (home && !sceso) return null
   return (
     <div className="wa-fab fixed bottom-6 right-5 z-50 flex flex-col items-end gap-2">
       <motion.a
@@ -22,7 +34,7 @@ export function WhatsAppButton() {
         aria-label="Scrivici su WhatsApp"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ type: 'spring', damping: 15, stiffness: 200, delay: 1.5 }}
+        transition={{ type: 'spring', damping: 15, stiffness: 200, delay: home ? 0 : 1.5 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#25D366] text-white shadow-[0_4px_20px_rgba(37,211,102,0.4)]"

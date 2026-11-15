@@ -1,8 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
 import reviewsData from '@/data/reviews.json'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { MAPPE } from '@/lib/sedi'
 
 // Solo recensioni vere da Google (npm run fetch-reviews). Se non ce ne sono, la sezione non esce: mai testi inventati.
 const reviews = reviewsData.reviews.filter(r => r.text && r.text.trim().length > 0)
@@ -18,20 +18,12 @@ const Stars = ({ n }: { n: number }) => (
 )
 
 export function Reviews() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
-
   if (reviews.length === 0) return null
 
   return (
-    <section ref={ref} className="bg-[#0F0F0F] py-20 md:py-28 overflow-hidden">
+    <section className="bg-[#0F0F0F] py-20 md:py-28 overflow-hidden">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ type: 'spring', damping: 20 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12"
-        >
+        <AnimatedSection className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <div>
             <p className="text-[#F5C518] text-sm font-semibold uppercase tracking-[0.2em] mb-3">Recensioni Google</p>
             <h2 className="font-display text-4xl md:text-5xl font-black text-white leading-tight"
@@ -41,7 +33,7 @@ export function Reviews() {
           </div>
           <div className="flex items-center gap-3 md:pb-2">
             <span className="text-5xl font-black text-[#F5C518]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-              {rating.toFixed(1)}
+              {rating.toFixed(1).replace('.', ',')}
             </span>
             <div>
               <Stars n={5} />
@@ -50,17 +42,12 @@ export function Reviews() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {reviews.slice(0, 6).map((r, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ type: 'spring', damping: 20, delay: i * 0.08 }}
-              className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
-            >
+            <AnimatedSection key={i} delay={i * 0.08}
+              className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
               <Stars n={Number(r.rating)} />
               <p className="text-white/80 text-sm leading-relaxed mt-4 mb-5">&ldquo;{r.text}&rdquo;</p>
               <div className="flex items-center">
@@ -76,19 +63,14 @@ export function Reviews() {
                   <span className="text-white text-sm font-semibold">{r.name}</span>
                 </div>
               </div>
-            </motion.div>
+            </AnimatedSection>
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-10"
-        >
+        <AnimatedSection direction="none" className="text-center mt-10">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://search.google.com/local/reviews?placeid=ChIJE7A-YnH9ExMRlssUFfIZGao"
+              href={MAPPE.lungomare.recensioni}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-white/70 transition-colors"
@@ -105,7 +87,7 @@ export function Reviews() {
               ⭐ Lascia la tua recensione
             </a>
           </div>
-        </motion.div>
+        </AnimatedSection>
       </div>
     </section>
   )

@@ -1,8 +1,9 @@
 'use client'
 
-import { useInView, motion } from 'framer-motion'
+import { useInView } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
 import reviewsData from '@/data/reviews.json'
+import { AnimatedSection } from '@/components/ui/AnimatedSection'
 
 const STATS = [
   { value: 4, suffix: '+', label: 'Anni di attività' },
@@ -43,19 +44,13 @@ export function SocialProof() {
       <div className="max-w-7xl mx-auto px-5 md:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
           {STATS.map(({ value, suffix, label, decimali }, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ type: 'spring', damping: 20, delay: i * 0.1 }}
-              className="text-center"
-            >
+            <AnimatedSection key={label} delay={i * 0.1} className="text-center">
               <div className="font-display text-4xl md:text-5xl font-black text-[#F5C518] mb-2"
                 style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
                 <CountUp target={value} suffix={suffix} active={isInView} decimali={decimali} />
               </div>
               <p className="text-white/60 text-sm uppercase tracking-wider">{label}</p>
-            </motion.div>
+            </AnimatedSection>
           ))}
         </div>
       </div>

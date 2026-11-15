@@ -40,7 +40,7 @@ export function Hero() {
         ref={videoRef}
         autoPlay muted loop playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        src={`${BASE}/brand/hero-bg.mp4`}
+        src={`${BASE}/brand/hero-bg-720.mp4`}
       />
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/65" />

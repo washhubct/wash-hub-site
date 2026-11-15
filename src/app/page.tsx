@@ -1,5 +1,6 @@
 import { HeroV2 } from '@/components/home/HeroV2'
 import { SocialProof } from '@/components/home/SocialProof'
+import { InBreve } from '@/components/home/InBreve'
 import { ParcheggioScelta } from '@/components/home/ParcheggioScelta'
 import { PrimaDopo } from '@/components/home/PrimaDopo'
 import { ComeLaviamo } from '@/components/home/ComeLaviamo'
@@ -24,6 +25,7 @@ export default function HomePage() {
       <JsonLd data={schemaSedi} />
       <HeroV2 />
       <SocialProof />
+      <InBreve />
       <ParcheggioScelta />
       <PrimaDopo />
       <ComeLaviamo />
