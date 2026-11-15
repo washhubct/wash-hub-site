@@ -21,6 +21,8 @@ const instrument = Instrument_Serif({
   weight: ['400'],
   style: ['normal', 'italic'],
   display: 'swap',
+  // Usato solo in qualche citazione sotto la piega: niente preload, non ruba banda al titolo
+  preload: false,
 })
 
 const inter = Inter({

@@ -7,7 +7,7 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection'
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 // Prima/dopo da trascinare con il dito. Coppia generata con Higgsfield Nano Banana Pro (08/10/2026):
-// dopo.jpg = scatto pulito, prima.jpg = stesso scatto sporcato (cenere, salsedine, fango), allineati al pixel.
+// dopo.webp = scatto pulito, prima.webp = stesso scatto sporcato (cenere, salsedine, fango), allineati al pixel.
 export function PrimaDopo() {
   const box = useRef<HTMLDivElement>(null)
   const [pos, setPos] = useState(55)
@@ -38,9 +38,9 @@ export function PrimaDopo() {
             style={{ border: '3px solid #F5C518' }}
             onPointerDown={e => { (e.target as HTMLElement).setPointerCapture?.(e.pointerId); muovi(e.clientX) }}
             onPointerMove={e => { if (e.buttons || e.pointerType === 'touch') muovi(e.clientX) }}>
-            <img src={`${BASE}/brand/dopo.jpg`} alt="Auto dopo il lavaggio" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+            <img src={`${BASE}/brand/dopo.webp`} alt="Auto dopo il lavaggio" width={1400} height={1045} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
             <div className="absolute inset-0 overflow-hidden" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-              <img src={`${BASE}/brand/prima.jpg`} alt="Auto prima del lavaggio" loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+              <img src={`${BASE}/brand/prima.webp`} alt="Auto prima del lavaggio" width={1400} height={1045} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
             </div>
             <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 text-xs font-bold">PRIMA</span>
             <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-[#F5C518] text-[#0F0F0F] text-xs font-bold">DOPO</span>
