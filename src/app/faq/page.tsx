@@ -4,72 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { motion } from 'framer-motion'
-
-type Voce = { q: string; a: string; link?: { href: string; label: string } }
-
-const FAQ: Voce[] = [
-  {
-    q: 'Devo prenotare o posso venire direttamente?',
-    a: 'Al Lungomare puoi prenotare online oppure passare direttamente: accogliamo chi arriva senza prenotazione compatibilmente con la disponibilità degli orari. Ai Paesi Etnei il self service non richiede prenotazione: sei sempre libero di venire.',
-    link: { href: '/prenota', label: 'Prenota online' },
-  },
-  {
-    q: 'Posso disdire una prenotazione?',
-    a: 'Sì. Disdici gratis fino a 2 ore prima dell\'orario prenotato dalla pagina Disdici: ti servono il telefono usato per prenotare, il nome e il giorno. Se mancano meno di 2 ore, scrivici su WhatsApp.',
-    link: { href: '/disdici', label: 'Disdici una prenotazione' },
-  },
-  {
-    q: 'Quanto tempo ci vuole per un lavaggio?',
-    a: 'Il lavaggio esterno richiede circa 15 minuti. Il Lavaggio Tradizionale (esterno + interni) circa 30 minuti. Il Performance Intenso varia da veicolo a veicolo: dipende da dimensioni e da quanto è sporca l\'auto. Per la tappezzeria i tempi variano in base al servizio richiesto.',
-    link: { href: '/servizi', label: 'Vedi il listino' },
-  },
-  {
-    q: 'Cosa include il lavaggio esterno?',
-    a: 'Carrozzeria completa, vetri, cerchi e passaruota. Prodotti professionali e risciacquo finale con acqua osmotizzata per evitare aloni.',
-  },
-  {
-    q: 'Cosa include il Lavaggio Tradizionale?',
-    a: 'È il lavaggio completo interno ed esterno: tutto il lavaggio esterno più aspirazione abitacolo, pulizia cruscotto e superfici interne, e cura dei vetri interni.',
-  },
-  {
-    q: 'Cosa include il Performance Intenso?',
-    a: 'Tutto quello che fa il Lavaggio Tradizionale, fatto in modo intenso: esterno e interni curati a fondo, con trattamento schiumogeno. È pensato per le auto molto sporche o per chi vuole il massimo risultato. Il prezzo dipende dalla taglia dell\'auto e la durata dal veicolo.',
-  },
-  {
-    q: 'Fate smacchiatura e sanificazione degli interni?',
-    a: 'Sì, al Lungomare. Smacchiamo a fondo sedili e tessuti e sanifichiamo l\'abitacolo. Per l\'impianto del clima usiamo una bomboletta sanificante, presidio medico-chirurgico. Tempi e costo dipendono dall\'auto e dallo stato degli interni: chiedili in sede o su WhatsApp.',
-    link: { href: '/servizi', label: 'Tutti i servizi' },
-  },
-  {
-    q: 'Fate il lavaggio motore?',
-    a: 'Sì, al Lungomare, su richiesta. Chiedi in sede o scrivici su WhatsApp prima di venire, così ti diciamo tempi e costo per la tua auto.',
-  },
-  {
-    q: 'Posso lavare la moto?',
-    a: 'Sì, al Lungomare laviamo moto e scooter a €12. Ti chiediamo solo di farla raffreddare prima di portarla: il cambio di temperatura repentino non fa bene ai componenti.',
-  },
-  {
-    q: 'Il self service ai Paesi Etnei è sempre aperto?',
-    a: 'Sì, il self service è aperto 24 ore su 24, 7 giorni su 7, inclusi domenica e festivi. Gli operatori per il lavaggio manuale sono invece disponibili dal lunedì al sabato dalle 8:00 alle 19:00 e la domenica dalle 8:00 alle 13:30.',
-    link: { href: '/sedi/paesi-etnei', label: 'La sede POP Paesi Etnei' },
-  },
-  {
-    q: 'Come si paga?',
-    a: 'Al Lungomare accettiamo contanti e carte di credito/debito. Al self service dei Paesi Etnei si paga con monete, carta o contactless.',
-  },
-  {
-    q: 'Fate la tappezzeria su tutti i tipi di auto?',
-    a: 'Sì, trattiamo qualsiasi tipo di interno: tessuto, pelle, alcantara, similpelle. Per un preventivo accurato ti consigliamo di portare il veicolo o mandarci delle foto via WhatsApp prima.',
-  },
-  {
-    q: 'Il risultato è garantito?',
-    a: 'Sì. Se al ritiro non sei soddisfatto del risultato, te lo rifacciamo. Nessuna discussione.',
-  },
-  {
-    q: 'Posso portare un SUV o un furgone?',
-    a: 'Sì, laviamo SUV, furgoni leggeri e veicoli commerciali. Il prezzo varia in base alla dimensione: scrivici su WhatsApp per un preventivo rapido.',
-  },
-]
+import { FAQ, type Voce } from '@/data/faq'
 
 function FAQItem({ q, a, link, index }: Voce & { index: number }) {
   const [open, setOpen] = useState(false)
@@ -122,8 +57,9 @@ export default function FAQPage() {
           <h1 className="font-display text-5xl md:text-6xl font-black"
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
             Domande frequenti
+            <span className="block mt-3 text-2xl md:text-3xl font-bold text-white/80">sul lavaggio auto a Catania</span>
           </h1>
-          <p className="text-white/50 mt-4 text-lg">Tutto quello che vuoi sapere prima di venire.</p>
+          <p className="text-white/70 mt-4 text-lg">Tutto quello che vuoi sapere prima di venire.</p>
         </AnimatedSection>
       </section>
 
