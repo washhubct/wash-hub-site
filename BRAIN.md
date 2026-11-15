@@ -18,7 +18,7 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 
 ## Progetto: scopo, stack, repo, deploy, env
 
-- Sito vetrina + prenotazione online di WASH HUB (autolavaggio Catania): sede Lungomare (Via Anfuso 35, operatori, Lun-Sab 8:00-18:30) e sede POP Paesi Etnei (Via Galileo Galilei 28, San Gregorio, self-service 24/7).
+- Sito vetrina + prenotazione online di WASH HUB (autolavaggio Catania): sede Lungomare (Via Anfuso 35, operatori, Lun-Sab 8:00-18:30) e sede POP Paesi Etnei (Via Galileo Galilei 28, San Gregorio, self-service 24/7; lavaggio a mano Lun-Sab 8:00-19:00 e Dom 8:00-13:30; telefono unico delle due sedi 095 469 5153).
 - Dominio produzione `wash-hub.it` (CNAME in `public/CNAME`); telefono 095 469 5153, email info@washhub.it.
 - Stack: Next.js 16 App Router, React 19, TypeScript 5, Tailwind v4 (config inline in `globals.css`), Framer Motion 12, Firebase JS SDK 12 (solo Firestore client).
 - Font via next/font: Bricolage Grotesque (headline), Instrument Serif (citazioni), Inter (body).
