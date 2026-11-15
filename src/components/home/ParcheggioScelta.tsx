@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
+import { MAPPE } from '@/lib/sedi'
 
 // Parcheggio in tre scelte chiare, ancorato all'hero (#parcheggio). Niente prezzi qui: stanno nelle pagine dedicate.
-const MAPS = 'https://www.google.com/maps/search/?api=1&query=Wash+Hub+Lungomare+Via+Anfuso+35+Catania'
+const MAPS = MAPPE.lungomare.indicazioni
 const OPZIONI = [
   { icona: '🔐', titolo: 'Parcheggio Smart', testo: 'Paghi online, entri col codice.', cta: 'Ottieni il codice', href: '/parcheggio-smart', evidenza: true },
-  { icona: '⏱️', titolo: 'A ore', testo: 'Paghi all’uscita.', cta: 'Come arrivare', href: MAPS, evidenza: false },
-  { icona: '📅', titolo: 'Abbonamento', testo: 'Il tuo posto, ogni mese.', cta: 'Chiedi disponibilità', href: '/contatti', evidenza: false },
+  { icona: '⏱️', titolo: 'A ore', testo: 'Minimo 2 ore, poi paghi il tempo che usi.', cta: 'Come arrivare', href: MAPS, evidenza: false },
+  { icona: '📅', titolo: 'Abbonamento', testo: 'Il tuo posto, ogni mese.', cta: 'Vedi le formule', href: '/parcheggio-smart#formule', evidenza: false },
 ]
 
 export function ParcheggioScelta() {

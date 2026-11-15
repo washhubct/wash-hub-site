@@ -4,31 +4,61 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { ParcheggioSmartForm } from '@/components/parcheggio/ParcheggioSmartForm'
 import { INDIRIZZO, MAPS_URL } from '@/lib/parcheggio-smart'
 import { JsonLd } from '@/components/seo/JsonLd'
-import { LUNGOMARE_ID } from '@/lib/schema'
+import { briciole, fornitoreLungomare, parcheggioLungomare, PARCHEGGIO_ID } from '@/lib/schema'
+import { MAPPE } from '@/lib/sedi'
 
 const schemaParcheggio = {
   '@context': 'https://schema.org',
-  '@type': 'Service',
-  '@id': 'https://wash-hub.it/parcheggio-smart/#service',
-  name: 'Parcheggio Smart',
-  serviceType: 'Parcheggio a ore con accesso a codice',
-  description: 'Parcheggio al Lungomare di Catania senza operatore: paghi online, ricevi un codice e apri il cancello da solo, anche di notte.',
-  url: 'https://wash-hub.it/parcheggio-smart/',
-  provider: { '@type': 'AutoWash', '@id': LUNGOMARE_ID, name: 'WASH HUB Lungomare', url: 'https://wash-hub.it/sedi/lungomare/' },
-  areaServed: { '@type': 'City', name: 'Catania' },
-  offers: {
-    '@type': 'Offer',
-    priceCurrency: 'EUR',
-    priceSpecification: { '@type': 'UnitPriceSpecification', price: 2, priceCurrency: 'EUR', unitCode: 'HUR', unitText: 'ora' },
-  },
+  '@graph': [
+    parcheggioLungomare,
+    {
+      '@type': 'Service',
+      '@id': 'https://wash-hub.it/parcheggio-smart/#service',
+      name: 'Parcheggio Smart',
+      serviceType: 'Parcheggio a ore con accesso a codice',
+      description: 'Parcheggio al Lungomare di Catania senza operatore: paghi online, ricevi un codice e apri il cancello da solo, anche di notte.',
+      url: 'https://wash-hub.it/parcheggio-smart/',
+      provider: fornitoreLungomare,
+      availableAtOrFrom: { '@id': PARCHEGGIO_ID },
+      areaServed: { '@type': 'City', name: 'Catania' },
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'EUR',
+        priceSpecification: { '@type': 'UnitPriceSpecification', price: 2, priceCurrency: 'EUR', unitCode: 'HUR', unitText: 'ora' },
+        eligibleQuantity: { '@type': 'QuantitativeValue', minValue: 2, unitCode: 'HUR' },
+      },
+    },
+    briciole([['Parcheggio Lungomare', '/parcheggio-smart/']]),
+  ],
 }
 
+const WHATSAPP_ABBONAMENTO = 'https://wa.me/390954695153?text=Ciao%20WASH%20HUB%2C%20vorrei%20informazioni%20sull%27abbonamento%20mensile%20al%20parcheggio.'
+
+// Le tre formule del parcheggio: stessi prezzi della pagina sede Lungomare
+const FORMULE = [
+  {
+    icona: '🔐', titolo: 'Parcheggio Smart, con il codice', prezzo: '€2', unita: '/ ora',
+    testo: 'Paghi online e apri il cancello con un codice a 6 cifre, a qualsiasi ora, anche quando l’autolavaggio è chiuso. Minimo 2 ore; fino a 6 ore paghi al massimo €8, fino a 24 ore al massimo €15.',
+    cta: 'Prendi il codice', href: '#prendi-codice', evidenza: true,
+  },
+  {
+    icona: '⏱️', titolo: 'A ore, paghi all’uscita', prezzo: '€2', unita: '/ ora',
+    testo: 'Entri, parcheggi e paghi quando esci. Minimo 2 ore, poi paghi il tempo che usi.',
+    cta: 'Come arrivare', href: MAPPE.lungomare.indicazioni, evidenza: false,
+  },
+  {
+    icona: '📅', titolo: 'Abbonamento mensile', prezzo: 'da €100', unita: '/ mese',
+    testo: 'Posto auto riservato tutto il mese: scoperto €100 al mese, coperto €140 al mese.',
+    cta: 'Chiedi disponibilità su WhatsApp', href: WHATSAPP_ABBONAMENTO, evidenza: false,
+  },
+]
+
 export const metadata: Metadata = {
-  title: 'Parcheggio Smart a Catania, anche di notte',
-  description: 'Parcheggio al Lungomare di Catania senza operatore: paghi online, ricevi un codice e apri il cancello. Da 2 ore, anche di notte. €2/ora, max €15 al giorno.',
+  title: 'Parcheggio Lungomare Catania, anche di notte',
+  description: 'Parcheggio in Via Anfuso 35 sul Lungomare di Catania: a ore da €2 (minimo 2 ore), con codice anche di notte, o in abbonamento mensile da €100.',
   openGraph: {
-    title: 'Parcheggio Smart WASH HUB — apri il cancello con un codice',
-    description: 'Paghi online, ricevi il codice, parcheggi da solo. Anche di notte. Via Anfuso 35, Catania.',
+    title: 'Parcheggio sul Lungomare di Catania — WASH HUB',
+    description: 'A ore, con codice anche di notte o in abbonamento mensile. Via Anfuso 35, Catania.',
     // openGraph di pagina sostituisce quello del layout: i campi comuni vanno ripetuti
     type: 'website',
     locale: 'it_IT',
@@ -49,6 +79,9 @@ const FAQ = [
   { q: 'E se resto più a lungo?', a: 'Il codice scade all’orario indicato. Prendi un nuovo codice da qui oppure paga la differenza al banco in orario di apertura.' },
   { q: 'Posso prenotare per dopo?', a: 'Sì, fino a 7 giorni prima: scegli data e ora di inizio. Il codice si attiva 5 minuti prima.' },
   { q: 'Quanto costa?', a: '€2 all’ora con minimo 2 ore. Fino a 6 ore paghi al massimo €8, fino a 24 ore al massimo €15. La stessa tariffa del parcheggio a ore.' },
+  { q: 'C’è un minimo di ore?', a: 'Sì, 2 ore. Con il parcheggio a ore poi paghi il tempo che usi, a €2 l’ora; con Parcheggio Smart scegli tu le ore quando prendi il codice.' },
+  { q: 'Dove si trova il parcheggio?', a: 'Dentro WASH HUB Lungomare, in Via Anfuso 35 a Catania: è il parcheggio interno della sede.' },
+  { q: 'C’è l’abbonamento mensile?', a: 'Sì, con posto riservato: scoperto €100 al mese, coperto €140 al mese. Per la disponibilità scrivici su WhatsApp.' },
 ]
 
 export default function ParcheggioSmartPage() {
@@ -64,11 +97,16 @@ export default function ParcheggioSmartPage() {
             <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-5" style={{ background: '#C8A84E', color: '#0F0F0F' }}>
               Novità · Lungomare
             </span>
-            <h1 className="font-display text-5xl md:text-7xl font-black leading-[0.95] mb-6" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-              Parcheggia<br />da solo.<br /><span style={{ color: '#C8A84E' }}>Anche di notte.</span>
+            <h1 className="font-display text-4xl md:text-6xl font-black leading-[0.95] mb-4" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+              Parcheggio sul Lungomare di Catania
             </h1>
-            <p className="text-white/60 text-lg md:text-xl max-w-lg leading-relaxed">
-              Paghi online, ricevi un codice a 6 cifre e apri il cancello del nostro parcheggio interno quando vuoi. Da 2 ore in su, €2 l&rsquo;ora.
+            <p className="font-display text-2xl md:text-3xl font-black leading-tight mb-6" style={{ fontFamily: 'var(--font-bricolage), system-ui', color: '#C8A84E' }}>
+              Parcheggia da solo. Anche di notte.
+            </p>
+            <p className="text-white/70 text-lg md:text-xl max-w-lg leading-relaxed">
+              Il parcheggio interno di WASH HUB è in Via Anfuso 35 a Catania. Con Parcheggio Smart paghi online, ricevi un codice a 6 cifre
+              e apri il cancello quando vuoi: €2 l&rsquo;ora, minimo 2 ore. In alternativa parcheggi a ore e paghi all&rsquo;uscita,
+              oppure scegli l&rsquo;<a href="#formule" className="underline text-white">abbonamento mensile</a>.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               {['Minimo 2 ore', 'Max €15 al giorno', 'Nessun operatore', 'Codice in 10 secondi'].map(t => (
@@ -124,7 +162,7 @@ export default function ParcheggioSmartPage() {
           <AnimatedSection className="rounded-3xl bg-[#0F0F0F] text-white p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             <div className="md:col-span-1">
               <p className="text-[#C8A84E] text-sm font-semibold uppercase tracking-[0.2em] mb-2">Tariffa</p>
-              <h3 className="font-display text-3xl font-black" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>Semplice come il parcheggio a ore.</h3>
+              <h2 className="font-display text-3xl font-black" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>Semplice come il parcheggio a ore.</h2>
             </div>
             <div className="md:col-span-2 grid grid-cols-3 gap-4">
               {[['€2', 'all’ora', 'minimo 2 ore'], ['€8', 'massimo', 'fino a 6 ore'], ['€15', 'massimo', 'fino a 24 ore']].map(([a, b, c]) => (
@@ -135,6 +173,47 @@ export default function ParcheggioSmartPage() {
                 </div>
               ))}
             </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Le tre formule */}
+      <section id="formule" className="py-20 md:py-28 bg-white scroll-mt-20">
+        <div className="max-w-6xl mx-auto px-5 md:px-8">
+          <AnimatedSection className="mb-10 max-w-2xl">
+            <p className="text-[#8a7230] text-sm font-semibold uppercase tracking-[0.2em] mb-3">Via Anfuso 35, Catania</p>
+            <h2 className="font-display text-4xl md:text-5xl font-black text-[#0F0F0F]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
+              Tre modi di parcheggiare
+            </h2>
+            <p className="text-[#6B6B6B] mt-4 text-lg leading-relaxed">
+              Stesso parcheggio, tre formule: con il codice quando vuoi tu, a ore pagando all&rsquo;uscita, o con il posto riservato tutto il mese.
+            </p>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {FORMULE.map((f, i) => (
+              <AnimatedSection key={f.titolo} delay={i * 0.08}>
+                <div className={`h-full flex flex-col p-7 rounded-2xl border ${f.evidenza ? 'bg-[#0F0F0F] border-[#0F0F0F] text-white' : 'bg-[#FAFAF7] border-[#E8E8E4] text-[#0F0F0F]'}`}>
+                  <span className="text-3xl" aria-hidden>{f.icona}</span>
+                  <h3 className="font-bold text-xl mt-4 mb-1">{f.titolo}</h3>
+                  <div className={f.evidenza ? 'text-[#C8A84E]' : 'text-[#8a7230]'}>
+                    <span className="font-display text-3xl font-black" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>{f.prezzo}</span>
+                    <span className="text-sm font-medium opacity-80"> {f.unita}</span>
+                  </div>
+                  <p className={`mt-3 leading-relaxed flex-1 ${f.evidenza ? 'text-white/70' : 'text-[#6B6B6B]'}`}>{f.testo}</p>
+                  <a href={f.href} {...(f.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    className={`mt-6 inline-flex self-start items-center px-5 py-3 rounded-full font-bold text-sm transition-colors ${f.evidenza ? 'bg-[#C8A84E] text-[#0F0F0F] hover:bg-[#d9bb66]' : 'bg-[#0F0F0F] text-white hover:bg-[#1a1a1a]'}`}>
+                    {f.cta} →
+                  </a>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+          <AnimatedSection className="mt-8">
+            <p className="text-[#6B6B6B] leading-relaxed max-w-3xl">
+              Ti serve di notte o quando l&rsquo;autolavaggio è chiuso? Parcheggio Smart. Parcheggi qui tutti i giorni? Con l&rsquo;abbonamento il posto è tuo.
+              Il parcheggio è nella sede <Link href="/sedi/lungomare" className="underline font-semibold text-[#0F0F0F]">WASH HUB Lungomare</Link>:
+              mentre l&rsquo;auto è ferma puoi anche <Link href="/prenota" className="underline font-semibold text-[#0F0F0F]">prenotare un lavaggio</Link>.
+            </p>
           </AnimatedSection>
         </div>
       </section>
