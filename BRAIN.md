@@ -19,7 +19,7 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 ## Progetto: scopo, stack, repo, deploy, env
 
 - Sito vetrina + prenotazione online di WASH HUB (autolavaggio Catania): sede Lungomare (Via Anfuso 35, operatori, Lun-Sab 8:00-18:30) e sede POP Paesi Etnei (Via Galileo Galilei 28, San Gregorio, self-service 24/7; lavaggio a mano Lun-Sab 8:00-19:00 e Dom 8:00-13:30; telefono unico delle due sedi 095 469 5153).
-- Dominio produzione `wash-hub.it` (CNAME in `public/CNAME`); telefono 095 469 5153, email info@washhub.it.
+- Dominio produzione `wash-hub.it` (CNAME in `public/CNAME`); telefono 095 469 5153 (vale per entrambe le sedi), email info@washhub.it; società titolare LAST MILE SRL (P.IVA 06183200879, REA CT-475508, sede legale Via Duca degli Abruzzi 180, Catania).
 - Stack: Next.js 16 App Router, React 19, TypeScript 5, Tailwind v4 (config inline in `globals.css`), Framer Motion 12, Firebase JS SDK 12 (solo Firestore client).
 - Font via next/font: Bricolage Grotesque (headline), Instrument Serif (citazioni), Inter (body).
 - Export statico (`output: 'export'`, `trailingSlash`, immagini non ottimizzate): nessuna API route, nessun server.
@@ -36,21 +36,21 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 ## Architettura e file chiave
 
 - `src/app/layout.tsx` — root layout: font, metadata SEO, JSON-LD LocalBusiness delle due sedi, Header/Footer/WhatsAppButton/ParcheggioSmartPopup.
-- `src/app/page.tsx` — home: HeroV2, SocialProof, ParcheggioScelta, PrimaDopo, ComeLaviamo, Garanzia, Reviews, SediPreview, HomeCTA.
+- `src/app/page.tsx` — home: HeroV2, SocialProof, InBreve (fatti chiave in prosa), ParcheggioScelta, PrimaDopo, ComeLaviamo, Garanzia, Reviews, SediPreview, HomeCTA.
 - `src/app/prenota/page.tsx` — pagina prenotazione, monta `BookingFlow`.
 - `src/app/prenota/{priority,caparra,garanzia}/page.tsx` — pagine di conferma dopo checkout (polling stato via Function).
 - `src/app/disdici/page.tsx` — disdetta online (gratis fino a 2h prima).
 - `src/app/priority/page.tsx` — landing Priority (salta la coda nelle ore calde).
 - `src/app/referral/page.tsx` — "Porta un amico": codice dal telefono, statistiche, voucher.
 - `src/app/parcheggio-smart/page.tsx` + `conferma/page.tsx` — acquisto codice cancello parcheggio e conferma con polling.
-- `src/app/servizi/page.tsx` — listino (`LAVAGGI`) e abbonamenti (`ABBONAMENTI`, sezione Coming Soon, link Stripe placeholder).
-- `src/app/sedi/`, `sedi/lungomare`, `sedi/paesi-etnei` — pagine sedi (Lungomare include tariffe parcheggio).
+- `src/app/servizi/page.tsx` — listino (`LAVAGGI`) e servizi su richiesta (`EXTRA`, solo Lungomare); `servizi/sanificazione-interni/page.tsx` — pagina dedicata a smacchiatura e sanificazione interni (su richiesta, senza prezzo fisso).
+- `src/app/sedi/`, `sedi/lungomare`, `sedi/paesi-etnei` — pagine sedi (Lungomare include tariffe parcheggio); alla sede POP non si prenota: lì i pulsanti sono indicazioni e telefono.
 - `src/app/{chi-siamo,contatti,faq,flotte,privacy,termini}/` — pagine statiche; `termini` contiene disdetta, caparra art. 1385, garanzia art. 1382, Priority.
 - `src/app/sitemap.ts`, `robots.ts` — SEO statici (`force-static`).
 - `src/components/booking/BookingFlow.tsx` — wizard 4 step (Servizio, Data, Orario, Dati): servizi `SERVICES`, slot, Priority, caparra, garanzia, codice amico, voucher.
 - `src/components/booking/Conferma{Priority,Caparra,Garanzia}.tsx`, `Disdici.tsx` — client delle pagine conferma/disdetta.
 - `src/components/home/*` — sezioni home; `Hero.tsx` e `Differentiators.tsx`, `ReferralBanner.tsx`, `ParcheggioSmartBanner.tsx` non sono più montati in home.
-- `src/components/layout/Header.tsx` — navbar floating pill (voci `NAV`), top-bar che sparisce allo scroll; `Footer.tsx` con logo MA-FRA.
+- `src/components/layout/Header.tsx` — navbar floating pill (voci `NAV`, menu desktop da `lg`, sotto menu a tutto schermo), top-bar che sparisce allo scroll, sulla pagina POP il pulsante è "Come arrivare"; `Footer.tsx` con logo MA-FRA e dati societari.
 - `src/components/parcheggio/ParcheggioSmartForm.tsx`, `ConfermaCodice.tsx` — form acquisto (prefisso internazionale, E.164) e stato codice.
 - `src/components/ui/` — AnimatedSection, AutoVideo (autoplay iPhone), HiggsfieldImage/Video (stub asset), Logo, ParcheggioSmartPopup, WhatsAppButton.
 - `src/lib/firebase-booking.ts` — init Firebase, `SLOTS`, `GIORNI_CHIUSI`/`CHIUSURE`, `isGiornoChiuso`, `getBookedSlots` (via Function), `validaCodiceAmico`, `saveBooking` (scrive `prenotazioni` con `sedeId: 'lungomare'`, nota `[WEB] ...`).
@@ -61,8 +61,10 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 - `src/lib/referral-code.ts` — codice referral deterministico dal telefono (`WH` + 4 char base32), modulo puro senza Firebase.
 - `src/lib/referral.ts` — statistiche referral e voucher attivi letti da Firestore (`referral/{code}`, `vouchers/{codice}`).
 - `src/lib/utils.ts` — `cn()` (clsx + tailwind-merge).
+- `src/lib/sedi.ts` — fonte unica di telefono, email, link Google Maps (scheda/indicazioni/recensioni) e dati societari; `src/lib/schema.ts` — JSON-LD (sedi, parcheggio, briciole).
+- `src/data/faq.ts` — domande frequenti, usate sia dalla pagina sia dal JSON-LD FAQPage.
 - `src/data/reviews.json` — recensioni Google reali, generate da `scripts/fetch-reviews.mjs` (Places API); la home legge rating e conteggio da qui.
-- `public/brand/` — logo, hero video/poster, clip e foto dei 4 passaggi (`passi/`), prima/dopo.
+- `public/brand/` — logo, hero video (`hero-bg-720.mp4`) e poster, clip e foto dei 4 passaggi (`passi/`), prima/dopo in WebP.
 - Collezioni Firestore toccate dal sito: `prenotazioni` (solo scrittura), `referral` (+ sub `eventi`), `vouchers` (lettura).
 
 ## Decisioni prese e perché
@@ -77,10 +79,10 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 - Con il codice amico l'email è obbligatoria; consenso marketing facoltativo e separato.
 - Self-referral bloccato lato client (codice calcolato dal telefono) e lato Function.
 - Performance Intenso a prezzo per taglia (utilitaria/berlina €29, SUV/monovolume/station €35), prezzo definito in sede: niente prezzo fisso in prenotazione.
-- Parcheggio Smart: tariffa identica al gestionale (€2/h, max €8 fino a 6h, max €15 fino a 24h, minimo 2h); nome ed email obbligatori, codice inviato via email.
+- Parcheggio Smart: tariffa identica al gestionale (€2/h, max €8 fino a 6h, max €15 fino a 24h, minimo 2h); a ore con pagamento all'uscita vale "minimo 2 ore, poi paghi il tempo che usi"; abbonamento mensile scoperto €100, coperto €140 (richiesta via WhatsApp); nome ed email obbligatori, codice inviato via email.
 - Dati fattura nel form parcheggio: provato e revertito (troppo attrito nel form).
 - Gift card rimossa (pagina, menu, footer) finché non serve Stripe.
-- Abbonamenti: sezione Coming Soon con link Stripe placeholder, prezzi non definitivi.
+- Abbonamenti lavaggio: in arrivo, nessun prezzo pubblicato (l'unico abbonamento attivo è quello mensile del parcheggio).
 - Home 2026: hero con due scelte (lavaggio/parcheggio), passaggi con gli Interni al primo posto, sezioni ripetute rimosse per accorciare del 25%; niente orari liberi in vista.
 - Video in autoplay su iPhone tramite `AutoVideo`; animazioni laterali solo da `md` in su per evitare scroll orizzontale.
 - Giorni chiusi gestiti in `GIORNI_CHIUSI`/`CHIUSURE` con difesa in profondità in `saveBooking`.
@@ -101,6 +103,6 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 
 - Sito in produzione su wash-hub.it con prenotazione, Priority, caparra/garanzia, disdetta, referral, Parcheggio Smart.
 - Recensioni: Google 5,0★ con 22 recensioni (dato di Guido, 14/11/2026); aggiornare con `npm run fetch-reviews`.
-- Aperti: abbonamenti (prezzi + Payment Link Stripe reali), gift card se torna utile, immagini stub Higgsfield residue in `sedi/page.tsx`, `servizi/page.tsx`, `SediPreview.tsx`.
+- Aperti: abbonamenti lavaggio (prezzi + Payment Link Stripe reali), gift card se torna utile, immagini stub Higgsfield residue in `sedi/page.tsx`, `servizi/page.tsx`, `SediPreview.tsx`.
 - Da valutare: Google Analytics 4 (non integrato), Resend per email contatti (non serve finché non c'è un form).
 - `GIORNI_CHIUSI` contiene date 2026 da ripulire e integrare per il 2027.
