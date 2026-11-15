@@ -21,9 +21,9 @@ const LAVAGGI: Lavaggio[] = [
   { icon: '🪡', name: 'Tappezzeria', desc: 'Interni, sedili, pannelli porta: su prenotazione', price: 'Su preventivo', time: 'Varia' },
 ]
 
-// Servizi senza listino fisso: tempi e costo si chiedono in sede o su WhatsApp
-const EXTRA: { icon: string; name: string; desc: string; href?: string }[] = [
-  { icon: '🧽', name: 'Smacchiatura e sanificazione interni', desc: 'Sedili e tessuti smacchiati a fondo, abitacolo sanificato.', href: '/servizi/sanificazione-interni' },
+// Servizi senza listino fisso: tempi e costo si chiedono in sede o su WhatsApp (`da` = prezzo di partenza, dove c'è)
+const EXTRA: { icon: string; name: string; desc: string; href?: string; da?: number }[] = [
+  { icon: '🧽', name: 'Smacchiatura e sanificazione interni', desc: 'Sedili e tessuti smacchiati a fondo, abitacolo sanificato. Il prezzo esatto te lo diciamo prima di iniziare.', href: '/servizi/sanificazione-interni', da: 100 },
   { icon: '🔧', name: 'Lavaggio motore', desc: 'Vano motore pulito con cura.' },
   { icon: '❄️', name: 'Sanificazione impianto clima', desc: 'Bomboletta sanificante, presidio medico-chirurgico, per l\'impianto di climatizzazione.', href: '/servizi/sanificazione-interni' },
 ]
@@ -56,6 +56,7 @@ const schemaServizi = {
           ...EXTRA.map(e => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', name: e.name, description: e.desc, ...(e.href ? { url: `https://wash-hub.it${e.href}/` } : {}) },
+            ...(e.da ? { priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: e.da, priceCurrency: 'EUR' } } : {}),
           })),
         ],
       },
@@ -135,7 +136,7 @@ export default function ServiziPage() {
             <p className="text-[#6B6B6B] mt-3 max-w-2xl">Tempi e costo dipendono dall&rsquo;auto: chiedili in sede o su WhatsApp.</p>
           </AnimatedSection>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {EXTRA.map(({ icon, name, desc, href }, i) => (
+            {EXTRA.map(({ icon, name, desc, href, da }, i) => (
               <AnimatedSection key={name} delay={i * 0.08}
                 className="bg-[#FAFAF7] border border-[#E8E8E4] rounded-2xl p-6">
                 <div className="text-3xl mb-4">{icon}</div>
@@ -143,6 +144,7 @@ export default function ServiziPage() {
                   style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
                   {name}
                 </h3>
+                {da && <p className="font-bold text-[#0F0F0F] mb-2">Da €{da}</p>}
                 <p className="text-[#6B6B6B] text-sm">{desc}</p>
                 {href && (
                   <Link href={href} className="inline-block mt-3 text-sm font-semibold text-[#0F0F0F] underline">

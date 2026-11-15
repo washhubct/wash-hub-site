@@ -52,7 +52,7 @@ export const FAQ: Voce[] = [
   },
   {
     q: 'Fate smacchiatura e sanificazione degli interni?',
-    a: 'Sì, facciamo smacchiatura e sanificazione degli interni al Lungomare. Smacchiamo a fondo sedili e tessuti e sanifichiamo l\'abitacolo. Per l\'impianto del clima usiamo una bomboletta sanificante, presidio medico-chirurgico. Tempi e costo dipendono dall\'auto e dallo stato degli interni: chiedili in sede o su WhatsApp.',
+    a: 'Sì, facciamo smacchiatura e sanificazione degli interni al Lungomare. Smacchiamo a fondo sedili e tessuti e sanifichiamo l\'abitacolo. Per l\'impianto del clima usiamo una bomboletta sanificante, presidio medico-chirurgico. Si parte da €100: il prezzo esatto dipende dalle macchie, da quanto è grande l\'auto e da quanto lavoro c\'è da fare, e te lo diciamo prima di iniziare. Per il preventivo scrivici su WhatsApp, anche con le foto dei sedili.',
     link: { href: '/servizi/sanificazione-interni', label: 'Sanificazione interni: come funziona' },
   },
   {
