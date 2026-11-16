@@ -77,12 +77,12 @@ export const fornitoreLungomare = {
 
 export const PARCHEGGIO_ID = `${SITO}/#parcheggio-lungomare`
 
-// Parcheggio interno del Lungomare con le tre formule. Accessibile 24 ore su 24; operatore presente 7:30–18:30 (Guido 15/11/2026).
+// Parcheggio interno del Lungomare con le due formule. Accessibile 24 ore su 24; operatore presente 7:30–18:30 (Guido 15/11/2026). A ore si entra sempre con il codice.
 export const parcheggioLungomare = {
   '@type': 'ParkingFacility',
   '@id': PARCHEGGIO_ID,
   name: 'Parcheggio WASH HUB Lungomare',
-  description: 'Parcheggio interno in Via Anfuso 35 a Catania, accessibile 24 ore su 24, con operatore presente dalle 7:30 alle 18:30 e pagamento online: a ore, con codice anche di notte (Parcheggio Smart) o in abbonamento mensile con posto riservato, coperto o scoperto.',
+  description: 'Parcheggio interno in Via Anfuso 35 a Catania, accessibile 24 ore su 24, con operatore presente dalle 7:30 alle 18:30: a ore con pagamento online e codice per il cancello (Parcheggio Smart), anche di notte, o in abbonamento mensile con posto riservato, coperto o scoperto.',
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
@@ -99,7 +99,7 @@ export const parcheggioLungomare = {
     {
       '@type': 'Offer',
       name: 'Parcheggio a ore',
-      description: 'Minimo 2 ore, poi paghi il tempo che usi.',
+      description: 'Minimo 2 ore. Si paga online e si entra con il codice.',
       priceCurrency: 'EUR',
       priceSpecification: { '@type': 'UnitPriceSpecification', price: 2, priceCurrency: 'EUR', unitCode: 'HUR', unitText: 'ora' },
       eligibleQuantity: { '@type': 'QuantitativeValue', minValue: 2, unitCode: 'HUR' },

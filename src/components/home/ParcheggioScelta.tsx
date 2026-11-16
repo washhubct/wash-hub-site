@@ -1,12 +1,9 @@
 import Link from 'next/link'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { MAPPE } from '@/lib/sedi'
 
-// Parcheggio in tre scelte chiare, ancorato all'hero (#parcheggio). Niente prezzi qui: stanno nelle pagine dedicate.
-const MAPS = MAPPE.lungomare.indicazioni
+// Parcheggio in due scelte chiare (a ore sempre con il codice), ancorato all'hero (#parcheggio). Niente prezzi qui: stanno nelle pagine dedicate.
 const OPZIONI = [
-  { icona: '🔐', titolo: 'Parcheggio Smart', testo: 'Paghi online, entri col codice.', cta: 'Ottieni il codice', href: '/parcheggio-smart', evidenza: true },
-  { icona: '⏱️', titolo: 'A ore', testo: 'Minimo 2 ore, poi paghi il tempo che usi.', cta: 'Come arrivare', href: MAPS, evidenza: false },
+  { icona: '🔐', titolo: 'Parcheggio Smart', testo: 'A ore: paghi online, entri col codice. Minimo 2 ore.', cta: 'Ottieni il codice', href: '/parcheggio-smart', evidenza: true },
   { icona: '📅', titolo: 'Abbonamento', testo: 'Il tuo posto, ogni mese.', cta: 'Vedi le formule', href: '/parcheggio-smart#formule', evidenza: false },
 ]
 
@@ -22,7 +19,7 @@ export function ParcheggioScelta() {
           </h2>
           <p className="mt-3 text-[#0F0F0F]/65">Accessibile 24 ore su 24. Operatore presente dalle 7:30 alle 18:30.</p>
         </AnimatedSection>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {OPZIONI.map((o, i) => (
             <AnimatedSection key={o.titolo} delay={i * 0.08}>
               <Link href={o.href} {...(o.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}

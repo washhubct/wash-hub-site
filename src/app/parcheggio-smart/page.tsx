@@ -5,7 +5,6 @@ import { ParcheggioSmartForm } from '@/components/parcheggio/ParcheggioSmartForm
 import { INDIRIZZO, MAPS_URL } from '@/lib/parcheggio-smart'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { briciole, fornitoreLungomare, parcheggioLungomare, PARCHEGGIO_ID } from '@/lib/schema'
-import { MAPPE } from '@/lib/sedi'
 
 const schemaParcheggio = {
   '@context': 'https://schema.org',
@@ -34,17 +33,13 @@ const schemaParcheggio = {
 
 const WHATSAPP_ABBONAMENTO = 'https://wa.me/390954695153?text=Ciao%20WASH%20HUB%2C%20vorrei%20informazioni%20sull%27abbonamento%20mensile%20al%20parcheggio.'
 
-// Le tre formule del parcheggio: stessi prezzi della pagina sede Lungomare
+// Le due formule del parcheggio: stessi prezzi della pagina sede Lungomare.
+// A ore si entra sempre con il codice: niente pagamento all'uscita o all'operatore (Guido 16/11/2026).
 const FORMULE = [
   {
-    icona: '🔐', titolo: 'Parcheggio Smart, con il codice', prezzo: '€2', unita: '/ ora',
-    testo: 'Paghi online e apri il cancello con un codice a 6 cifre, a qualsiasi ora, anche quando l’autolavaggio è chiuso. Minimo 2 ore; fino a 6 ore paghi al massimo €8, fino a 24 ore al massimo €15.',
+    icona: '🔐', titolo: 'A ore, con il codice', prezzo: '€2', unita: '/ ora',
+    testo: 'Con Parcheggio Smart paghi online e apri il cancello con un codice a 6 cifre, a qualsiasi ora, anche quando l’autolavaggio è chiuso. Per parcheggiare a ore serve sempre il codice. Minimo 2 ore; fino a 6 ore paghi al massimo €8, fino a 24 ore al massimo €15.',
     cta: 'Prendi il codice', href: '#prendi-codice', evidenza: true,
-  },
-  {
-    icona: '⏱️', titolo: 'A ore, paghi all’uscita', prezzo: '€2', unita: '/ ora',
-    testo: 'Entri, parcheggi e paghi online quando esci. Minimo 2 ore, poi paghi il tempo che usi.',
-    cta: 'Come arrivare', href: MAPPE.lungomare.indicazioni, evidenza: false,
   },
   {
     icona: '📅', titolo: 'Abbonamento mensile', prezzo: 'da €100', unita: '/ mese',
@@ -55,10 +50,10 @@ const FORMULE = [
 
 export const metadata: Metadata = {
   title: 'Parcheggio Lungomare Catania, aperto 24 ore su 24',
-  description: 'Parcheggio in Via Anfuso 35 sul Lungomare di Catania, accessibile 24 ore su 24: a ore da €2 (minimo 2 ore), con codice anche di notte, abbonamento mensile da €100.',
+  description: 'Parcheggio in Via Anfuso 35 sul Lungomare di Catania, accessibile 24 ore su 24 con il codice: a ore da €2 (minimo 2 ore), anche di notte, o abbonamento mensile da €100.',
   openGraph: {
     title: 'Parcheggio sul Lungomare di Catania — WASH HUB',
-    description: 'Accessibile 24 ore su 24: a ore, con codice anche di notte o in abbonamento mensile. Via Anfuso 35, Catania.',
+    description: 'Accessibile 24 ore su 24 con il codice: a ore, anche di notte, o in abbonamento mensile. Via Anfuso 35, Catania.',
     // openGraph di pagina sostituisce quello del layout: i campi comuni vanno ripetuti
     type: 'website',
     locale: 'it_IT',
@@ -75,12 +70,12 @@ const STEPS = [
 ]
 
 const FAQ = [
-  { q: 'Che orari ha il parcheggio?', a: 'Il parcheggio è accessibile 24 ore su 24. L’operatore è presente dalle 7:30 alle 18:30; negli altri orari entri ed esci con il codice di Parcheggio Smart.' },
+  { q: 'Che orari ha il parcheggio?', a: 'Il parcheggio è accessibile 24 ore su 24. Per parcheggiare a ore serve sempre il codice di Parcheggio Smart: con quello entri ed esci a qualsiasi ora. L’operatore è presente dalle 7:30 alle 18:30.' },
   { q: 'Funziona anche di notte e nei festivi?', a: 'Sì. Il codice vale nella fascia che scegli tu, a qualsiasi ora, anche quando l’autolavaggio è chiuso.' },
   { q: 'E se resto più a lungo?', a: 'Il codice scade all’orario indicato. Per restare di più prendi un nuovo codice da qui: si paga online.' },
   { q: 'Posso prenotare per dopo?', a: 'Sì, fino a 7 giorni prima: scegli data e ora di inizio. Il codice si attiva 5 minuti prima.' },
-  { q: 'Quanto costa?', a: '€2 all’ora con minimo 2 ore. Fino a 6 ore paghi al massimo €8, fino a 24 ore al massimo €15. La stessa tariffa del parcheggio a ore.' },
-  { q: 'C’è un minimo di ore?', a: 'Sì, 2 ore. Con il parcheggio a ore poi paghi il tempo che usi, a €2 l’ora; con Parcheggio Smart scegli tu le ore quando prendi il codice.' },
+  { q: 'Quanto costa?', a: '€2 all’ora con minimo 2 ore. Fino a 6 ore paghi al massimo €8, fino a 24 ore al massimo €15.' },
+  { q: 'C’è un minimo di ore?', a: 'Sì, 2 ore. Scegli tu le ore quando prendi il codice, a €2 l’ora.' },
   { q: 'Dove si trova il parcheggio?', a: 'Dentro WASH HUB Lungomare, in Via Anfuso 35 a Catania: è il parcheggio interno della sede.' },
   { q: 'C’è l’abbonamento mensile?', a: 'Sì, con posto riservato: scoperto €100 al mese, coperto €140 al mese. Per la disponibilità scrivici su WhatsApp.' },
 ]
@@ -106,8 +101,8 @@ export default function ParcheggioSmartPage() {
             </p>
             <p className="text-white/70 text-lg md:text-xl max-w-lg leading-relaxed">
               Il parcheggio interno di WASH HUB è in Via Anfuso 35 a Catania. Con Parcheggio Smart paghi online, ricevi un codice a 6 cifre
-              e apri il cancello quando vuoi: €2 l&rsquo;ora, minimo 2 ore. In alternativa parcheggi a ore e paghi all&rsquo;uscita,
-              oppure scegli l&rsquo;<a href="#formule" className="underline text-white">abbonamento mensile</a>.
+              e apri il cancello quando vuoi: €2 l&rsquo;ora, minimo 2 ore. Per parcheggiare a ore serve sempre il codice.
+              Se parcheggi qui tutti i giorni c&rsquo;è l&rsquo;<a href="#formule" className="underline text-white">abbonamento mensile</a>.
               Il parcheggio è accessibile 24 ore su 24; l&rsquo;operatore è presente dalle 7:30 alle 18:30.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
@@ -179,19 +174,19 @@ export default function ParcheggioSmartPage() {
         </div>
       </section>
 
-      {/* Le tre formule */}
+      {/* Le due formule */}
       <section id="formule" className="py-20 md:py-28 bg-white scroll-mt-20">
         <div className="max-w-6xl mx-auto px-5 md:px-8">
           <AnimatedSection className="mb-10 max-w-2xl">
             <p className="text-[#8a7230] text-sm font-semibold uppercase tracking-[0.2em] mb-3">Via Anfuso 35, Catania</p>
             <h2 className="font-display text-4xl md:text-5xl font-black text-[#0F0F0F]" style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
-              Tre modi di parcheggiare
+              Due modi di parcheggiare
             </h2>
             <p className="text-[#6B6B6B] mt-4 text-lg leading-relaxed">
-              Stesso parcheggio, tre formule: con il codice quando vuoi tu, a ore pagando all&rsquo;uscita, o con il posto riservato tutto il mese.
+              Stesso parcheggio, due formule: a ore con il codice, quando vuoi tu, o con il posto riservato tutto il mese.
             </p>
           </AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {FORMULE.map((f, i) => (
               <AnimatedSection key={f.titolo} delay={i * 0.08}>
                 <div className={`h-full flex flex-col p-7 rounded-2xl border ${f.evidenza ? 'bg-[#0F0F0F] border-[#0F0F0F] text-white' : 'bg-[#FAFAF7] border-[#E8E8E4] text-[#0F0F0F]'}`}>
@@ -212,7 +207,7 @@ export default function ParcheggioSmartPage() {
           </div>
           <AnimatedSection className="mt-8">
             <p className="text-[#6B6B6B] leading-relaxed max-w-3xl">
-              Il parcheggio è accessibile 24 ore su 24 e l&rsquo;operatore è presente dalle 7:30 alle 18:30: fuori da quell&rsquo;orario entri con Parcheggio Smart.
+              Il parcheggio è accessibile 24 ore su 24 e l&rsquo;operatore è presente dalle 7:30 alle 18:30.
               Parcheggi qui tutti i giorni? Con l&rsquo;abbonamento il posto è tuo.
               Il parcheggio è nella sede <Link href="/sedi/lungomare" className="underline font-semibold text-[#0F0F0F]">WASH HUB Lungomare</Link>:
               mentre l&rsquo;auto è ferma puoi anche <Link href="/prenota" className="underline font-semibold text-[#0F0F0F]">prenotare un lavaggio</Link>.

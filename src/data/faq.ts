@@ -65,7 +65,7 @@ export const FAQ: Voce[] = [
   },
   {
     q: 'C\'è il parcheggio?',
-    a: 'Sì, al Lungomare c\'è il parcheggio interno, in Via Anfuso 35: costa €2 l\'ora con minimo 2 ore, poi paghi il tempo che usi. È accessibile 24 ore su 24 e l\'operatore è presente dalle 7:30 alle 18:30. Con Parcheggio Smart paghi online e apri il cancello con un codice, anche di notte. C\'è anche l\'abbonamento mensile con posto riservato: scoperto €100, coperto €140.',
+    a: 'Sì, al Lungomare c\'è il parcheggio interno, in Via Anfuso 35: costa €2 l\'ora con minimo 2 ore. Per parcheggiare a ore serve sempre il codice di Parcheggio Smart: paghi online e apri il cancello a qualsiasi ora, anche di notte. Il parcheggio è accessibile 24 ore su 24 e l\'operatore è presente dalle 7:30 alle 18:30. C\'è anche l\'abbonamento mensile con posto riservato: scoperto €100, coperto €140.',
     link: { href: '/parcheggio-smart', label: 'Parcheggio al Lungomare' },
   },
   {

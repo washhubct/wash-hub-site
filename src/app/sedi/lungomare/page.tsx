@@ -141,15 +141,15 @@ export default function LungomareePage() {
               Parcheggio Lungomare
             </h2>
             <p className="text-white/60 text-lg max-w-2xl mb-12">
-              Non solo lavaggio: al Lungomare trovi anche il parcheggio. A ore, con minimo 2 ore e poi paghi
-              il tempo che usi, oppure in abbonamento mensile con posto riservato — coperto o scoperto.
+              Non solo lavaggio: al Lungomare trovi anche il parcheggio. A ore con Parcheggio Smart: paghi online
+              e apri il cancello con un codice, minimo 2 ore. Oppure in abbonamento mensile con posto riservato — coperto o scoperto.
               È accessibile 24 ore su 24; l&rsquo;operatore è presente dalle 7:30 alle 18:30.
             </p>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
-              { icon: '⏱️', title: 'Parcheggio ad ore', price: '€2', unit: '/ ora', desc: 'Minimo 2 ore, poi paghi il tempo che usi.', highlight: false },
+              { icon: '⏱️', title: 'Parcheggio ad ore', price: '€2', unit: '/ ora', desc: 'Minimo 2 ore. Paghi online ed entri con il codice.', highlight: false },
               { icon: '🅿️', title: 'Abbonamento — Posto scoperto', price: '€100', unit: '/ mese', desc: 'Posto auto riservato tutto il mese, all’aperto. Comodità e tariffa contenuta.', highlight: false },
               { icon: '🏠', title: 'Abbonamento — Posto coperto', price: '€140', unit: '/ mese', desc: 'Posto al coperto: la tua auto protetta da sole, pioggia e intemperie tutto il mese.', highlight: true },
             ].map(({ icon, title, price, unit, desc, highlight }) => (
