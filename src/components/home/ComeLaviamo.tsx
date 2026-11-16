@@ -27,9 +27,10 @@ export function ComeLaviamo() {
             Quattro passaggi. Tutti a mano.
           </h2>
         </AnimatedSection>
-        <div className="-mx-5 px-5 md:mx-0 md:px-0 flex md:grid md:grid-cols-4 gap-4 overflow-x-auto snap-x snap-mandatory pb-2 [scrollbar-width:none]">
+        {/* Sul telefono uno sotto l'altro: scorrendo in giù si vedono in ordine, dal passaggio 01 al 04 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {PASSI.map((p, i) => (
-            <AnimatedSection key={p.n} delay={i * 0.08} className="snap-start shrink-0 w-[78%] sm:w-[46%] md:w-auto">
+            <AnimatedSection key={p.n} delay={i * 0.08}>
               <div className="h-full rounded-3xl overflow-hidden bg-white border border-[#0F0F0F]/10">
                 <div className="relative aspect-[4/5]">
                   <AutoVideo src={`${BASE}/brand/passi/${p.file}.mp4`} poster={`${BASE}/brand/passi/${p.file}.jpg`}
