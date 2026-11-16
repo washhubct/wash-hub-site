@@ -43,7 +43,7 @@ const FORMULE = [
   },
   {
     icona: '⏱️', titolo: 'A ore, paghi all’uscita', prezzo: '€2', unita: '/ ora',
-    testo: 'Entri, parcheggi e paghi quando esci. Minimo 2 ore, poi paghi il tempo che usi. L’operatore è presente dalle 7:30 alle 18:30.',
+    testo: 'Entri, parcheggi e paghi online quando esci. Minimo 2 ore, poi paghi il tempo che usi.',
     cta: 'Come arrivare', href: MAPPE.lungomare.indicazioni, evidenza: false,
   },
   {
@@ -77,7 +77,7 @@ const STEPS = [
 const FAQ = [
   { q: 'Che orari ha il parcheggio?', a: 'Il parcheggio è accessibile 24 ore su 24. L’operatore è presente dalle 7:30 alle 18:30; negli altri orari entri ed esci con il codice di Parcheggio Smart.' },
   { q: 'Funziona anche di notte e nei festivi?', a: 'Sì. Il codice vale nella fascia che scegli tu, a qualsiasi ora, anche quando l’autolavaggio è chiuso.' },
-  { q: 'E se resto più a lungo?', a: 'Il codice scade all’orario indicato. Prendi un nuovo codice da qui oppure paga la differenza all’operatore, presente dalle 7:30 alle 18:30.' },
+  { q: 'E se resto più a lungo?', a: 'Il codice scade all’orario indicato. Per restare di più prendi un nuovo codice da qui: si paga online.' },
   { q: 'Posso prenotare per dopo?', a: 'Sì, fino a 7 giorni prima: scegli data e ora di inizio. Il codice si attiva 5 minuti prima.' },
   { q: 'Quanto costa?', a: '€2 all’ora con minimo 2 ore. Fino a 6 ore paghi al massimo €8, fino a 24 ore al massimo €15. La stessa tariffa del parcheggio a ore.' },
   { q: 'C’è un minimo di ore?', a: 'Sì, 2 ore. Con il parcheggio a ore poi paghi il tempo che usi, a €2 l’ora; con Parcheggio Smart scegli tu le ore quando prendi il codice.' },

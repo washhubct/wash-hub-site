@@ -82,7 +82,7 @@ export const parcheggioLungomare = {
   '@type': 'ParkingFacility',
   '@id': PARCHEGGIO_ID,
   name: 'Parcheggio WASH HUB Lungomare',
-  description: 'Parcheggio interno in Via Anfuso 35 a Catania, accessibile 24 ore su 24: a ore (operatore presente dalle 7:30 alle 18:30), con codice anche di notte (Parcheggio Smart) o in abbonamento mensile con posto riservato, coperto o scoperto.',
+  description: 'Parcheggio interno in Via Anfuso 35 a Catania, accessibile 24 ore su 24, con operatore presente dalle 7:30 alle 18:30 e pagamento online: a ore, con codice anche di notte (Parcheggio Smart) o in abbonamento mensile con posto riservato, coperto o scoperto.',
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],

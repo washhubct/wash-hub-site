@@ -79,7 +79,7 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 - Con il codice amico l'email è obbligatoria; consenso marketing facoltativo e separato.
 - Self-referral bloccato lato client (codice calcolato dal telefono) e lato Function.
 - Performance Intenso a prezzo per taglia (utilitaria/berlina €29, SUV/monovolume/station €35), prezzo definito in sede: niente prezzo fisso in prenotazione.
-- Parcheggio Smart: tariffa identica al gestionale (€2/h, max €8 fino a 6h, max €15 fino a 24h, minimo 2h); a ore con pagamento all'uscita vale "minimo 2 ore, poi paghi il tempo che usi"; abbonamento mensile scoperto €100, coperto €140 (richiesta via WhatsApp); nome ed email obbligatori, codice inviato via email; parcheggio accessibile 24 ore su 24, operatore presente 7:30–18:30.
+- Parcheggio Smart: tariffa identica al gestionale (€2/h, max €8 fino a 6h, max €15 fino a 24h, minimo 2h); a ore con pagamento all'uscita vale "minimo 2 ore, poi paghi il tempo che usi"; abbonamento mensile scoperto €100, coperto €140 (richiesta via WhatsApp); nome ed email obbligatori, codice inviato via email; parcheggio accessibile 24 ore su 24, operatore presente 7:30–18:30; il parcheggio si paga online, mai all'operatore (chi resta oltre l'orario prende un nuovo codice).
 - Dati fattura nel form parcheggio: provato e revertito (troppo attrito nel form).
 - Gift card rimossa (pagina, menu, footer) finché non serve Stripe.
 - Abbonamenti lavaggio: in arrivo, nessun prezzo pubblicato (l'unico abbonamento attivo è quello mensile del parcheggio).

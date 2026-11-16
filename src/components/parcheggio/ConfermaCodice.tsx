@@ -114,7 +114,7 @@ export function ConfermaCodice() {
           📍 Portami al parcheggio
         </a>
       </div>
-      <p className="mt-6 text-xs text-[#6B6B6B]">Tieni questa pagina: il codice resta visibile ricaricandola. Hai bisogno di più tempo? Passa al banco o prendi un nuovo codice.</p>
+      <p className="mt-6 text-xs text-[#6B6B6B]">Tieni questa pagina: il codice resta visibile ricaricandola. Hai bisogno di più tempo? Prendi un nuovo codice: si paga online.</p>
     </div>
   )
 }
