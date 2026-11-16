@@ -86,7 +86,7 @@ export function ParcheggioSmartForm() {
       <div className="rounded-3xl bg-white border border-[#E8E8E4] p-8 text-center">
         <p className="text-2xl mb-2">🔧</p>
         <p className="font-bold text-[#0F0F0F]">Vendita online momentaneamente sospesa.</p>
-        <p className="text-[#6B6B6B] mt-1">Passa al banco: ti diamo il codice al volo.</p>
+        <p className="text-[#6B6B6B] mt-1">Il codice si prende solo da qui: riprova tra poco.</p>
       </div>
     )
   }

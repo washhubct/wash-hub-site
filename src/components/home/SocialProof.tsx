@@ -7,7 +7,6 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection'
 
 const STATS = [
   { value: 4, suffix: '+', label: 'Anni di attività' },
-  { value: 58300, suffix: '+', label: 'Auto lavate' },
   // Rating reale da Google Places (npm run fetch-reviews), mai scritto a mano
   { value: reviewsData.rating, suffix: '★', label: 'Rating Google', decimali: 1 },
   { value: 2, suffix: '', label: 'Sedi attive' },
@@ -42,7 +41,7 @@ export function SocialProof() {
   return (
     <section ref={ref} className="bg-[#0F0F0F] py-16 md:py-20">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
+        <div className="grid grid-cols-3 gap-4">
           {STATS.map(({ value, suffix, label, decimali }, i) => (
             <AnimatedSection key={label} delay={i * 0.1} className="text-center">
               <div className="font-display text-4xl md:text-5xl font-black text-[#F5C518] mb-2"
