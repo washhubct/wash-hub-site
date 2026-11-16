@@ -36,7 +36,7 @@ Unica fonte di memoria del progetto. Solo fatti durevoli, una riga ciascuno. Agg
 ## Architettura e file chiave
 
 - `src/app/layout.tsx` — root layout: font, metadata SEO, JSON-LD LocalBusiness delle due sedi, Header/Footer/WhatsAppButton/ParcheggioSmartPopup.
-- `src/app/page.tsx` — home: HeroV2 (riceve voto e numero recensioni da `src/data/reviews.json`), SocialProof, InBreve (fatti chiave in prosa), ParcheggioScelta, PrimaDopo, ComeLaviamo, Garanzia, SediPreview, Reviews, ReferralBanner, HomeCTA.
+- `src/app/page.tsx` — home: HeroV2 (riceve voto e numero recensioni da `src/data/reviews.json`), SocialProof, ParcheggioScelta, PrimaDopo, ComeLaviamo, Garanzia, SediPreview, Reviews, ReferralBanner, HomeCTA, InBreve (fatti chiave in prosa, in fondo per scelta di Guido: testo visibile, mai nascosto).
 - `src/app/prenota/page.tsx` — pagina prenotazione, monta `BookingFlow`.
 - `src/app/prenota/{priority,caparra,garanzia}/page.tsx` — pagine di conferma dopo checkout (polling stato via Function).
 - `src/app/disdici/page.tsx` — disdetta online (gratis fino a 2h prima).

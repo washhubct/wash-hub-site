@@ -27,7 +27,6 @@ export default function HomePage() {
       <JsonLd data={schemaSedi} />
       <HeroV2 voto={reviewsData.rating} recensioni={reviewsData.totalRatings} />
       <SocialProof />
-      <InBreve />
       <ParcheggioScelta />
       <PrimaDopo />
       <ComeLaviamo />
@@ -36,6 +35,8 @@ export default function HomePage() {
       <Reviews />
       <ReferralBanner />
       <HomeCTA />
+      {/* Fatti chiave in prosa in fondo: la home resta leggera, il testo resta visibile (Guido 16/11/2026) */}
+      <InBreve />
     </>
   )
 }
