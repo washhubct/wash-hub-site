@@ -17,7 +17,7 @@ export function ParcheggioScelta() {
             style={{ fontFamily: 'var(--font-bricolage), system-ui' }}>
             Lasci l&apos;auto. Al resto pensiamo noi.
           </h2>
-          <p className="mt-3 text-[#0F0F0F]/65">Accessibile 24 ore su 24. Operatore presente dalle 7:30 alle 18:30.</p>
+          <p className="mt-3 text-[#0F0F0F]/65">Accessibile 24 ore su 24. Operatore presente dal lunedì al sabato, 7:30–18:30.</p>
         </AnimatedSection>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {OPZIONI.map((o, i) => (

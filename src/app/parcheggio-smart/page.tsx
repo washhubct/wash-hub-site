@@ -70,7 +70,7 @@ const STEPS = [
 ]
 
 const FAQ = [
-  { q: 'Che orari ha il parcheggio?', a: 'Il parcheggio è accessibile 24 ore su 24. Per parcheggiare a ore serve sempre il codice di Parcheggio Smart: con quello entri ed esci a qualsiasi ora. L’operatore è presente dalle 7:30 alle 18:30.' },
+  { q: 'Che orari ha il parcheggio?', a: 'Il parcheggio è accessibile 24 ore su 24. Per parcheggiare a ore serve sempre il codice di Parcheggio Smart: con quello entri ed esci a qualsiasi ora. L’operatore è presente dal lunedì al sabato, dalle 7:30 alle 18:30.' },
   { q: 'Funziona anche di notte e nei festivi?', a: 'Sì. Il codice vale nella fascia che scegli tu, a qualsiasi ora, anche quando l’autolavaggio è chiuso.' },
   { q: 'E se resto più a lungo?', a: 'Il codice scade all’orario indicato. Per restare di più prendi un nuovo codice da qui: si paga online.' },
   { q: 'Posso prenotare per dopo?', a: 'Sì, fino a 7 giorni prima: scegli data e ora di inizio. Il codice si attiva 5 minuti prima.' },
@@ -103,10 +103,10 @@ export default function ParcheggioSmartPage() {
               Il parcheggio interno di WASH HUB è in Via Anfuso 35 a Catania. Con Parcheggio Smart paghi online, ricevi un codice a 6 cifre
               e apri il cancello quando vuoi: €2 l&rsquo;ora, minimo 2 ore. Per parcheggiare a ore serve sempre il codice.
               Se parcheggi qui tutti i giorni c&rsquo;è l&rsquo;<a href="#formule" className="underline text-white">abbonamento mensile</a>.
-              Il parcheggio è accessibile 24 ore su 24; l&rsquo;operatore è presente dalle 7:30 alle 18:30.
+              Il parcheggio è accessibile 24 ore su 24; l&rsquo;operatore è presente dal lunedì al sabato, dalle 7:30 alle 18:30.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
-              {['Aperto 24 ore su 24', 'Operatore 7:30–18:30', 'Minimo 2 ore', 'Max €15 al giorno', 'Codice in 10 secondi'].map(t => (
+              {['Aperto 24 ore su 24', 'Operatore lun–sab 7:30–18:30', 'Minimo 2 ore', 'Max €15 al giorno', 'Codice in 10 secondi'].map(t => (
                 <span key={t} className="px-3 py-1 rounded-full text-xs border border-white/20 text-white/70">{t}</span>
               ))}
             </div>
@@ -207,7 +207,7 @@ export default function ParcheggioSmartPage() {
           </div>
           <AnimatedSection className="mt-8">
             <p className="text-[#6B6B6B] leading-relaxed max-w-3xl">
-              Il parcheggio è accessibile 24 ore su 24 e l&rsquo;operatore è presente dalle 7:30 alle 18:30.
+              Il parcheggio è accessibile 24 ore su 24 e l&rsquo;operatore è presente dal lunedì al sabato, dalle 7:30 alle 18:30.
               Parcheggi qui tutti i giorni? Con l&rsquo;abbonamento il posto è tuo.
               Il parcheggio è nella sede <Link href="/sedi/lungomare" className="underline font-semibold text-[#0F0F0F]">WASH HUB Lungomare</Link>:
               mentre l&rsquo;auto è ferma puoi anche <Link href="/prenota" className="underline font-semibold text-[#0F0F0F]">prenotare un lavaggio</Link>.

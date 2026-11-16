@@ -11,7 +11,7 @@ export const FAQ: Voce[] = [
   },
   {
     q: 'Quali sono gli orari? Siete aperti la domenica?',
-    a: 'La sede Lungomare è aperta dal lunedì al sabato dalle 8:00 alle 18:30 ed è chiusa la domenica; il suo parcheggio interno è accessibile 24 ore su 24, con operatore dalle 7:30 alle 18:30. Al POP Paesi Etnei il self service è aperto 24 ore su 24, tutti i giorni; il lavaggio a mano con operatori dal lunedì al sabato dalle 8:00 alle 19:00 e la domenica dalle 8:00 alle 13:30.',
+    a: 'La sede Lungomare è aperta dal lunedì al sabato dalle 8:00 alle 18:30 ed è chiusa la domenica; il suo parcheggio interno è accessibile 24 ore su 24, con operatore dal lunedì al sabato dalle 7:30 alle 18:30. Al POP Paesi Etnei il self service è aperto 24 ore su 24, tutti i giorni; il lavaggio a mano con operatori dal lunedì al sabato dalle 8:00 alle 19:00 e la domenica dalle 8:00 alle 13:30.',
   },
   {
     q: 'Quanto costa un lavaggio auto?',
@@ -65,7 +65,7 @@ export const FAQ: Voce[] = [
   },
   {
     q: 'C\'è il parcheggio?',
-    a: 'Sì, al Lungomare c\'è il parcheggio interno, in Via Anfuso 35: costa €2 l\'ora con minimo 2 ore. Per parcheggiare a ore serve sempre il codice di Parcheggio Smart: paghi online e apri il cancello a qualsiasi ora, anche di notte. Il parcheggio è accessibile 24 ore su 24 e l\'operatore è presente dalle 7:30 alle 18:30. C\'è anche l\'abbonamento mensile con posto riservato: scoperto €100, coperto €140.',
+    a: 'Sì, al Lungomare c\'è il parcheggio interno, in Via Anfuso 35: costa €2 l\'ora con minimo 2 ore. Per parcheggiare a ore serve sempre il codice di Parcheggio Smart: paghi online e apri il cancello a qualsiasi ora, anche di notte. Il parcheggio è accessibile 24 ore su 24 e l\'operatore è presente dal lunedì al sabato, dalle 7:30 alle 18:30. C\'è anche l\'abbonamento mensile con posto riservato: scoperto €100, coperto €140.',
     link: { href: '/parcheggio-smart', label: 'Parcheggio al Lungomare' },
   },
   {

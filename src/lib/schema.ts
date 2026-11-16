@@ -77,12 +77,12 @@ export const fornitoreLungomare = {
 
 export const PARCHEGGIO_ID = `${SITO}/#parcheggio-lungomare`
 
-// Parcheggio interno del Lungomare con le due formule. Accessibile 24 ore su 24; operatore presente 7:30–18:30 (Guido 15/11/2026). A ore si entra sempre con il codice.
+// Parcheggio interno del Lungomare con le due formule. Accessibile 24 ore su 24; operatore presente lun–sab 7:30–18:30 (Guido 15–16/11/2026). A ore si entra sempre con il codice.
 export const parcheggioLungomare = {
   '@type': 'ParkingFacility',
   '@id': PARCHEGGIO_ID,
   name: 'Parcheggio WASH HUB Lungomare',
-  description: 'Parcheggio interno in Via Anfuso 35 a Catania, accessibile 24 ore su 24, con operatore presente dalle 7:30 alle 18:30: a ore con pagamento online e codice per il cancello (Parcheggio Smart), anche di notte, o in abbonamento mensile con posto riservato, coperto o scoperto.',
+  description: 'Parcheggio interno in Via Anfuso 35 a Catania, accessibile 24 ore su 24, con operatore presente dal lunedì al sabato dalle 7:30 alle 18:30: a ore con pagamento online e codice per il cancello (Parcheggio Smart), anche di notte, o in abbonamento mensile con posto riservato, coperto o scoperto.',
   openingHoursSpecification: {
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
